@@ -55,7 +55,11 @@ public class Controller implements Initializable {
     }
 
     public void savePersonAction() {
-
+        int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
+        Person person = personenverwaltung.getPersonen().get(listId);
+        this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
+                this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
+                this.personenverwaltungEmailField.getText(), this.personenverwaltungTypeValueFactory.getValue());
     }
 
     public void personenverwaltungUpdateTextFields() {
@@ -66,6 +70,6 @@ public class Controller implements Initializable {
         this.personenverwaltungTelefonField.setText(person.getTelefonnr());
         this.personenverwaltungEmailField.setText(person.getEmail());
         this.personenverwaltungTimestampLabel.setText(person.getZeitstempelString());
-        //this.personenverwaltungTypeValueFactory.setValue(person.getType());
+        this.personenverwaltungTypeValueFactory.setValue(person.getType());
     }
 }

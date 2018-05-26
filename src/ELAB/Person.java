@@ -3,7 +3,7 @@ package ELAB;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public abstract class Person {
+public class Person {
     private int id;
     private String name;
     private String adresse;
@@ -11,15 +11,17 @@ public abstract class Person {
     private String email;
     private Timestamp zeitstempel;
     private String passwort;
-    protected String type;
+    private String type;
 
-    public Person(int id, String name, String adresse, String telefonnr, String email) {
+
+    public Person(int id, String name, String adresse, String telefonnr, String email, String type) {
         this.id = id;
         this.name = name;
         this.adresse = adresse;
         this.telefonnr = telefonnr;
         this.email = email;
         this.zeitstempel = new Timestamp(System.currentTimeMillis());
+        this.type = type;
     }
 
     public Timestamp getZeitstempel() {
@@ -75,5 +77,9 @@ public abstract class Person {
     public String getType() 
     {
         return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
