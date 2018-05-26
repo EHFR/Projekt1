@@ -66,6 +66,6 @@ public class Controller implements Initializable {
         this.personenverwaltungTelefonField.setText(person.getTelefonnr());
         this.personenverwaltungEmailField.setText(person.getEmail());
         this.personenverwaltungTimestampLabel.setText(person.getZeitstempelString());
-        //this.personenverwaltungTypeValueFactory.setValue(person.getType());
+        this.personenverwaltungTypeValueFactory.setValue(person.getType());
     }
 }

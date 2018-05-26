@@ -18,27 +18,9 @@ public class Personenverwaltung {
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Personen");
             while (rs.next()) {
-                Person p = null;
-                switch (rs.getString("Type")) {
-                    case "Kunde":
-                        p = new Kunde(rs.getInt("PersonID"), rs.getString("PersonName"),
-                                rs.getString("PersonAdresse"), rs.getString("PersonTel"),
-                                rs.getString("PersonEmail"));
-                        break;
-                    case "Mitglied":
-                        p = new Mitglied(rs.getInt("PersonID"), rs.getString("PersonName"),
-                                rs.getString("PersonAdresse"), rs.getString("PersonTel"),
-                                rs.getString("PersonEmail"));
-                        break;
-                    case "LehrstuhlPerson":
-                        p = new LehrstuhlPerson(rs.getInt("PersonID"), rs.getString("PersonName"),
-                                rs.getString("PersonAdresse"), rs.getString("PersonTel"),
-                                rs.getString("PersonEmail"));
-                        break;
-                    default:
-                        System.out.println("Internal Error in Personenverwaltung (NO OR INCORRECT TYPE ATTRIBUT). Quitting reload process!");
-                        return;
-                }
+                Person p = new Person(rs.getInt("PersonID"), rs.getString("PersonName"),
+                        rs.getString("PersonAdresse"), rs.getString("PersonTel"),
+                        rs.getString("PersonEmail"), rs.getString("Type"));
                 p.setZeitstempel(rs.getTimestamp("timestamp"));
                 personen.add(p);
             }
