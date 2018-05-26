@@ -18,7 +18,7 @@ public abstract class Person {
         this.adresse = adresse;
         this.telefonnr = telefonnr;
         this.email = email;
-        this.zeitstempel = new Timestamp(); // Muss bei schon existierenden Personen mit set überschrieben werden
+        this.zeitstempel = new Timestamp(System.currentTimeMillis());
     }
 
     public String getName() {
@@ -53,11 +53,11 @@ public abstract class Person {
         this.email = email;
     }
 
-    public void setZeitstempel(Date zeitstempel) {
+    public void setZeitstempel(Timestamp zeitstempel) {
         this.zeitstempel = zeitstempel;
     }
 
-    public String getZeitstempel() {
+    public String getZeitstempelString() {
         return zeitstempel.toString();
     }
 

@@ -41,6 +41,4 @@ public class Kategorie {
 	{
 		produkte.add(p);
 	}
-    
-    
 }

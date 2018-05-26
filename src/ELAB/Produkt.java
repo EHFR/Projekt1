@@ -1,6 +1,7 @@
 package ELAB;
 
-public class Produkt extends Kategorie{
+public class Produkt
+	{
     private int id;
     private String name;
     private String link;
