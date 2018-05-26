@@ -55,7 +55,11 @@ public class Controller implements Initializable {
     }
 
     public void savePersonAction() {
-
+        int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
+        Person person = personenverwaltung.getPersonen().get(listId);
+        this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
+                this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
+                this.personenverwaltungEmailField.getText(), this.personenverwaltungTypeValueFactory.getValue());
     }
 
     public void personenverwaltungUpdateTextFields() {

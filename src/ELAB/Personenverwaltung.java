@@ -33,6 +33,7 @@ public class Personenverwaltung {
     }
 
     public ArrayList<Person> getPersonen() {
+        this.reloadPersonen();
         return personen;
     }
 
@@ -62,7 +63,7 @@ public class Personenverwaltung {
 		}
     }
     
-    public void updatePerson(int id,String personID, String personName, String personAdresse, String personTel, String personEmail)
+    public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail)
     {
     	Db db = new Db();
     	String sql = "UPDATE Personen SET PersonName = '" + personName + "', PersonAdresse = '" + personAdresse 
