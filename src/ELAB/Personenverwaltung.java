@@ -54,12 +54,12 @@ public class Personenverwaltung {
     public void removePerson(int id) 
     {
     	Db db = new Db();
-    	String sql = "DELETE FROM Personen WHERE PersonID = " + id + "" ;
+    	String sql = "DELETE FROM Personen WHERE PersonID = " + id + " " ;
     	
     	try {
 			db.updateQuery(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			 e.printStackTrace();
 		}
     }
     
