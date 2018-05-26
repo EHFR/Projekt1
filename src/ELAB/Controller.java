@@ -59,7 +59,7 @@ public class Controller implements Initializable {
         Person person = personenverwaltung.getPersonen().get(listId);
         this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
                 this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
-                this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue()); //spinner oder factory
+                this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(), ""); //spinner oder factory
     }
 
     public void personenverwaltungUpdateTextFields() {
