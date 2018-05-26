@@ -25,10 +25,10 @@ public class Person {
     }
 
     public Timestamp getZeitstempel() {
-        return zeitstempel;
-    }
+		return zeitstempel;
+	}
 
-    public String getName() {
+	public String getName() {
         return name;
     }
 
@@ -64,10 +64,11 @@ public class Person {
         this.zeitstempel = zeitstempel;
     }
 
-    public String getZeitstempelString() {
-        return zeitstempel.toString();
+    public String getZeitstempelString()
+    {
+    	return zeitstempel.toString();
     }
-
+    
 
     public int getId() {
         return id;
