@@ -11,8 +11,7 @@ public class Produkt
     private int menge_bestellt;
     private String lagerort;
 	
-    public Produkt(int id, String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant,
-			int menge_bestellt, String lagerort) 
+    public Produkt(int id, String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) 
     {
 		this.id = id;
 		this.name = name;
@@ -23,13 +22,9 @@ public class Produkt
 		this.menge_bestellt = menge_bestellt;
 		this.lagerort = lagerort;
 	}
-
+    
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -87,9 +82,5 @@ public class Produkt
 	public void setLagerort(String lagerort) {
 		this.lagerort = lagerort;
 	}
-    
-    
-
-    
 
 }
