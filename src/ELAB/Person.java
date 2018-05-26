@@ -61,6 +61,10 @@ public abstract class Person {
         this.zeitstempel = zeitstempel;
     }
 
+    public String getZeitstempelString()
+    {
+    	return zeitstempel.toString();
+    }
     
 
     public int getId() {

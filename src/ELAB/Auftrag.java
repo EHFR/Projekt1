@@ -99,7 +99,7 @@ public class Auftrag {
 		this.personen = personen;
 	}
     
-    public void fügePersonHinzu(Person p)
+    public void fuegePersonHinzu(Person p)
     {
     	personen.add(p);
     }
