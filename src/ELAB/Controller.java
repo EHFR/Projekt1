@@ -20,10 +20,11 @@ public class Controller implements Initializable {
     public TextField personenverwaltungAdresseField;
     public TextField personenverwaltungTelefonField;
     public TextField personenverwaltungEmailField;
-    public TextField personenverwaltungPasswortField;
+    public PasswordField personenverwaltungPasswortField;
     public Spinner<String> personenverwaltungTypSpinner;
     private SpinnerValueFactory<String> personenverwaltungTypeValueFactory;
     public Label personenverwaltungTimestampLabel;
+    private boolean neuePersonModus = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -48,6 +49,18 @@ public class Controller implements Initializable {
         personenverwaltungListe.setItems(items);
     }
 
+    public void addPersonAction() {
+        this.neuePersonModus = true;
+        this.personenverwaltungListe.setDisable(true);
+        this.personenverwaltungNameField.setText("");
+        this.personenverwaltungAdresseField.setText("");
+        this.personenverwaltungTelefonField.setText("");
+        this.personenverwaltungEmailField.setText("");
+        this.personenverwaltungTimestampLabel.setText("");
+        this.personenverwaltungTypeValueFactory.setValue("");
+        this.personenverwaltungPasswortField.setText("");
+    }
+
     public void removePersonAction() {
         int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
         Person personToRemove = personenverwaltung.getPersonen().get(listId);
@@ -59,7 +72,8 @@ public class Controller implements Initializable {
         Person person = personenverwaltung.getPersonen().get(listId);
         this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
                 this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
-                this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(), ""); //spinner oder factory
+                this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
+                this.personenverwaltungPasswortField.getText()); //spinner oder factory
     }
 
     public void personenverwaltungUpdateTextFields() {
@@ -71,5 +85,6 @@ public class Controller implements Initializable {
         this.personenverwaltungEmailField.setText(person.getEmail());
         this.personenverwaltungTimestampLabel.setText(person.getZeitstempelString());
         this.personenverwaltungTypeValueFactory.setValue(person.getType());
+        this.personenverwaltungPasswortField.setText(person.getPasswort());
     }
 }
