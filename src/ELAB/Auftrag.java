@@ -104,6 +104,4 @@ public class Auftrag {
     	personen.add(p);
     }
     
-    
-    
 }

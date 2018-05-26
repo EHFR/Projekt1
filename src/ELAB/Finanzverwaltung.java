@@ -1,4 +1,6 @@
 package ELAB;
 
-public class Finanzverwaltung {
+public class Finanzverwaltung 
+{
+	
 }
