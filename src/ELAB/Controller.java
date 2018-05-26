@@ -56,7 +56,7 @@ public class Controller implements Initializable {
         this.personenverwaltungAdresseField.setText("");
         this.personenverwaltungTelefonField.setText("");
         this.personenverwaltungEmailField.setText("");
-        this.personenverwaltungTimestampLabel.setText("");
+        this.personenverwaltungTimestampLabel.setText("---");
         this.personenverwaltungTypeValueFactory.setValue("");
         this.personenverwaltungPasswortField.setText("");
     }
