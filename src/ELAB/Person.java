@@ -14,7 +14,7 @@ public class Person {
     private String type;
 
 
-    public Person(int id, String name, String adresse, String telefonnr, String email, String type) {
+    public Person(int id, String name, String adresse, String telefonnr, String email, String type, String passwort) {
         this.id = id;
         this.name = name;
         this.adresse = adresse;
@@ -22,6 +22,7 @@ public class Person {
         this.email = email;
         this.zeitstempel = new Timestamp(System.currentTimeMillis());
         this.type = type;
+        this.passwort = passwort;
     }
 
     public Timestamp getZeitstempel() {
