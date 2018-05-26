@@ -11,6 +11,7 @@ public abstract class Person {
     private String email;
     private Timestamp zeitstempel;
     private String passwort;
+    protected String type;
 
     public Person(int id, String name, String adresse, String telefonnr, String email) {
         this.id = id;
@@ -69,5 +70,9 @@ public abstract class Person {
 
     public int getId() {
         return id;
+    }
+
+    public String getType() {
+        return type;
     }
 }
