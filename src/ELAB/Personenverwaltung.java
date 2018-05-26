@@ -54,12 +54,12 @@ public class Personenverwaltung {
         return personen;
     }
 
-    private void addPerson(int personID, String personName, String personAdresse, String personTel, String personEmail) {
+    public void addPerson(String personName, String personAdresse, String personTel, String personEmail) {
     
-    	 	Db db = new Db();
+    		Db db = new Db();
     	 
-    		String sql = "INSERT INTO (PersonID, PersonName, PersonAdresse, PersonTel, PersonEmail) "
-    				+ "VALUES ("+ personID + ",'" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "'"; 
+    		String sql = "INSERT INTO (PersonName, PersonAdresse, PersonTel, PersonEmail) "
+    				+ "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "'"; 
     		try {
 				db.updateQuery(sql);
 			} catch (SQLException e) {
@@ -68,9 +68,30 @@ public class Personenverwaltung {
     		
     }
 
-    private void removePerson() {
-        // siehe oben addPerson
+    public void removePerson(int id) 
+    {
+    	Db db = new Db();
+    	String sql = "DELETE FROM Personen WHERE PersonID = " + id + "" ;
+    	
+    	try {
+			db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
+    
+    public void updatePerson(int id,String personID, String personName, String personAdresse, String personTel, String personEmail)
+    {
+    	Db db = new Db();
+    	String sql = "UPDATE Personen SET PersonName = '" + personName + "', PersonAdresse = '" + personAdresse 
+    			+ "', PersonTel = '" + personTel + "', PersonEmail '" + personEmail + "' WHERE PersonID = " + id + "";
+    	try {
+			db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
 
     // Methoden zum Bearbeiten von Personen zB. Namen ändern und sowas... hier wird später mit der GUI drauf zugegriffen
 }
