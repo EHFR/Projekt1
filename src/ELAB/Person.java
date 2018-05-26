@@ -1,5 +1,6 @@
 package ELAB;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public abstract class Person {
@@ -8,7 +9,7 @@ public abstract class Person {
     private String adresse;
     private String telefonnr;
     private String email;
-    private Date zeitstempel;
+    private Timestamp zeitstempel;
     private String passwort;
 
     public Person(int id, String name, String adresse, String telefonnr, String email) {
@@ -17,10 +18,14 @@ public abstract class Person {
         this.adresse = adresse;
         this.telefonnr = telefonnr;
         this.email = email;
-        this.zeitstempel = new Date(); // Muss bei schon existierenden Personen mit set überschrieben werden
+        this.zeitstempel = new Timestamp(System.currentTimeMillis());
     }
 
-    public String getName() {
+    public Timestamp getZeitstempel() {
+		return zeitstempel;
+	}
+
+	public String getName() {
         return name;
     }
 
@@ -52,13 +57,11 @@ public abstract class Person {
         this.email = email;
     }
 
-    public void setZeitstempel(Date zeitstempel) {
+    public void setZeitstempel(Timestamp zeitstempel) {
         this.zeitstempel = zeitstempel;
     }
 
-    public String getZeitstempel() {
-        return zeitstempel.toString();
-    }
+    
 
     public int getId() {
         return id;

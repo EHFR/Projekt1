@@ -39,7 +39,7 @@ public class Personenverwaltung {
                         System.out.println("Internal Error in Personenverwaltung (NO OR INCORRECT TYPE ATTRIBUT). Quitting reload process!");
                         return;
                 }
-                p.setZeitstempel(rs.getDate("timestamp"));
+                p.setZeitstempel(rs.getTimestamp("timestamp"));
                 personen.add(p);
             }
         } catch (SQLException e) {
