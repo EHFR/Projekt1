@@ -41,7 +41,7 @@ public class Fertigungsverwaltung {
         
 		Db db = new Db();
 	 
-		String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Koste , Status) "
+		String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, Status) "
 				+ "VALUES ('" + titel + "','" + fertigungsArt + "','" + dateiName + "','" + dateiOrt + "','" + kosten + "','" + status + "')"; 
 		try {
 			db.updateQuery(sql);
