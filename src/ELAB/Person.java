@@ -21,7 +21,11 @@ public abstract class Person {
         this.zeitstempel = new Timestamp(System.currentTimeMillis());
     }
 
-    public String getName() {
+    public Timestamp getZeitstempel() {
+		return zeitstempel;
+	}
+
+	public String getName() {
         return name;
     }
 
@@ -57,9 +61,7 @@ public abstract class Person {
         this.zeitstempel = zeitstempel;
     }
 
-    public String getZeitstempelString() {
-        return zeitstempel.toString();
-    }
+    
 
     public int getId() {
         return id;

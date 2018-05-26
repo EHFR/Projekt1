@@ -24,7 +24,7 @@ public class Rechnung {
     	this.topf = topf;
     	this.betrag = betrag;
     	this.status = status;
-    	this.zeitstempel = zeitstempel;
+    	this.zeitstempel = new Timestamp(System.currentTimeMillis());
     }
 
     

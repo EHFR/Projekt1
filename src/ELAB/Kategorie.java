@@ -37,7 +37,7 @@ public class Kategorie {
 		this.produkte = produkte;
 	}
 	
-	public void produkteHinzufügen(Produkt p)
+	public void produkteHinzufuegen(Produkt p)
 	{
 		produkte.add(p);
 	}
