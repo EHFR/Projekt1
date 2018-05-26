@@ -20,7 +20,7 @@ public class Personenverwaltung {
             while (rs.next()) {
                 Person p = new Person(rs.getInt("PersonID"), rs.getString("PersonName"),
                         rs.getString("PersonAdresse"), rs.getString("PersonTel"),
-                        rs.getString("PersonEmail"), rs.getString("Type"));
+                        rs.getString("PersonEmail"), rs.getString("Type"), rs.getString("Password"));
                 p.setZeitstempel(rs.getTimestamp("timestamp"));
                 personen.add(p);
             }
@@ -37,12 +37,12 @@ public class Personenverwaltung {
         return personen;
     }
 
-    public void addPerson(String personName, String personAdresse, String personTel, String personEmail, String type) {
+    public void addPerson(String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) {
     
     		Db db = new Db();
     	 
-    		String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Type) "
-    				+ "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + type + "')"; 
+    		String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Type, Password) "
+    				+ "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + type + "','" + passwort + "')";)"; 
     		try {
 				db.updateQuery(sql);
 			} catch (SQLException e) {
@@ -63,11 +63,12 @@ public class Personenverwaltung {
 		}
     }
     
-    public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type)
+    public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type, String passwort)
     {
     	Db db = new Db();
     	String sql = "UPDATE Personen SET PersonName = '" + personName + "', PersonAdresse = '" + personAdresse 
-    			+ "', PersonTel = '" + personTel + "', PersonEmail = '" + personEmail + "', Type = '" + type + "' WHERE PersonID = " + id + "";
+    			+ "', PersonTel = '" + personTel + "', PersonEmail = '" + personEmail + "', Type = '" + type + "', Password = '" + passwort + "' "
+    			+ "WHERE PersonID = " + id + "";
     	try {
 			db.updateQuery(sql);
 		} catch (SQLException e) {
