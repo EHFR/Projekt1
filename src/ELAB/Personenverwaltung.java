@@ -16,7 +16,7 @@ public class Personenverwaltung {
         Db db = new Db();
 
         try {
-            ResultSet rs = db.connect("Personen");
+            ResultSet rs = db.exequteQuery("SELECT * FROM Personen");
             while (rs.next()) {
                 Person p = null;
                 switch (rs.getString("Type")) {
@@ -54,9 +54,18 @@ public class Personenverwaltung {
         return personen;
     }
 
-    private void addPerson(/*Infos zur Person*/) {
-        // Neue Person mit Sql hinzufügen
-        // Personen alle mit reload neu laden
+    private void addPerson(int personID, String personName, String personAdresse, String personTel, String personEmail) {
+    
+    	 	Db db = new Db();
+    	 
+    		String sql = "INSERT INTO (PersonID, PersonName, PersonAdresse, PersonTel, PersonEmail) "
+    				+ "VALUES ("+ personID + ",'" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "'"; 
+    		try {
+				db.updateQuery(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+    		
     }
 
     private void removePerson() {

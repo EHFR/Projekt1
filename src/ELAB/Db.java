@@ -7,16 +7,24 @@ public class Db {
     private String db_url = "jdbc:sqlite:ELAB.db";
     private Connection conn = null;
 
-    ResultSet connect(String table) throws SQLException {
-        String sql = "SELECT * FROM " + table;
+    ResultSet exequteQuery(String sqlquery) throws SQLException {
+        String sql = sqlquery;
         PreparedStatement stmt = null;
-        boolean check = false;
         DriverManager.registerDriver(new org.sqlite.JDBC());
         this.conn = DriverManager.getConnection(this.db_url);
         stmt = this.conn.prepareStatement(sql);
-        check = true;
         return stmt.executeQuery();
     }
+    
+    void updateQuery(String sqlquery) throws SQLException
+    {
+    	String sql = sqlquery;
+    	Statement stmt = null;
+    	DriverManager.registerDriver(new org.sqlite.JDBC());
+    	this.conn = DriverManager.getConnection(this.db_url);
+    	stmt.executeUpdate(sql);
+    }
+    
 
     void close() {
         try {
