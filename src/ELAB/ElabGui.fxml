@@ -60,7 +60,7 @@
                                     <Label text="Passwort:" GridPane.rowIndex="5" />
                                     <TextField fx:id="personenverwaltungPasswortField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Button mnemonicParsing="false" onAction="#removePersonAction" prefHeight="25.0" prefWidth="124.0" text="Löschen" GridPane.rowIndex="7" />
-                                    <Button fx:id="personenverwaltungSaveBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Button fx:id="personenverwaltungSaveBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#savePersonAction" prefHeight="25.0" prefWidth="116.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
