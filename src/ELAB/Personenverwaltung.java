@@ -37,12 +37,12 @@ public class Personenverwaltung {
         return personen;
     }
 
-    public void addPerson(String personName, String personAdresse, String personTel, String personEmail) {
+    public void addPerson(String personName, String personAdresse, String personTel, String personEmail, String type) {
     
     		Db db = new Db();
     	 
-    		String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail) "
-    				+ "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "'"; 
+    		String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Type) "
+    				+ "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + type + "')"; 
     		try {
 				db.updateQuery(sql);
 			} catch (SQLException e) {
@@ -63,11 +63,11 @@ public class Personenverwaltung {
 		}
     }
     
-    public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail)
+    public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type)
     {
     	Db db = new Db();
     	String sql = "UPDATE Personen SET PersonName = '" + personName + "', PersonAdresse = '" + personAdresse 
-    			+ "', PersonTel = '" + personTel + "', PersonEmail '" + personEmail + "' WHERE PersonID = " + id + "";
+    			+ "', PersonTel = '" + personTel + "', PersonEmail = '" + personEmail + "', Type = '" + type + "' WHERE PersonID = " + id + "";
     	try {
 			db.updateQuery(sql);
 		} catch (SQLException e) {
