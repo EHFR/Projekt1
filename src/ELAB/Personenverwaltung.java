@@ -42,7 +42,7 @@ public class Personenverwaltung {
     		Db db = new Db();
     	 
     		String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Type, Password) "
-    				+ "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + type + "','" + passwort + "')";)"; 
+    				+ "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + type + "','" + passwort + "')"; 
     		try {
 				db.updateQuery(sql);
 			} catch (SQLException e) {
