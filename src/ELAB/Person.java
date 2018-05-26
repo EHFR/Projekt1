@@ -9,6 +9,7 @@ public abstract class Person {
     private String telefonnr;
     private String email;
     private Date zeitstempel;
+    private String passwort;
 
     public Person(int id, String name, String adresse, String telefonnr, String email) {
         this.id = id;

@@ -23,11 +23,13 @@ public class Controller implements Initializable {
         this.fertigungsverwaltung = new Fertigungsverwaltung();
         this.finanzverwaltung = new Finanzverwaltung();
         this.bauteileverwaltung = new Bauteileverwaltung();
+
+        this.populatePersonenverwaltungList();
     }
 
-    private void populatePersonenverwaltungList(){
+    private void populatePersonenverwaltungList() {
         ArrayList<String> allNames = new ArrayList<>();
-        for(Person person: personenverwaltung.getPersonen()){
+        for (Person person : personenverwaltung.getPersonen()) {
             allNames.add(person.getName());
         }
         ObservableList<String> items = FXCollections.observableArrayList(allNames);

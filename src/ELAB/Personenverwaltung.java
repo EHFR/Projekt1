@@ -9,6 +9,7 @@ public class Personenverwaltung {
 
     public Personenverwaltung() {
         personen = new ArrayList<>();
+        this.reloadPersonen();
     }
 
     private void reloadPersonen() {
