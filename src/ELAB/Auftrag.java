@@ -15,7 +15,7 @@ public class Auftrag {
     private Timestamp zeitstempel;
     private ArrayList<Person> personen;
     
-    public Auftrag(int id,String titel, String fertigungsart, String dateiname, String dateiort, float kosten, String status, Timestamp zeitstempel)
+    public Auftrag(int id,String titel, String fertigungsart, String dateiname, String dateiort, float kosten, String status)
     {
     	this.id = id;
     	this.titel = titel;
@@ -24,7 +24,7 @@ public class Auftrag {
     	this.dateiort = dateiort;
     	this.kosten = kosten;
     	this.status = status;
-    	this.zeitstempel = zeitstempel;
+    	this.zeitstempel = new Timestamp(System.currentTimeMillis());
     }
 
 	public int getId() {
