@@ -81,4 +81,8 @@ public class Person {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getPasswort() {
+        return passwort;
+    }
 }
