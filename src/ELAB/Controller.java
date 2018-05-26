@@ -2,6 +2,7 @@ package ELAB;
 
 import javafx.collections.*;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
 
@@ -16,6 +17,7 @@ public class Controller implements Initializable {
     private Bauteileverwaltung bauteileverwaltung;
 
     public ListView<String> personenverwaltungListe;
+    public Button personenverwaltungSaveBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
