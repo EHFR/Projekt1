@@ -7,14 +7,14 @@ public class Rechnung {
     private int id;
     private Date datum;
     private String name;
-    private Kunde auftraggeber;
-    private Mitglied ansprechpartner;
+    private Person auftraggeber;
+    private Person ansprechpartner;
     private Topf topf;
     private float betrag;
     private String status;
     private Timestamp zeitstempel;
     
-    public Rechnung(int id,Date datum, String name, Kunde auftraggeber, Mitglied ansprechpartner, Topf topf, float betrag, String status, Timestamp zeitstempel)
+    public Rechnung(int id,Date datum, String name, Person auftraggeber, Person ansprechpartner, Topf topf, float betrag, String status, Timestamp zeitstempel)
     {
     	this.id = id;
     	this.datum = new Date();
@@ -48,19 +48,19 @@ public class Rechnung {
 		this.name = name;
 	}
 
-	public Kunde getAuftraggeber() {
+	public Person getAuftraggeber() {
 		return auftraggeber;
 	}
 
-	public void setAuftraggeber(Kunde auftraggeber) {
+	public void setAuftraggeber(Person auftraggeber) {
 		this.auftraggeber = auftraggeber;
 	}
 
-	public Mitglied getAnsprechpartner() {
+	public Person getAnsprechpartner() {
 		return ansprechpartner;
 	}
 
-	public void setAnsprechpartner(Mitglied ansprechpartner) {
+	public void setAnsprechpartner(Person ansprechpartner) {
 		this.ansprechpartner = ansprechpartner;
 	}
 
