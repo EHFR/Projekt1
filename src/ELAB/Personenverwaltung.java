@@ -58,7 +58,7 @@ public class Personenverwaltung {
     
     		Db db = new Db();
     	 
-    		String sql = "INSERT INTO (PersonName, PersonAdresse, PersonTel, PersonEmail) "
+    		String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail) "
     				+ "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "'"; 
     		try {
 				db.updateQuery(sql);
@@ -91,6 +91,7 @@ public class Personenverwaltung {
 			e.printStackTrace();
 		}
     }
+    
     
 
     // Methoden zum Bearbeiten von Personen zB. Namen ändern und sowas... hier wird später mit der GUI drauf zugegriffen

@@ -67,12 +67,13 @@ public abstract class Person {
     	return zeitstempel.toString();
     }
     
-
-    public int getId() {
+    public int getId() 
+    {
         return id;
     }
 
-    public String getType() {
+    public String getType() 
+    {
         return type;
     }
 }
