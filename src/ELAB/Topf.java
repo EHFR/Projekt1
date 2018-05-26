@@ -28,6 +28,14 @@ public class Topf {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public float getSollbestand() {
+		return sollbestand;
+	}
+
+	public void setSollbestand(float sollbestand) {
+		this.sollbestand = sollbestand;
+	}
 
 	public float getIstbestand() {
 		return istbestand;
