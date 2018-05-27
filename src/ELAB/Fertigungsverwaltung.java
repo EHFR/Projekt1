@@ -21,7 +21,7 @@ public class Fertigungsverwaltung {
                 Auftrag a = new Auftrag(rs.getInt("ID"), rs.getString("Titel"),
                         rs.getString("FertigungsArt"), rs.getString("DateiName"),
                         rs.getString("DateiOrt"), rs.getFloat("Kosten"), rs.getString("Status"));
-                a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
+                a.setZeitstempel(rs.getTimestamp("timestamp"));
                 this.auftraege.add(a);
             }
         } catch (SQLException e) {

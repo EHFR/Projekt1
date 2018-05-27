@@ -15,21 +15,38 @@ public class Bauteileverwaltung {
 		topf = new ArrayList<>();
 	}
 	
-	private void reloadKategorie()
+	private void reloadProdukt()
 	{
 		Db db = new Db();
 		this.kategorie.clear();
 		try {
-			ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
-			while (rs.next())
+			ResultSet rs = db.exequteQuery("SELECT * FROM Produkt");
+			while(rs.next())
 			{
-//				Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"), rs.getInt("Produkte"));
-				
+				Produkt p = new Produkt(rs.getInt("ID"),rs.getString("Name"),rs.getString("Link")
+						,rs.getDouble("Einzelpreis"),rs.getInt("MengeLagernd")
+						,rs.getInt("MengeGeplant"),rs.getInt("MengeBestellt"),rs.getString("LagerOrt"));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			// TODO: handle exception
 		}
 	}
+	
+//	private void reloadKategorie()
+//	{
+//		Db db = new Db();
+//		this.kategorie.clear();
+//		try {
+//			ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
+//			while (rs.next())
+//			{
+//				Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"), rs.getInt("Produkte"));
+//				
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//	}
 	
 	public void addProdukt(String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort)
 	{
