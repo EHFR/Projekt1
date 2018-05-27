@@ -41,6 +41,10 @@ public class Personenverwaltung {
 
         Db db = new Db();
 
+        /**
+         *  Hier muesste irgendwie ein neuer Zeitstempel mit der aktuellen Zeit erstellt werden und  der Datenbank übergeben werden
+         * */
+
         String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Type, Password) "
                 + "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + type + "','" + passwort + "')";
         try {
