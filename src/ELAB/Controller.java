@@ -36,7 +36,7 @@ public class Controller implements Initializable {
         // init Commands
         this.populatePersonenverwaltungList();
         ObservableList<String> types = FXCollections.observableArrayList("Mitglied", "Kunde", "Lehrstuhl bezogene Person");
-        SpinnerValueFactory<String> personenverwaltungTypeValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(types);
+        this.personenverwaltungTypeValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(types);
         this.personenverwaltungTypSpinner.setValueFactory(personenverwaltungTypeValueFactory);
     }
 
@@ -57,7 +57,7 @@ public class Controller implements Initializable {
         this.personenverwaltungTelefonField.setText("");
         this.personenverwaltungEmailField.setText("");
         this.personenverwaltungTimestampLabel.setText("---");
-        this.personenverwaltungTypeValueFactory.setValue("");
+        this.personenverwaltungTypeValueFactory.setValue("Kunde");
         this.personenverwaltungPasswortField.setText("");
     }
 
@@ -68,12 +68,19 @@ public class Controller implements Initializable {
     }
 
     public void savePersonAction() {
-        int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
-        Person person = personenverwaltung.getPersonen().get(listId);
-        this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
-                this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
-                this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
-                this.personenverwaltungPasswortField.getText()); //spinner oder factory
+        if (this.neuePersonModus) {
+            this.personenverwaltung.addPerson(this.personenverwaltungNameField.getText(),
+                    this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
+                    this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
+                    this.personenverwaltungPasswortField.getText()); //spinner oder factory
+        } else {
+            int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
+            Person person = personenverwaltung.getPersonen().get(listId);
+            this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
+                    this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
+                    this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
+                    this.personenverwaltungPasswortField.getText()); //spinner oder factory
+        }
     }
 
     public void personenverwaltungUpdateTextFields() {

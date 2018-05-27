@@ -14,7 +14,7 @@ public class Personenverwaltung {
 
     private void reloadPersonen() {
         Db db = new Db();
-
+        this.personen.clear();
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Personen");
             while (rs.next()) {
@@ -22,7 +22,7 @@ public class Personenverwaltung {
                         rs.getString("PersonAdresse"), rs.getString("PersonTel"),
                         rs.getString("PersonEmail"), rs.getString("Type"), rs.getString("Password"));
                 p.setZeitstempel(rs.getTimestamp("timestamp"));
-                personen.add(p);
+                this.personen.add(p);
             }
         } catch (SQLException e) {
             System.out.println("Error while reading Database!");
