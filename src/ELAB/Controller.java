@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    /**
+     * Allgemein
+     */
     private Personenverwaltung personenverwaltung;
     private Fertigungsverwaltung fertigungsverwaltung;
     private Finanzverwaltung finanzverwaltung;
@@ -19,6 +22,9 @@ public class Controller implements Initializable {
 
     public Label error;
 
+    /**
+     * Personenverwaltung
+     */
     public ListView<String> personenverwaltungListe;
     public TextField personenverwaltungNameField;
     public TextField personenverwaltungAdresseField;
@@ -32,6 +38,24 @@ public class Controller implements Initializable {
     public Button personenverwaltungSaveBtn;
     private boolean neuePersonModus = false;
 
+    /**
+     * Fertigungsverwaltung
+     */
+    public ListView<String> fertigungsverwaltungListe;
+    public TextField fertigungsverwaltungTitelField;
+    public TextField fertigungsverwaltungFertigungsartField;
+    public TextField fertigungsverwaltungDateinameField;
+    public TextField fertigungsverwaltungDateiortField;
+    public TextField fertigungsverwaltungKostenField;
+    public Spinner<String> fertigungsverwaltungStatusSpinner;
+    private SpinnerValueFactory<String> fertigungsverwaltungStatusValueFactory;
+    public TextField fertigungsverwaltungAuftraggeberField;
+    public Label fertigungsverwaltungTimestampLabel;
+    public TextArea fertigungsverwaltungAuftragbearbeiterArea;
+    public Button fertigungsverwaltungRemoveBtn;
+    public Button fertigungsverwaltungSaveBtn;
+    private boolean neuerAuftragModus = false;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.personenverwaltung = new Personenverwaltung();
@@ -39,11 +63,21 @@ public class Controller implements Initializable {
         this.finanzverwaltung = new Finanzverwaltung();
         this.bauteileverwaltung = new Bauteileverwaltung();
 
-        // init Commands
+        /**
+         * Personenverwaltung INIT
+         */
         this.populatePersonenverwaltungList();
         ObservableList<String> types = FXCollections.observableArrayList("Mitglied", "Kunde", "Lehrstuhl bezogene Person");
         this.personenverwaltungTypeValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(types);
         this.personenverwaltungTypSpinner.setValueFactory(personenverwaltungTypeValueFactory);
+
+        /**
+         * Fertigungsverwaltung INIT
+         */
+        this.populateFertigungsverwaltungList();
+        //ObservableList<String> stadien = FXCollections.observableArrayList("Angenommen", "Gefertigt", "Kosten kalkuliert", "Abgeholt", "Abgerechnet", "Auf Material warten", "Fertigung unterbrochen");
+        //this.fertigungsverwaltungStatusValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        //this.fertigungsverwaltungStatusSpinner.setValueFactory(fertigungsverwaltungStatusValueFactory);
     }
 
     private void showError(String errorText) {
@@ -70,6 +104,9 @@ public class Controller implements Initializable {
         error.setVisible(false);
     }
 
+    /**
+     * Personenverwaltung
+     */
 
     private void populatePersonenverwaltungList() {
         ArrayList<String> allNames = new ArrayList<>();
@@ -170,19 +207,112 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Fertigungsverwaltung
+     */
+    private void populateFertigungsverwaltungList() {
+        ArrayList<String> allTitel = new ArrayList<>();
+        for (Auftrag auftrag : fertigungsverwaltung.getAuftraege()) {
+            allTitel.add(auftrag.getTitel());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(allTitel);
+        fertigungsverwaltungListe.setItems(items);
+        this.fertigungsverwaltungUpdateTextFields();
+    }
+
     public void addAuftragAction() {
-
+        this.neuerAuftragModus = true;
+        this.fertigungsverwaltungDisableInputs(false);
+        this.fertigungsverwaltungListe.setDisable(true);
+        this.fertigungsverwaltungTitelField.setText("");
+        this.fertigungsverwaltungFertigungsartField.setText("");
+        this.fertigungsverwaltungDateinameField.setText("");
+        this.fertigungsverwaltungDateiortField.setText("");
+        this.fertigungsverwaltungKostenField.setText("");
+        //this.fertigungsverwaltungStatusField.setText(""); // todo Spinner machen
+        this.fertigungsverwaltungTimestampLabel.setText("---");
+        this.fertigungsverwaltungAuftraggeberField.setText(""); //todo aktuell angemeldeter
+        this.fertigungsverwaltungAuftragbearbeiterArea.setText("");
     }
 
-    public void fertigungsverwaltungUpdateTextFields() {
-
-    }
 
     public void removeAuftragAction() {
-
+        /*int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            showError("Keine Person zum löschen ausgewählt!");
+            return;
+        }
+        Person personToRemove = personenverwaltung.getPersonen().get(listId);
+        this.personenverwaltung.removePerson(personToRemove.getId());
+        this.populatePersonenverwaltungList();*/
     }
 
     public void saveAuftragAction() {
+        /*if (this.personenverwaltungPasswortField.getText().equals("")) {
+            showError("Passwort darf nicht leer sein!");
+            return;
+        }
+        if (this.personenverwaltungNameField.getText().equals("")) {
+            showError("Name darf nicht leer sein!");
+            return;
+        }
+        if (this.personenverwaltung.personAlreadyExists(this.personenverwaltungNameField.getText())) {
+            showError("Name existiert schon, bitte einen anderen wählen!");
+            return;
+        }
+        if (this.neuePersonModus) {
+            this.personenverwaltung.addPerson(this.personenverwaltungNameField.getText(),
+                    this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
+                    this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
+                    this.personenverwaltungPasswortField.getText()); //spinner oder factory
+            this.neuePersonModus = false;
+        } else {
+            int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError("Keine Person zum bearbeiten ausgewählt!");
+                return;
+            }
+            Person person = personenverwaltung.getPersonen().get(listId);
+            this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
+                    this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
+                    this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
+                    this.personenverwaltungPasswortField.getText()); //spinner oder factory
+        }
+        showOk();
+        this.populatePersonenverwaltungList();*/
+    }
 
+    private void fertigungsverwaltungDisableInputs(boolean disabled) {
+        this.fertigungsverwaltungTitelField.setDisable(disabled);
+        this.fertigungsverwaltungFertigungsartField.setDisable(disabled);
+        this.fertigungsverwaltungDateinameField.setDisable(disabled);
+        this.fertigungsverwaltungDateiortField.setDisable(disabled);
+        this.fertigungsverwaltungTimestampLabel.setDisable(disabled);
+        this.fertigungsverwaltungKostenField.setDisable(disabled);
+        //this.fertigungsverwaltungStatusField.setDisable(disabled);
+        this.fertigungsverwaltungSaveBtn.setDisable(disabled);
+        this.fertigungsverwaltungRemoveBtn.setDisable(disabled);
+        this.fertigungsverwaltungAuftraggeberField.setDisable(disabled);
+        this.fertigungsverwaltungAuftragbearbeiterArea.setDisable(disabled);
+    }
+
+    public void fertigungsverwaltungUpdateTextFields() {
+        int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            this.fertigungsverwaltungDisableInputs(true);
+        } else {
+            this.fertigungsverwaltungDisableInputs(false);
+
+            Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
+            this.fertigungsverwaltungTitelField.setText(auftrag.getTitel());
+            this.fertigungsverwaltungFertigungsartField.setText(auftrag.getFertigungsart());
+            this.fertigungsverwaltungDateinameField.setText(auftrag.getDateiname());
+            this.fertigungsverwaltungDateiortField.setText(auftrag.getDateiort());
+            this.fertigungsverwaltungKostenField.setText(String.valueOf(auftrag.getKosten()));
+            //this.fertigungsverwaltungStatusField.setText(auftrag.getStatus()); //todo Spinner machen
+            this.fertigungsverwaltungTimestampLabel.setText(auftrag.getZeitstempelString());
+            this.fertigungsverwaltungAuftraggeberField.setText(auftrag.getAuftraggeber().getName());
+            this.fertigungsverwaltungAuftragbearbeiterArea.setText(auftrag.getAuftragbearbeiterString());
+        }
     }
 }

@@ -32,7 +32,7 @@ public class Fertigungsverwaltung {
         }
     }
 
-    public ArrayList<Auftrag> getAuftrag() {
+    public ArrayList<Auftrag> getAuftraege() {
         this.reloadAuftraege();
         return auftraege;
     }
