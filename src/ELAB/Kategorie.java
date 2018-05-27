@@ -1,16 +1,20 @@
 package ELAB;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Kategorie {
     private int id;
     private String name;
+    private int produktID;
     private ArrayList<Produkt> produkte;
+    Map<Integer, Produkt> num = new HashMap<Integer, Produkt>();
     
-	public Kategorie(int id, String name, ArrayList<Produkt> produkte) {
+	public Kategorie(int id, String name, int produkte) {
 		this.id = id;
 		this.name = name;
-		this.produkte = produkte;
+		this.produkte = num<produkte, Produkt>;
 	}
 
 	public int getId() {
