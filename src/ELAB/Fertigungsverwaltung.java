@@ -72,5 +72,4 @@ public class Fertigungsverwaltung {
             e.printStackTrace();
         }
     }
-            
 }

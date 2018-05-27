@@ -70,6 +70,7 @@ public class Controller implements Initializable {
         error.setVisible(false);
     }
 
+
     private void populatePersonenverwaltungList() {
         ArrayList<String> allNames = new ArrayList<>();
         for (Person person : personenverwaltung.getPersonen()) {
@@ -95,8 +96,13 @@ public class Controller implements Initializable {
 
     public void removePersonAction() {
         int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            showError("Keine Person zum löschen ausgewählt!");
+            return;
+        }
         Person personToRemove = personenverwaltung.getPersonen().get(listId);
         this.personenverwaltung.removePerson(personToRemove.getId());
+        this.populatePersonenverwaltungList();
     }
 
     public void savePersonAction() {
@@ -117,6 +123,7 @@ public class Controller implements Initializable {
                     this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
                     this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
                     this.personenverwaltungPasswortField.getText()); //spinner oder factory
+            this.neuePersonModus = false;
         } else {
             int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
@@ -130,9 +137,10 @@ public class Controller implements Initializable {
                     this.personenverwaltungPasswortField.getText()); //spinner oder factory
         }
         showOk();
+        this.populatePersonenverwaltungList();
     }
 
-    private void personenverwaltungDisableInputs(boolean disabled){
+    private void personenverwaltungDisableInputs(boolean disabled) {
         this.personenverwaltungNameField.setDisable(disabled);
         this.personenverwaltungAdresseField.setDisable(disabled);
         this.personenverwaltungTelefonField.setDisable(disabled);
@@ -160,5 +168,21 @@ public class Controller implements Initializable {
             this.personenverwaltungTypeValueFactory.setValue(person.getType());
             this.personenverwaltungPasswortField.setText(person.getPasswort());
         }
+    }
+
+    public void addAuftragAction() {
+
+    }
+
+    public void fertigungsverwaltungUpdateTextFields() {
+
+    }
+
+    public void removeAuftragAction() {
+
+    }
+
+    public void saveAuftragAction() {
+
     }
 }
