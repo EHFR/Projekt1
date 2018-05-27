@@ -19,10 +19,12 @@ public class Db {
     void updateQuery(String sqlquery) throws SQLException
     {
     	String sql = sqlquery;
-    	Statement stmt = null;
+    	PreparedStatement stmt = null;
     	DriverManager.registerDriver(new org.sqlite.JDBC());
     	this.conn = DriverManager.getConnection(this.db_url);
-    	stmt.executeUpdate(sql);
+    	stmt = this.conn.prepareStatement(sql);
+    	stmt.executeUpdate();
+  
     }
     
 
