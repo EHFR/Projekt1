@@ -49,13 +49,28 @@ public class Fertigungsverwaltung {
 			e.printStackTrace();
 		}
 		
-}
+    }
+    public void removeAuftrag(int id) {
+        Db db = new Db();
+        String sql = "DELETE FROM Auftrag WHERE ID = " + id + " ";
+
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
-        
-        
-        
-        
-        
-        
-        
+    public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten, String status) {
+        Db db = new Db();
+        String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
+                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten + "', Status = '" + status + "' "
+                + "WHERE ID = " + id + "";
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+            
 }
