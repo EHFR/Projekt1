@@ -1,5 +1,8 @@
 package ELAB;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Produkt
 	{
     private int id;
@@ -10,6 +13,7 @@ public class Produkt
     private int menge_geplant;
     private int menge_bestellt;
     private String lagerort;
+    Map<Integer, Produkt> num = new HashMap<Integer, Produkt>();
 	
     public Produkt(int id, String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) 
     {
@@ -22,6 +26,7 @@ public class Produkt
 		this.menge_bestellt = menge_bestellt;
 		this.lagerort = lagerort;
 	}
+    
     
 	public int getId() {
 		return id;

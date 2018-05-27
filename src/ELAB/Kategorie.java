@@ -9,12 +9,12 @@ public class Kategorie {
     private String name;
     private int produktID;
     private ArrayList<Produkt> produkte;
-    Map<Integer, Produkt> num = new HashMap<Integer, Produkt>();
+   
     
-	public Kategorie(int id, String name, int produkte) {
+	public Kategorie(int id, String name, ArrayList<Produkt> produkte) {
 		this.id = id;
 		this.name = name;
-		this.produkte = num<produkte, Produkt>;
+		this.produkte = produkte;
 	}
 
 	public int getId() {
@@ -45,4 +45,22 @@ public class Kategorie {
 	{
 		produkte.add(p);
 	}
+
+	public int getProduktID() {
+		return produktID;
+	}
+
+	public void setProduktID(int produktID) {
+		this.produktID = produktID;
+	}
+
+//	public Map<Integer, Produkt> getNum() {
+//		return num;
+//	}
+//
+//	public void setNum(Map<Integer, Produkt> num) {
+//		this.num = num;
+//	}
+	
+	
 }

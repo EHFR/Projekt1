@@ -23,7 +23,7 @@ public class Bauteileverwaltung {
 			ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
 			while (rs.next())
 			{
-				Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"), rs.getInt("Produkte"));
+//				Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"), rs.getInt("Produkte"));
 				
 			}
 		} catch (Exception e) {
