@@ -14,7 +14,7 @@ public class Fertigungsverwaltung {
     
     private void reloadAuftraege() {
         Db db = new Db();
-
+        this.auftraege.clear();
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Auftrag");
             while (rs.next()) {
@@ -22,7 +22,7 @@ public class Fertigungsverwaltung {
                         rs.getString("FertigungsArt"), rs.getString("DateiName"),
                         rs.getString("DateiOrt"), rs.getFloat("Kosten"), rs.getString("Status"));
                 a.setZeitstempel(rs.getTimestamp("timestamp"));
-                auftraege.add(a);
+                this.auftraege.add(a);
             }
         } catch (SQLException e) {
             System.out.println("Error while reading Database!");
