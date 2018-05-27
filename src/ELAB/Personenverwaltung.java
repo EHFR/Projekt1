@@ -2,10 +2,12 @@ package ELAB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Personenverwaltung {
     private ArrayList<Person> personen;
+    private Timestamp timestamp;
 
     public Personenverwaltung() {
         personen = new ArrayList<>();
@@ -41,10 +43,10 @@ public class Personenverwaltung {
 
         Db db = new Db();
 
-        
+        timestamp = new Timestamp(System.currentTimeMillis());
 
-        String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Type, Password) "
-                + "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + type + "','" + passwort + "')";
+        String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, timestamp, Type, Password) "
+                + "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "'," + timestamp  +  ",'" + type + "','" + passwort + "')";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -79,16 +81,14 @@ public class Personenverwaltung {
     public boolean personAlreadyExists(String name){
         boolean check = false;
         Db db = new Db();
-        int count = 0;
         try {
-			ResultSet rs = db.exequteQuery("SELECT count(*) FROM Personen WHERE Name = '" + name + "'");
+			ResultSet rs = db.exequteQuery("SELECT Name FROM Personen WHERE Name = '" + name + "'");
 			while(rs.next())
 			{
-				count = rs.getInt("count(*)");
-			}
-			if(count >= 2)
-			{
-				check = true;
+				if(rs.getString("Name").equals(name))
+				{
+					check = true;
+				}
 			}
 			
 		} catch (SQLException e) {
