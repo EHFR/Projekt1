@@ -1,8 +1,10 @@
 package ELAB;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.util.Duration;
 
 
 import java.net.URL;
@@ -14,6 +16,8 @@ public class Controller implements Initializable {
     private Fertigungsverwaltung fertigungsverwaltung;
     private Finanzverwaltung finanzverwaltung;
     private Bauteileverwaltung bauteileverwaltung;
+
+    public Label error;
 
     public ListView<String> personenverwaltungListe;
     public TextField personenverwaltungNameField;
@@ -38,6 +42,30 @@ public class Controller implements Initializable {
         ObservableList<String> types = FXCollections.observableArrayList("Mitglied", "Kunde", "Lehrstuhl bezogene Person");
         this.personenverwaltungTypeValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(types);
         this.personenverwaltungTypSpinner.setValueFactory(personenverwaltungTypeValueFactory);
+    }
+
+    private void showError(String errorText) {
+        System.out.println("Error: creating Label with -> " + errorText);
+        this.error.setVisible(true);
+        this.error.setText(errorText);
+        this.error.setStyle("-fx-background-color: #f44336");
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished(event -> hideErrorLabel());
+        delay.play();
+    }
+
+    private void showOk() {
+        System.out.println("okok");
+        error.setVisible(true);
+        error.setText("OK");
+        error.setStyle("-fx-background-color: #4caf50");
+        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        delay.setOnFinished(event -> hideErrorLabel());
+        delay.play();
+    }
+
+    private void hideErrorLabel() {
+        error.setVisible(false);
     }
 
     private void populatePersonenverwaltungList() {
@@ -68,6 +96,18 @@ public class Controller implements Initializable {
     }
 
     public void savePersonAction() {
+        if (this.personenverwaltungPasswortField.getText().equals("")) {
+            showError("Passwort darf nicht leer sein!");
+            return;
+        }
+        if (this.personenverwaltungNameField.getText().equals("")) {
+            showError("Name darf nicht leer sein!");
+            return;
+        }
+        if (this.personenverwaltung.personAlreadyExists(this.personenverwaltungNameField.getText())) {
+            showError("Name existiert schon, bitte einen anderen wählen!");
+            return;
+        }
         if (this.neuePersonModus) {
             this.personenverwaltung.addPerson(this.personenverwaltungNameField.getText(),
                     this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
@@ -81,6 +121,7 @@ public class Controller implements Initializable {
                     this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
                     this.personenverwaltungPasswortField.getText()); //spinner oder factory
         }
+        showOk();
     }
 
     public void personenverwaltungUpdateTextFields() {

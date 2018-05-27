@@ -1,5 +1,7 @@
 package ELAB;
 
+import sun.reflect.generics.tree.Tree;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -78,6 +80,11 @@ public class Personenverwaltung {
         }
     }
 
+    public boolean personAlreadyExists(String name){
+        /** Pruefen ob der Name schon existiert, da Namen einmalig sein müssen für die Passwortabfrage mit Name!
+         * return boolean*/
+        return true; // provisorisch
+    }
 
     // Methoden zum Bearbeiten von Personen zB. Namen ändern und sowas... hier wird später mit der GUI drauf zugegriffen
 }
