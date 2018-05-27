@@ -12,8 +12,15 @@ public class Auftrag {
     private String dateiort;
     private float kosten;
     private String status;
-    private Timestamp statusZeitstempel; // todo für jeden Status einnen eigenen Zeitstempel machen
+    private Timestamp statusZeitstempel_angenommen;
+    private Timestamp statusZeitstempel_gefertigt;
+    private Timestamp statusZeitstempel_kosten_kalkuliert;
+    private Timestamp statusZeitstempel_abgeholt;
+    private Timestamp statusZeitstempel_abgerechnet;
+    private Timestamp statusZeitstempel_wartenAufMaterial;
+    private Timestamp statusZeitstempel_fertigungFehlgeschlagen;
     private Timestamp zeitstempel;
+    private Timestamp statusZeitstempel;
     private Person auftraggeber;
     private boolean angenommen;
     private boolean gefertigt;
@@ -25,7 +32,10 @@ public class Auftrag {
     private ArrayList<Person> auftragbearbeiter;
 
     public Auftrag(int id, String titel, String fertigungsart, String dateiname, String dateiort,
-                   float kosten, boolean gefertigt, boolean kosten_kalkuliert, boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen, boolean angenommen) {
+                   float kosten,boolean angenommen, Timestamp statusZeitstempel_angenommen,boolean gefertigt, Timestamp statusZeitstempel_gefertigt,
+                   boolean kosten_kalkuliert, Timestamp statusZeitstempel_kosten_kalkuliert, boolean abgeholt, Timestamp statusZeitstempel_abgeholt, 
+                   boolean abgerechnet, Timestamp statusZeitstempel_abgerechnet, boolean wartenAufMaterial, Timestamp statusZeitstempel_wartenAufMaterial,
+                   boolean fertigungFehlgeschlagen, Timestamp statusZeitstempel_fertigungFehlgeschlagen) {
 
         this.id = id;
         this.titel = titel;
@@ -40,6 +50,13 @@ public class Auftrag {
         this.abgerechnet = false;
         this.wartenAufMaterial = false;
         this.fertigungFehlgeschlagen = false;
+        this.statusZeitstempel_angenommen = statusZeitstempel_angenommen;
+        this.statusZeitstempel_gefertigt = statusZeitstempel_gefertigt;
+        this.statusZeitstempel_kosten_kalkuliert = statusZeitstempel_kosten_kalkuliert;
+        this.statusZeitstempel_abgeholt = statusZeitstempel_abgeholt;
+        this.statusZeitstempel_abgerechnet = statusZeitstempel_abgerechnet;
+        this.statusZeitstempel_wartenAufMaterial = statusZeitstempel_wartenAufMaterial;
+        this.statusZeitstempel_fertigungFehlgeschlagen = statusZeitstempel_fertigungFehlgeschlagen;
         this.zeitstempel = new Timestamp(System.currentTimeMillis());
     }
 

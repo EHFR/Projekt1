@@ -2,10 +2,12 @@ package ELAB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Fertigungsverwaltung {
     private ArrayList<Auftrag> auftraege;
+    private Timestamp timestamp;
 
     public Fertigungsverwaltung() {
         auftraege = new ArrayList<>();
@@ -20,9 +22,11 @@ public class Fertigungsverwaltung {
             while (rs.next()) {
                 Auftrag a = new Auftrag(rs.getInt("ID"), rs.getString("Titel"),
                         rs.getString("FertigungsArt"), rs.getString("DateiName"),
-                        rs.getString("DateiOrt"), rs.getFloat("Kosten"), rs.getBoolean("angenommen"),
-                        rs.getBoolean("gefertigt"), rs.getBoolean("kosten_kalkuliert"), rs.getBoolean("abgeholt"),
-                        rs.getBoolean("abgerechnet"), rs.getBoolean("wartenAufMaterial"), rs.getBoolean("fertigungFehlgeschlagen"));
+                        rs.getString("DateiOrt"), rs.getFloat("Kosten"), rs.getBoolean("angenommen"), rs.getTimestamp("statusZeitstempel_angenommen"),
+                        rs.getBoolean("gefertigt"),rs.getTimestamp("statusZeitstempel_gefertigt"), rs.getBoolean("kosten_kalkuliert"), rs.getTimestamp("statusZeitstempel_kosten_kalkuliert"),
+                        rs.getBoolean("abgeholt"), rs.getTimestamp("statusZeitstempel_abgeholt"), 
+                        rs.getBoolean("abgerechnet"), rs.getTimestamp("statusZeitstempel_abgerechnet"), rs.getBoolean("wartenAufMaterial"), rs.getTimestamp("statusZeitstempel_wartenAufMaterial"),
+                        rs.getBoolean("fertigungFehlgeschlagen"), rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"));
                 a.setZeitstempel(rs.getTimestamp("timestamp"));
                 this.auftraege.add(a);
             }
@@ -80,10 +84,14 @@ public class Fertigungsverwaltung {
 
     public void updateStatus(int id, boolean angenommen, boolean gefertigt, boolean kosten_kalkuliert,
                              boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {
-        // SQL: anhand der Id alle Stadien aktualisieren, wenn sich der Status geändert hat, einen neuen Zeitstempel(aktuell) erstellen
         Db db = new Db();
-        String sql = "UPDATE Auftrag SET angenommen = " + angenommen + ", gefertigt = " + gefertigt + ", kosten_kalkuliert = " + kosten_kalkuliert + ", abgeholt = "
-                + abgeholt + ", abgerechnet = " + abgerechnet + ", wartenAufMaterial = " + wartenAufMaterial + ", fertigungFehlgeschlagen = " + fertigungFehlgeschlagen
+        
+        timestamp = new Timestamp(System.currentTimeMillis());
+        
+        String sql = "UPDATE Auftrag SET angenommen = " + angenommen + ", statusZeitstempel_angenommen " + timestamp + ", gefertigt = " + gefertigt + ", statusZeitstempel_gefertigt " 
+        		+ timestamp + ", kosten_kalkuliert = " + kosten_kalkuliert + ", statusZeitstempel_kosten_kalkuliert " + timestamp + ", abgeholt = "
+                + abgeholt + ", statusZeitstempel_abgeholt " + timestamp + ", abgerechnet = " + abgerechnet + ", statusZeitstempel_abgerechnet " + timestamp + ", wartenAufMaterial = " 
+        		+ wartenAufMaterial + ", statusZeitstempel_wartenAufMaterial " + timestamp + ", fertigungFehlgeschlagen = " + fertigungFehlgeschlagen + ", statusZeitstempel_fertigungFehlgeschlagen " + timestamp 
                 + "WHERE ID = " + id + "";
         try {
             db.updateQuery(sql);
