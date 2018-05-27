@@ -66,7 +66,9 @@ public class Person {
     }
 
     public String getZeitstempelString() {
-        return zeitstempel.toString();
+        // korrekte Rückgabe eines Strings des Timestamps
+        return "10.12.2016 12:15"; // Beispielhaft/Provisorisch
+        //return zeitstempel.toString();
     }
 
 
