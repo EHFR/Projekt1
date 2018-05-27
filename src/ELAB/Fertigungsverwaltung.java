@@ -39,12 +39,16 @@ public class Fertigungsverwaltung {
         return auftraege;
     }
     
-    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten, String status) {
+    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten,  boolean angenommen,
+    				boolean gefertigt, boolean kosten_kalkuliert, boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {
         
 		Db db = new Db();
 	 
-		String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, Status) "
-				+ "VALUES ('" + titel + "','" + fertigungsArt + "','" + dateiName + "','" + dateiOrt + "','" + kosten + "','" + status + "')"; 
+		String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen) "
+				+ "VALUES ('" + titel + "','" + fertigungsArt + "','" + dateiName 
+				+ "','" + dateiOrt + "','" + kosten + "'," + angenommen + "," + gefertigt + "," 
+				+ kosten_kalkuliert + "," + abgeholt + "," + abgerechnet 
+				+ "," + wartenAufMaterial + "," + fertigungFehlgeschlagen + ")"; 
 		try {
 			db.updateQuery(sql);
 		} catch (SQLException e) {
@@ -63,10 +67,13 @@ public class Fertigungsverwaltung {
         }
     }
     
-    public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten, String status) {
+    public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten,boolean angenommen ,boolean gefertigt, 
+    			boolean kosten_kalkuliert, boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {
         Db db = new Db();
         String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
-                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten + "', Status = '" + status + "' "
+                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten + "', angenommen = " + angenommen + ", gefertigt = "
+                + gefertigt + ", kosten_kalkuliert = " + kosten_kalkuliert + ", abgeholt = " 
+                + abgeholt + ", abgerechnet = " + abgerechnet + ", wartenAufMaterial = " + wartenAufMaterial + ", fertigungFehlgeschlagen = " + fertigungFehlgeschlagen
                 + "WHERE ID = " + id + "";
         try {
             db.updateQuery(sql);
