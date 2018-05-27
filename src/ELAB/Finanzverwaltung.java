@@ -9,9 +9,9 @@ public class Finanzverwaltung {
 
     public Finanzverwaltung() {
         kasse = new ArrayList<>();
-        this.reloadKasse();	
+        //this.reloadKasse();
     }
-    
+    /*
     private void reloadKasse() {
         Db db = new Db();
         this.kasse.clear();
@@ -68,6 +68,6 @@ public class Finanzverwaltung {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }  
+    }  */
     
 }
