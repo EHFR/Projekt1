@@ -1,5 +1,6 @@
 package ELAB;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -12,6 +13,22 @@ public class Bauteileverwaltung {
 	{
 		kategorie = new ArrayList<>();
 		topf = new ArrayList<>();
+	}
+	
+	private void reloadKategorie()
+	{
+		Db db = new Db();
+		this.kategorie.clear();
+		try {
+			ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
+			while (rs.next())
+			{
+				Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"), rs.getInt("Produkte"));
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	
 	public void addProdukt(String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort)
