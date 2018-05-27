@@ -20,6 +20,31 @@ public class Auftrag {
     private boolean kosten_kalkuliert;
     private boolean abgeholt;
     private boolean abgerechnet;
+	private boolean wartenAufMaterial;
+    private boolean fertigungFehlgeschlagen;
+    private ArrayList<Person> auftragbearbeiter;
+    
+    public Auftrag(int id, String titel, String fertigungsart, String dateiname, String dateiort,
+    		float kosten, boolean gefertigt, boolean kosten_kalkuliert, boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen, boolean angenommen) {
+    	
+        this.id = id;
+        this.titel = titel;
+        this.fertigungsart = fertigungsart;
+        this.dateiname = dateiname;
+        this.dateiort = dateiort;
+        this.kosten = kosten;
+        this.angenommen = false;
+        this.gefertigt = false;
+        this.kosten_kalkuliert = false;
+        this.abgeholt = false;
+        this.abgerechnet = false;
+        this.wartenAufMaterial = false;
+        this.fertigungFehlgeschlagen = false;
+        this.zeitstempel = new Timestamp(System.currentTimeMillis());
+    }
+    
+    
+    
     public Timestamp getStatusZeitstempel() {
 		return statusZeitstempel;
 	}
@@ -87,27 +112,6 @@ public class Auftrag {
 	public Timestamp getZeitstempel() {
 		return zeitstempel;
 	}
-
-	private boolean wartenAufMaterial;
-    private boolean fertigungFehlgeschlagen;
-    private ArrayList<Person> auftragbearbeiter;
-
-    public Auftrag(int id, String titel, String fertigungsart, String dateiname, String dateiort, float kosten, String status) {
-        this.id = id;
-        this.titel = titel;
-        this.fertigungsart = fertigungsart;
-        this.dateiname = dateiname;
-        this.dateiort = dateiort;
-        this.kosten = kosten;
-        boolean angenommen = false;
-        boolean gefertigt = false;
-        boolean kosten_kalkuliert = false;
-        boolean abgeholt = false;
-        boolean abgerechnet = false;
-        boolean wartenAufMaterial = false;
-        boolean fertigungFehlgeschlagen = false;
-        this.zeitstempel = new Timestamp(System.currentTimeMillis());
-    }
 
     public int getId() {
         return id;

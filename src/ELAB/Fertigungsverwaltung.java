@@ -20,7 +20,9 @@ public class Fertigungsverwaltung {
             while (rs.next()) {
                 Auftrag a = new Auftrag(rs.getInt("ID"), rs.getString("Titel"),
                         rs.getString("FertigungsArt"), rs.getString("DateiName"),
-                        rs.getString("DateiOrt"), rs.getFloat("Kosten"), rs.getString("Status"));
+                        rs.getString("DateiOrt"), rs.getFloat("Kosten"),rs.getBoolean("angenommen"),
+                        rs.getBoolean("gefertigt"),rs.getBoolean("kosten_kalkuliert"),rs.getBoolean("abgeholt"),
+                        rs.getBoolean("abgerechnet"),rs.getBoolean("wartenAufMaterial"),rs.getBoolean("fertigungFehlgeschlagen"));
                 a.setZeitstempel(rs.getTimestamp("timestamp"));
                 this.auftraege.add(a);
             }
