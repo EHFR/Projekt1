@@ -12,7 +12,7 @@ public class Auftrag {
     private String dateiort;
     private float kosten;
     private String status;
-    private Timestamp statusZeitstempel; // todo Zeitstempel für den letzten Status implementieren (auch in Datenbank)
+    private Timestamp statusZeitstempel; // todo für jeden Status einnen eigenen Zeitstempel machen
     private Timestamp zeitstempel;
     private Person auftraggeber;
     private boolean angenommen;
@@ -20,13 +20,13 @@ public class Auftrag {
     private boolean kosten_kalkuliert;
     private boolean abgeholt;
     private boolean abgerechnet;
-	private boolean wartenAufMaterial;
+    private boolean wartenAufMaterial;
     private boolean fertigungFehlgeschlagen;
     private ArrayList<Person> auftragbearbeiter;
-    
+
     public Auftrag(int id, String titel, String fertigungsart, String dateiname, String dateiort,
-    		float kosten, boolean gefertigt, boolean kosten_kalkuliert, boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen, boolean angenommen) {
-    	
+                   float kosten, boolean gefertigt, boolean kosten_kalkuliert, boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen, boolean angenommen) {
+
         this.id = id;
         this.titel = titel;
         this.fertigungsart = fertigungsart;
@@ -42,76 +42,75 @@ public class Auftrag {
         this.fertigungFehlgeschlagen = false;
         this.zeitstempel = new Timestamp(System.currentTimeMillis());
     }
-    
-    
-    
+
+
     public Timestamp getStatusZeitstempel() {
-		return statusZeitstempel;
-	}
+        return statusZeitstempel;
+    }
 
-	public void setStatusZeitstempel(Timestamp statusZeitstempel) {
-		this.statusZeitstempel = statusZeitstempel;
-	}
+    public void setStatusZeitstempel(Timestamp statusZeitstempel) {
+        this.statusZeitstempel = statusZeitstempel;
+    }
 
-	public boolean isAngenommen() {
-		return angenommen;
-	}
+    public boolean isAngenommen() {
+        return angenommen;
+    }
 
-	public void setAngenommen(boolean angenommen) {
-		this.angenommen = angenommen;
-	}
+    public void setAngenommen(boolean angenommen) {
+        this.angenommen = angenommen;
+    }
 
-	public boolean isGefertigt() {
-		return gefertigt;
-	}
+    public boolean isGefertigt() {
+        return gefertigt;
+    }
 
-	public void setGefertigt(boolean gefertigt) {
-		this.gefertigt = gefertigt;
-	}
+    public void setGefertigt(boolean gefertigt) {
+        this.gefertigt = gefertigt;
+    }
 
-	public boolean isKosten_kalkuliert() {
-		return kosten_kalkuliert;
-	}
+    public boolean isKosten_kalkuliert() {
+        return kosten_kalkuliert;
+    }
 
-	public void setKosten_kalkuliert(boolean kosten_kalkuliert) {
-		this.kosten_kalkuliert = kosten_kalkuliert;
-	}
+    public void setKosten_kalkuliert(boolean kosten_kalkuliert) {
+        this.kosten_kalkuliert = kosten_kalkuliert;
+    }
 
-	public boolean isAbgeholt() {
-		return abgeholt;
-	}
+    public boolean isAbgeholt() {
+        return abgeholt;
+    }
 
-	public void setAbgeholt(boolean abgeholt) {
-		this.abgeholt = abgeholt;
-	}
+    public void setAbgeholt(boolean abgeholt) {
+        this.abgeholt = abgeholt;
+    }
 
-	public boolean isAbgerechnet() {
-		return abgerechnet;
-	}
+    public boolean isAbgerechnet() {
+        return abgerechnet;
+    }
 
-	public void setAbgerechnet(boolean abgerechnet) {
-		this.abgerechnet = abgerechnet;
-	}
+    public void setAbgerechnet(boolean abgerechnet) {
+        this.abgerechnet = abgerechnet;
+    }
 
-	public boolean isWartenAufMaterial() {
-		return wartenAufMaterial;
-	}
+    public boolean isWartenAufMaterial() {
+        return wartenAufMaterial;
+    }
 
-	public void setWartenAufMaterial(boolean wartenAufMaterial) {
-		this.wartenAufMaterial = wartenAufMaterial;
-	}
+    public void setWartenAufMaterial(boolean wartenAufMaterial) {
+        this.wartenAufMaterial = wartenAufMaterial;
+    }
 
-	public boolean isFertigungFehlgeschlagen() {
-		return fertigungFehlgeschlagen;
-	}
+    public boolean isFertigungFehlgeschlagen() {
+        return fertigungFehlgeschlagen;
+    }
 
-	public void setFertigungFehlgeschlagen(boolean fertigungFehlgeschlagen) {
-		this.fertigungFehlgeschlagen = fertigungFehlgeschlagen;
-	}
+    public void setFertigungFehlgeschlagen(boolean fertigungFehlgeschlagen) {
+        this.fertigungFehlgeschlagen = fertigungFehlgeschlagen;
+    }
 
-	public Timestamp getZeitstempel() {
-		return zeitstempel;
-	}
+    public Timestamp getZeitstempel() {
+        return zeitstempel;
+    }
 
     public int getId() {
         return id;
