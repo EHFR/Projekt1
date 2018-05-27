@@ -1,4 +1,4 @@
 package ELAB;
 
-public class Barkasse extends Kasse {
+public class Barkasse {
 }
