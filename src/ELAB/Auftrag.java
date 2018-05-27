@@ -15,6 +15,81 @@ public class Auftrag {
     private Timestamp statusZeitstempel; // todo Zeitstempel für den letzten Status implementieren (auch in Datenbank)
     private Timestamp zeitstempel;
     private Person auftraggeber;
+    private boolean angenommen;
+    private boolean gefertigt;
+    private boolean kosten_kalkuliert;
+    private boolean abgeholt;
+    private boolean abgerechnet;
+    public Timestamp getStatusZeitstempel() {
+		return statusZeitstempel;
+	}
+
+	public void setStatusZeitstempel(Timestamp statusZeitstempel) {
+		this.statusZeitstempel = statusZeitstempel;
+	}
+
+	public boolean isAngenommen() {
+		return angenommen;
+	}
+
+	public void setAngenommen(boolean angenommen) {
+		this.angenommen = angenommen;
+	}
+
+	public boolean isGefertigt() {
+		return gefertigt;
+	}
+
+	public void setGefertigt(boolean gefertigt) {
+		this.gefertigt = gefertigt;
+	}
+
+	public boolean isKosten_kalkuliert() {
+		return kosten_kalkuliert;
+	}
+
+	public void setKosten_kalkuliert(boolean kosten_kalkuliert) {
+		this.kosten_kalkuliert = kosten_kalkuliert;
+	}
+
+	public boolean isAbgeholt() {
+		return abgeholt;
+	}
+
+	public void setAbgeholt(boolean abgeholt) {
+		this.abgeholt = abgeholt;
+	}
+
+	public boolean isAbgerechnet() {
+		return abgerechnet;
+	}
+
+	public void setAbgerechnet(boolean abgerechnet) {
+		this.abgerechnet = abgerechnet;
+	}
+
+	public boolean isWartenAufMaterial() {
+		return wartenAufMaterial;
+	}
+
+	public void setWartenAufMaterial(boolean wartenAufMaterial) {
+		this.wartenAufMaterial = wartenAufMaterial;
+	}
+
+	public boolean isFertigungFehlgeschlagen() {
+		return fertigungFehlgeschlagen;
+	}
+
+	public void setFertigungFehlgeschlagen(boolean fertigungFehlgeschlagen) {
+		this.fertigungFehlgeschlagen = fertigungFehlgeschlagen;
+	}
+
+	public Timestamp getZeitstempel() {
+		return zeitstempel;
+	}
+
+	private boolean wartenAufMaterial;
+    private boolean fertigungFehlgeschlagen;
     private ArrayList<Person> auftragbearbeiter;
 
     public Auftrag(int id, String titel, String fertigungsart, String dateiname, String dateiort, float kosten, String status) {
@@ -24,7 +99,13 @@ public class Auftrag {
         this.dateiname = dateiname;
         this.dateiort = dateiort;
         this.kosten = kosten;
-        this.status = status;
+        boolean angenommen = false;
+        boolean gefertigt = false;
+        boolean kosten_kalkuliert = false;
+        boolean abgeholt = false;
+        boolean abgerechnet = false;
+        boolean wartenAufMaterial = false;
+        boolean fertigungFehlgeschlagen = false;
         this.zeitstempel = new Timestamp(System.currentTimeMillis());
     }
 
