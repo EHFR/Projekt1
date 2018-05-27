@@ -28,6 +28,8 @@ public class Controller implements Initializable {
     public Spinner<String> personenverwaltungTypSpinner;
     private SpinnerValueFactory<String> personenverwaltungTypeValueFactory;
     public Label personenverwaltungTimestampLabel;
+    public Button personenverwaltungRemoveBtn;
+    public Button personenverwaltungSaveBtn;
     private boolean neuePersonModus = false;
 
     @Override
@@ -75,10 +77,12 @@ public class Controller implements Initializable {
         }
         ObservableList<String> items = FXCollections.observableArrayList(allNames);
         personenverwaltungListe.setItems(items);
+        this.personenverwaltungUpdateTextFields();
     }
 
     public void addPersonAction() {
         this.neuePersonModus = true;
+        this.personenverwaltungDisableInputs(false);
         this.personenverwaltungListe.setDisable(true);
         this.personenverwaltungNameField.setText("");
         this.personenverwaltungAdresseField.setText("");
@@ -115,6 +119,10 @@ public class Controller implements Initializable {
                     this.personenverwaltungPasswortField.getText()); //spinner oder factory
         } else {
             int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError("Keine Person zum bearbeiten ausgewählt!");
+                return;
+            }
             Person person = personenverwaltung.getPersonen().get(listId);
             this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
                     this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
@@ -124,15 +132,33 @@ public class Controller implements Initializable {
         showOk();
     }
 
+    private void personenverwaltungDisableInputs(boolean disabled){
+        this.personenverwaltungNameField.setDisable(disabled);
+        this.personenverwaltungAdresseField.setDisable(disabled);
+        this.personenverwaltungTelefonField.setDisable(disabled);
+        this.personenverwaltungEmailField.setDisable(disabled);
+        this.personenverwaltungTimestampLabel.setDisable(disabled);
+        this.personenverwaltungTypSpinner.setDisable(disabled);
+        this.personenverwaltungPasswortField.setDisable(disabled);
+        this.personenverwaltungSaveBtn.setDisable(disabled);
+        this.personenverwaltungRemoveBtn.setDisable(disabled);
+    }
+
     public void personenverwaltungUpdateTextFields() {
         int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
-        Person person = personenverwaltung.getPersonen().get(listId);
-        this.personenverwaltungNameField.setText(person.getName());
-        this.personenverwaltungAdresseField.setText(person.getAdresse());
-        this.personenverwaltungTelefonField.setText(person.getTelefonnr());
-        this.personenverwaltungEmailField.setText(person.getEmail());
-        this.personenverwaltungTimestampLabel.setText(person.getZeitstempelString());
-        this.personenverwaltungTypeValueFactory.setValue(person.getType());
-        this.personenverwaltungPasswortField.setText(person.getPasswort());
+        if (listId == -1) {
+            this.personenverwaltungDisableInputs(true);
+        } else {
+            this.personenverwaltungDisableInputs(false);
+
+            Person person = personenverwaltung.getPersonen().get(listId);
+            this.personenverwaltungNameField.setText(person.getName());
+            this.personenverwaltungAdresseField.setText(person.getAdresse());
+            this.personenverwaltungTelefonField.setText(person.getTelefonnr());
+            this.personenverwaltungEmailField.setText(person.getEmail());
+            this.personenverwaltungTimestampLabel.setText(person.getZeitstempelString());
+            this.personenverwaltungTypeValueFactory.setValue(person.getType());
+            this.personenverwaltungPasswortField.setText(person.getPasswort());
+        }
     }
 }
