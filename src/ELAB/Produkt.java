@@ -15,6 +15,14 @@ public class Produkt
     private String lagerort;
     Map<Integer, Produkt> num = new HashMap<Integer, Produkt>();
 	
+    /*
+     *  Martin fragen ob er uns HashMaps erklären kann. 
+     *  Kategorie soll den key id einlessen und den produkt zurückgeben und in die array liste übergeben.
+     * 
+     * 
+     */
+    
+    
     public Produkt(int id, String name, String link, double einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) 
     {
 		this.id = id;

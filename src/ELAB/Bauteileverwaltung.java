@@ -7,12 +7,12 @@ import java.util.ArrayList;
 public class Bauteileverwaltung {
 	
 	private ArrayList<Kategorie> kategorie;
-	private ArrayList<Topf> topf;
+	private ArrayList<Produkt> produkt;
 	
 	public Bauteileverwaltung()
 	{
 		kategorie = new ArrayList<>();
-		topf = new ArrayList<>();
+		produkt = new ArrayList<>();
 	}
 	
 	private void reloadProdukt()
@@ -26,10 +26,14 @@ public class Bauteileverwaltung {
 				Produkt p = new Produkt(rs.getInt("ID"),rs.getString("Name"),rs.getString("Link")
 						,rs.getDouble("Einzelpreis"),rs.getInt("MengeLagernd")
 						,rs.getInt("MengeGeplant"),rs.getInt("MengeBestellt"),rs.getString("LagerOrt"));
+				this.produkt.add(p);
 			}
 		} catch (SQLException e) {
-			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			db.close();
 		}
+		
 	}
 	
 //	private void reloadKategorie()

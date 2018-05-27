@@ -41,9 +41,7 @@ public class Personenverwaltung {
 
         Db db = new Db();
 
-        /**
-         *  Hier muesste irgendwie ein neuer Zeitstempel mit der aktuellen Zeit erstellt werden und  der Datenbank übergeben werden
-         * */
+        
 
         String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Type, Password) "
                 + "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + type + "','" + passwort + "')";
@@ -79,10 +77,26 @@ public class Personenverwaltung {
     }
 
     public boolean personAlreadyExists(String name){
-        /** Pruefen ob der Name schon existiert, da Namen einmalig sein müssen für die Passwortabfrage mit Name!
-         * return boolean*/
-        return false; // provisorisch
+        boolean check = false;
+        Db db = new Db();
+        int count = 0;
+        try {
+			ResultSet rs = db.exequteQuery("SELECT count(*) FROM Personen WHERE Name = '" + name + "'");
+			while(rs.next())
+			{
+				count = rs.getInt("count(*)");
+			}
+			if(count >= 2)
+			{
+				check = true;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+        
+        return check; 
     }
 
-    // Methoden zum Bearbeiten von Personen zB. Namen ändern und sowas... hier wird später mit der GUI drauf zugegriffen
 }
