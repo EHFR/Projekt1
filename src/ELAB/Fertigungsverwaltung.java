@@ -66,12 +66,23 @@ public class Fertigungsverwaltung {
         }
     }
 
-    public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten, boolean angenommen, boolean gefertigt,
-                              boolean kosten_kalkuliert, boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {
+    public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten) {
         Db db = new Db();
         String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
-                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten + "', angenommen = " + angenommen + ", gefertigt = "
-                + gefertigt + ", kosten_kalkuliert = " + kosten_kalkuliert + ", abgeholt = "
+                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten
+                + "WHERE ID = " + id + "";
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateStatus(int id, boolean angenommen, boolean gefertigt, boolean kosten_kalkuliert,
+                             boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {
+        // SQL: anhand der Id alle Stadien aktualisieren, wenn sich der Status geändert hat, einen neuen Zeitstempel(aktuell) erstellen
+        Db db = new Db();
+        String sql = "UPDATE Auftrag SET angenommen = " + angenommen + ", gefertigt = " + gefertigt + ", kosten_kalkuliert = " + kosten_kalkuliert + ", abgeholt = "
                 + abgeholt + ", abgerechnet = " + abgerechnet + ", wartenAufMaterial = " + wartenAufMaterial + ", fertigungFehlgeschlagen = " + fertigungFehlgeschlagen
                 + "WHERE ID = " + id + "";
         try {
