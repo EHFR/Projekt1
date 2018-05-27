@@ -8,14 +8,14 @@ public class Produkt
     private int id;
     private String name;
     private String link;
-    private float einzelpreis;
+    private double einzelpreis;
     private int menge_lagernd;
     private int menge_geplant;
     private int menge_bestellt;
     private String lagerort;
     Map<Integer, Produkt> num = new HashMap<Integer, Produkt>();
 	
-    public Produkt(int id, String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) 
+    public Produkt(int id, String name, String link, double einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) 
     {
 		this.id = id;
 		this.name = name;
@@ -48,11 +48,11 @@ public class Produkt
 		this.link = link;
 	}
 
-	public float getEinzelpreis() {
+	public double getEinzelpreis() {
 		return einzelpreis;
 	}
 
-	public void setEinzelpreis(float einzelpreis) {
+	public void setEinzelpreis(double einzelpreis) {
 		this.einzelpreis = einzelpreis;
 	}
 
