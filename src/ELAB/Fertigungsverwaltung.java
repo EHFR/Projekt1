@@ -61,16 +61,13 @@ public class Fertigungsverwaltung {
 
     }
 
-<<<<<<< HEAD
+
 	public void removeAuftrag(int id) {
 		Db db = new Db();
 		Auftrag a = this.getAuftragByID(id);
 		String sql = "DELETE FROM Auftrag WHERE ID = " + a.getId() + " ";
-=======
-    public void removeAuftrag(int id) {
-        Db db = new Db();
-        String sql = "DELETE FROM Auftrag WHERE ID = " + id + " ";
->>>>>>> branch 'master' of https://github.com/KevinKreps/Projekt1.git
+
+
 
         try {
             db.updateQuery(sql);
@@ -79,7 +76,7 @@ public class Fertigungsverwaltung {
         }
     }
 
-<<<<<<< HEAD
+
 	public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt,
 			float kosten) {
 		Db db = new Db();
@@ -93,20 +90,8 @@ public class Fertigungsverwaltung {
 			e.printStackTrace();
 		}
 	}
-=======
-    public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt,
-                              float kosten) {
-        Db db = new Db();
-        String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
-                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten
-                + "WHERE ID = " + id + "";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
->>>>>>> branch 'master' of https://github.com/KevinKreps/Projekt1.git
+
+
 
     public void updateStatus(int id, boolean angenommen, boolean gefertigt, boolean kosten_kalkuliert, boolean abgeholt,
                              boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {
