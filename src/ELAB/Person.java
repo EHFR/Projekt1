@@ -1,6 +1,7 @@
 package ELAB;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Person {
@@ -66,8 +67,11 @@ public class Person {
     }
 
     public String getZeitstempelString() {
+    	Date date = new Date();
+    	date.setTime(zeitstempel.getTime());
+    	String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
         // korrekte Rückgabe eines Strings des Timestamps
-        return "10.12.2016 12:15"; // Beispielhaft/Provisorisch
+        return formattedDate; // Beispielhaft/Provisorisch
         //return zeitstempel.toString();
     }
 
