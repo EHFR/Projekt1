@@ -9,50 +9,49 @@ public class Kategorie {
     private String name;
     private int produktID;
     private ArrayList<Produkt> produkte;
-   
-    
-	public Kategorie(int id, String name, ArrayList<Produkt> produkte) {
-		this.id = id;
-		this.name = name;
-		this.produkte = produkte;
-	}
 
-	public int getId() {
-		return id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Kategorie(int id, String name, ArrayList<Produkt> produkte) {
+        this.id = id;
+        this.name = name;
+        this.produkte = produkte;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public ArrayList<Produkt> getProdukte() {
-		return produkte;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setProdukte(ArrayList<Produkt> produkte) {
-		this.produkte = produkte;
-	}
-	
-	public void produkteHinzufuegen(Produkt p)
-	{
-		produkte.add(p);
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public int getProduktID() {
-		return produktID;
-	}
+    public ArrayList<Produkt> getProdukte() {
+        return produkte;
+    }
 
-	public void setProduktID(int produktID) {
-		this.produktID = produktID;
-	}
+    public void setProdukte(ArrayList<Produkt> produkte) {
+        this.produkte = produkte;
+    }
+
+    public void produkteHinzufuegen(Produkt p) {
+        produkte.add(p);
+    }
+
+    public int getProduktID() {
+        return produktID;
+    }
+
+    public void setProduktID(int produktID) {
+        this.produktID = produktID;
+    }
 
 //	public Map<Integer, Produkt> getNum() {
 //		return num;
@@ -61,6 +60,6 @@ public class Kategorie {
 //	public void setNum(Map<Integer, Produkt> num) {
 //		this.num = num;
 //	}
-	
-	
+
+
 }

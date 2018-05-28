@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Finanzverwaltung {
-	private ArrayList<Kasse> kasse;
+    private ArrayList<Kasse> kasse;
 
     public Finanzverwaltung() {
         kasse = new ArrayList<>();
@@ -19,7 +19,7 @@ public class Finanzverwaltung {
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Kasse");
             while (rs.next()) {
-                Kasse k = new Kasse(rs.getArray("TÃ¶pfe"));
+                Kasse k = new Kasse(rs.getArray("Töpfe"));
                 this.kasse.add(k);
             }
         } catch (SQLException e) {
@@ -39,7 +39,7 @@ public class Finanzverwaltung {
         
 		Db db = new Db();
 	 
-		String sql = "INSERT INTO Kasse (TÃ¶pfe) "
+		String sql = "INSERT INTO Kasse (Töpfe) "
 				+ "VALUES ()"; 
 		try {
 			db.updateQuery(sql);
@@ -69,5 +69,5 @@ public class Finanzverwaltung {
             e.printStackTrace();
         }
     }  */
-    
+
 }

@@ -1,4 +1,4 @@
 package ELAB;
 
-public class Kostenstelle{
+public class Kostenstelle {
 }

@@ -15,18 +15,17 @@ public class Db {
         stmt = this.conn.prepareStatement(sql);
         return stmt.executeQuery();
     }
-    
-    void updateQuery(String sqlquery) throws SQLException
-    {
-    	String sql = sqlquery;
-    	PreparedStatement stmt = null;
-    	DriverManager.registerDriver(new org.sqlite.JDBC());
-    	this.conn = DriverManager.getConnection(this.db_url);
-    	stmt = this.conn.prepareStatement(sql);
-    	stmt.executeUpdate();
-  
+
+    void updateQuery(String sqlquery) throws SQLException {
+        String sql = sqlquery;
+        PreparedStatement stmt = null;
+        DriverManager.registerDriver(new org.sqlite.JDBC());
+        this.conn = DriverManager.getConnection(this.db_url);
+        stmt = this.conn.prepareStatement(sql);
+        stmt.executeUpdate();
+
     }
-    
+
 
     void close() {
         try {

@@ -57,7 +57,7 @@ public class Personenverwaltung {
         timestamp = new Timestamp(System.currentTimeMillis());
 
         String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, timestamp, Type, Password) "
-                + "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "'," + timestamp  +  ",'" + type + "','" + passwort + "')";
+                + "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "'," + timestamp + ",'" + type + "','" + passwort + "')";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -91,25 +91,23 @@ public class Personenverwaltung {
         }
     }
 
-    public boolean personAlreadyExists(String name){
+    public boolean personAlreadyExists(String name) {
         boolean check = false;
         Db db = new Db();
         try {
-			ResultSet rs = db.exequteQuery("SELECT Name FROM Personen WHERE Name = '" + name + "'");
-			while(rs.next())
-			{
-				if(rs.getString("Name").equals(name))
-				{
-					check = true;
-				}
-			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-        
-        return check; 
+            ResultSet rs = db.exequteQuery("SELECT PersonName FROM Personen WHERE PersonName = '" + name + "'");
+            while (rs.next()) {
+                if (rs.getString("PersonName").equals(name)) {
+                    check = true;
+                }
+            }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return check;
     }
 
 }
