@@ -81,8 +81,7 @@ public class Fertigungsverwaltung {
         }
     }
 
-    public void updateStatus(int id, boolean angenommen, boolean gefertigt, boolean kosten_kalkuliert,
-                             boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {
+    public void updateStatus(Auftrag a) {
         Db db = new Db();
         String sql = "";
         
@@ -93,126 +92,140 @@ public class Fertigungsverwaltung {
 //                + abgeholt + ", statusZeitstempel_abgeholt " + timestamp + ", abgerechnet = " + abgerechnet + ", statusZeitstempel_abgerechnet " + timestamp + ", wartenAufMaterial = " 
 //	      		+ wartenAufMaterial + ", statusZeitstempel_wartenAufMaterial " + timestamp + ", fertigungFehlgeschlagen = " + fertigungFehlgeschlagen + ", statusZeitstempel_fertigungFehlgeschlagen " + timestamp 
 //                + "WHERE ID = " + id + "";
-        if(angenommen == true)
+        if(a.isAngenommen() == true)
     	{
-    		 sql = "UPDATE Auftrag SET angeommen = " + true + ", statusZeitstempel_angenommen = " + timestampNew + " WHERE ID = " + id + "";
+        	 a.setStatusZeitstempel_angenommen(timestampNew);
+    		 sql = "UPDATE Auftrag SET angeommen = " + true + ", statusZeitstempel_angenommen = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	else if(angenommen == false)
+    	else if(a.isAngenommen() == false)
     	{
-    		 sql = "UPDATE Auftrag SET angeommen = " + false + ", statusZeitstempel_angenommen = " + timestampNew + " WHERE ID = " + id + "";
+    		 a.setStatusZeitstempel_angenommen(timestampNew);
+    		 sql = "UPDATE Auftrag SET angeommen = " + false + ", statusZeitstempel_angenommen = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-        if(gefertigt == true)
+    	else if(a.isGefertigt() == true)
     	{
-    		 sql = "UPDATE Auftrag SET gefertigt = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_gefertigt(timestampNew);
+    		 sql = "UPDATE Auftrag SET gefertigt = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	else if(gefertigt == false)
+    	else if(a.isGefertigt() == false)
     	{
-    		 sql = "UPDATE Auftrag SET gefertigt = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_gefertigt(timestampNew);
+    		 sql = "UPDATE Auftrag SET gefertigt = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-        if(kosten_kalkuliert == true)
+    	else if(a.isKosten_kalkuliert() == true)
     	{
-    		 sql = "UPDATE Auftrag SET kosten_kalkuliert = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_kosten_kalkuliert(timestampNew);
+    		 sql = "UPDATE Auftrag SET kosten_kalkuliert = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	else if(kosten_kalkuliert == false)
+    	else if(a.isKosten_kalkuliert() == false)
     	{
-    		 sql = "UPDATE Auftrag SET kosten_kalkuliert = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_kosten_kalkuliert(timestampNew);
+    		 sql = "UPDATE Auftrag SET kosten_kalkuliert = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	if(abgeholt == true)
+    	else if(a.isAbgeholt() == true)
     	{
-    		 sql = "UPDATE Auftrag SET abgeholt = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_abgeholt(timestampNew);
+    		 sql = "UPDATE Auftrag SET abgeholt = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	else if(abgeholt == false)
+    	else if(a.isAbgeholt() == false)
     	{
-    		 sql = "UPDATE Auftrag SET abgeholt = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_abgeholt(timestampNew);
+    		 sql = "UPDATE Auftrag SET abgeholt = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	if(abgerechnet == true)
+    	else if(a.isAbgerechnet() == true)
     	{
-    		 sql = "UPDATE Auftrag SET abgerechnet = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_abgerechnet(timestampNew);
+    		 sql = "UPDATE Auftrag SET abgerechnet = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	else if(abgerechnet == false)
+    	else if(a.isAbgerechnet() == false)
     	{
-    		 sql = "UPDATE Auftrag SET abgerechnet = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_abgerechnet(timestampNew);
+    		 sql = "UPDATE Auftrag SET abgerechnet = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	if(wartenAufMaterial == true)
+    	else if(a.isWartenAufMaterial() == true)
     	{
-    		 sql = "UPDATE Auftrag SET wartenAufMaterial = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_wartenAufMaterial(timestampNew);
+    		 sql = "UPDATE Auftrag SET wartenAufMaterial = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	else if(wartenAufMaterial == false)
+    	else if(a.isWartenAufMaterial() == false)
     	{
-    		 sql = "UPDATE Auftrag SET wartenAufMaterial = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_wartenAufMaterial(timestampNew);
+    		 sql = "UPDATE Auftrag SET wartenAufMaterial = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	if(fertigungFehlgeschlagen == true)
+    	else if(a.isFertigungFehlgeschlagen() == true)
     	{
-    		 sql = "UPDATE Auftrag SET fertigungFehlgeschlagen = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_fertigungFehlgeschlagen(timestampNew);
+    		 sql = "UPDATE Auftrag SET fertigungFehlgeschlagen = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
     	            e.printStackTrace();
     	        }
     	}
-    	else if(fertigungFehlgeschlagen == false)
+    	else if(a.isFertigungFehlgeschlagen() == false)
     	{
-    		 sql = "UPDATE Auftrag SET fertigungFehlgeschlagen = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
+    		a.setStatusZeitstempel_fertigungFehlgeschlagen(timestampNew);
+    		 sql = "UPDATE Auftrag SET fertigungFehlgeschlagen = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + a.getId() + "";
     		  try {
     	            db.updateQuery(sql);
     	        } catch (SQLException e) {
@@ -220,6 +233,11 @@ public class Fertigungsverwaltung {
     	        }
     	}
     }
+//    
+//    int id, boolean angenommen, boolean gefertigt, boolean kosten_kalkuliert,
+//    boolean abgeholt, boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen,Timestamp statusZeitstempel_angenommen,
+//    Timestamp statusZeitstempel_gefertigt,Timestamp statusZeitstempel_kosten_kalkuliert,Timestamp statusZeitstempel_abgeholt,Timestamp statusZeitstempel_abgerechnet,
+//    Timestamp statusZeitstempel_wartenAufMaterial
     
 //    public void updateStatusAngenommen(int id, boolean angenommen)
 //    {
