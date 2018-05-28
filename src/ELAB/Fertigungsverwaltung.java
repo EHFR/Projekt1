@@ -114,6 +114,11 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET angeommen = " + false + ", statusZeitstempel_angenommen = " + timestampNew + " WHERE ID = " + id + "";
     	}
+    	try {
+    		db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
     public void updateStatusGefertigt(int id, boolean gefertigt) 
     {
@@ -128,6 +133,11 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET gefertigt = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
+    	try {
+    		db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
     public void updateStatusKosten_kalkuliert(int id, boolean kosten_kalkuliert) 
     {
@@ -142,6 +152,11 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET kosten_kalkuliert = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
+    	try {
+    		db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
     public void updateStatusAbgeholt(int id, boolean abgeholt) 
     {
@@ -156,6 +171,11 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET abgeholt = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
+    	try {
+    		db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
     public void updateStatusAbgerechnet(int id, boolean abgerechnet) 
     {
@@ -170,6 +190,11 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET abgerechnet = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
+    	try {
+    		db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
     public void updateStatusWartenAufMaterial(int id, boolean wartenAufMaterial) 
     {
@@ -184,6 +209,11 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET wartenAufMaterial = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
+    	try {
+    		db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
     public void updateStatusFertigungFehlgeschlagen(int id, boolean fertigungFehlgeschlagen) 
     {
@@ -198,5 +228,10 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET fertigungFehlgeschlagen = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
+    	try {
+    		db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
