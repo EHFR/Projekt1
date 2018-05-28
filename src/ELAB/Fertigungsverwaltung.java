@@ -62,9 +62,13 @@ public class Fertigungsverwaltung {
 
     }
 
-    public void removeAuftrag(int id) {
-        Db db = new Db();
-        String sql = "DELETE FROM Auftrag WHERE ID = " + id + " ";
+
+	public void removeAuftrag(int id) {
+		Db db = new Db();
+		Auftrag a = this.getAuftragByID(id);
+		String sql = "DELETE FROM Auftrag WHERE ID = " + a.getId() + " ";
+
+
 
         try {
             db.updateQuery(sql);
@@ -73,18 +77,22 @@ public class Fertigungsverwaltung {
         }
     }
 
-    public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt,
-                              float kosten) {
-        Db db = new Db();
-        String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
-                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten
-                + "WHERE ID = " + id + "";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
+	public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt,
+			float kosten) {
+		Db db = new Db();
+		Auftrag a = this.getAuftragByID(id);
+		String sql = "UPDATE Auftrag SET Titel = '" + a.getTitel() + "', FertigungsArt = '" + a.getFertigungsart()
+				+ "', DateiName = '" + a.getDateiname() + "', DateiOrt = '" + a.getDateiort() + "', Kosten = '" + a.getKosten()
+				+ "WHERE ID = " + a.getId() + "";
+		try {
+			db.updateQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 
     public void updateStatus(int id, boolean angenommen, boolean gefertigt, boolean kosten_kalkuliert, boolean abgeholt,
                              boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {
