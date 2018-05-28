@@ -35,7 +35,7 @@ public class Personenverwaltung {
                 Person p = new Person(rs.getInt("PersonID"), rs.getString("PersonName"),
                         rs.getString("PersonAdresse"), rs.getString("PersonTel"),
                         rs.getString("PersonEmail"), rs.getString("Type"), rs.getString("Password"));
-                p.setZeitstempel(rs.getTimestamp("timestamp"));
+                p.setZeitstempel(rs.getTimestamp("Timestamp"));
                 this.personen.add(p);
             }
         } catch (SQLException e) {
