@@ -29,7 +29,7 @@ public class Fertigungsverwaltung {
                         rs.getBoolean("wartenAufMaterial"), rs.getTimestamp("statusZeitstempel_wartenAufMaterial"),
                         rs.getBoolean("fertigungFehlgeschlagen"),
                         rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"));
-                a.setZeitstempel(rs.getTimestamp("timestamp"));
+                a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
                 this.auftraege.add(a);
             }
         } catch (SQLException e) {
