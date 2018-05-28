@@ -51,8 +51,9 @@ public class Fertigungsverwaltung {
 
         String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen) "
                 + "VALUES ('" + titel + "','" + fertigungsArt + "','" + dateiName + "','" + dateiOrt + "','" + kosten
-                + "'," + false + "," + false + "," + false + "," + false + "," + false + "," + false + "," + false
-                + ")";
+                + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE"
+                + "')";
+        //todo Emre geht das so mit den boolean "FALSE" ? Bitte nachprüfen :)
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
