@@ -67,10 +67,13 @@ public class Person {
     }
 
     public String getZeitstempelString() {
-        Date date = new Date();
-        date.setTime(zeitstempel.getTime());
-        String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
-        return formattedDate;
+        if (zeitstempel != null) {
+            Date date = new Date();
+            date.setTime(zeitstempel.getTime());
+            String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
+            return formattedDate;
+        }
+        return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
 
 

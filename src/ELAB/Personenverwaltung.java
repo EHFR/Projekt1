@@ -82,9 +82,9 @@ public class Personenverwaltung {
         boolean check = false;
         Db db = new Db();
         try {
-            ResultSet rs = db.exequteQuery("SELECT Name FROM Personen WHERE Name = '" + name + "'");
+            ResultSet rs = db.exequteQuery("SELECT PersonName FROM Personen WHERE PersonName = '" + name + "'");
             while (rs.next()) {
-                if (rs.getString("Name").equals(name)) {
+                if (rs.getString("PersonName").equals(name)) {
                     check = true;
                 }
             }
