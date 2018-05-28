@@ -32,8 +32,8 @@ public class Auftrag {
     private ArrayList<Person> auftragbearbeiter;
 
     public Auftrag(int id, String titel, String fertigungsart, String dateiname, String dateiort,
-                   float kosten,boolean angenommen, Timestamp statusZeitstempel_angenommen,boolean gefertigt, Timestamp statusZeitstempel_gefertigt,
-                   boolean kosten_kalkuliert, Timestamp statusZeitstempel_kosten_kalkuliert, boolean abgeholt, Timestamp statusZeitstempel_abgeholt, 
+                   float kosten, boolean angenommen, Timestamp statusZeitstempel_angenommen, boolean gefertigt, Timestamp statusZeitstempel_gefertigt,
+                   boolean kosten_kalkuliert, Timestamp statusZeitstempel_kosten_kalkuliert, boolean abgeholt, Timestamp statusZeitstempel_abgeholt,
                    boolean abgerechnet, Timestamp statusZeitstempel_abgerechnet, boolean wartenAufMaterial, Timestamp statusZeitstempel_wartenAufMaterial,
                    boolean fertigungFehlgeschlagen, Timestamp statusZeitstempel_fertigungFehlgeschlagen) {
 
@@ -62,76 +62,76 @@ public class Auftrag {
 
 
     public Timestamp getStatusZeitstempel_angenommen() {
-		return statusZeitstempel_angenommen;
-	}
+        return statusZeitstempel_angenommen;
+    }
 
 
-	public void setStatusZeitstempel_angenommen(Timestamp statusZeitstempel_angenommen) {
-		this.statusZeitstempel_angenommen = statusZeitstempel_angenommen;
-	}
+    public void setStatusZeitstempel_angenommen(Timestamp statusZeitstempel_angenommen) {
+        this.statusZeitstempel_angenommen = statusZeitstempel_angenommen;
+    }
 
 
-	public Timestamp getStatusZeitstempel_gefertigt() {
-		return statusZeitstempel_gefertigt;
-	}
+    public Timestamp getStatusZeitstempel_gefertigt() {
+        return statusZeitstempel_gefertigt;
+    }
 
 
-	public void setStatusZeitstempel_gefertigt(Timestamp statusZeitstempel_gefertigt) {
-		this.statusZeitstempel_gefertigt = statusZeitstempel_gefertigt;
-	}
+    public void setStatusZeitstempel_gefertigt(Timestamp statusZeitstempel_gefertigt) {
+        this.statusZeitstempel_gefertigt = statusZeitstempel_gefertigt;
+    }
 
 
-	public Timestamp getStatusZeitstempel_kosten_kalkuliert() {
-		return statusZeitstempel_kosten_kalkuliert;
-	}
+    public Timestamp getStatusZeitstempel_kosten_kalkuliert() {
+        return statusZeitstempel_kosten_kalkuliert;
+    }
 
 
-	public void setStatusZeitstempel_kosten_kalkuliert(Timestamp statusZeitstempel_kosten_kalkuliert) {
-		this.statusZeitstempel_kosten_kalkuliert = statusZeitstempel_kosten_kalkuliert;
-	}
+    public void setStatusZeitstempel_kosten_kalkuliert(Timestamp statusZeitstempel_kosten_kalkuliert) {
+        this.statusZeitstempel_kosten_kalkuliert = statusZeitstempel_kosten_kalkuliert;
+    }
 
 
-	public Timestamp getStatusZeitstempel_abgeholt() {
-		return statusZeitstempel_abgeholt;
-	}
+    public Timestamp getStatusZeitstempel_abgeholt() {
+        return statusZeitstempel_abgeholt;
+    }
 
 
-	public void setStatusZeitstempel_abgeholt(Timestamp statusZeitstempel_abgeholt) {
-		this.statusZeitstempel_abgeholt = statusZeitstempel_abgeholt;
-	}
+    public void setStatusZeitstempel_abgeholt(Timestamp statusZeitstempel_abgeholt) {
+        this.statusZeitstempel_abgeholt = statusZeitstempel_abgeholt;
+    }
 
 
-	public Timestamp getStatusZeitstempel_abgerechnet() {
-		return statusZeitstempel_abgerechnet;
-	}
+    public Timestamp getStatusZeitstempel_abgerechnet() {
+        return statusZeitstempel_abgerechnet;
+    }
 
 
-	public void setStatusZeitstempel_abgerechnet(Timestamp statusZeitstempel_abgerechnet) {
-		this.statusZeitstempel_abgerechnet = statusZeitstempel_abgerechnet;
-	}
+    public void setStatusZeitstempel_abgerechnet(Timestamp statusZeitstempel_abgerechnet) {
+        this.statusZeitstempel_abgerechnet = statusZeitstempel_abgerechnet;
+    }
 
 
-	public Timestamp getStatusZeitstempel_wartenAufMaterial() {
-		return statusZeitstempel_wartenAufMaterial;
-	}
+    public Timestamp getStatusZeitstempel_wartenAufMaterial() {
+        return statusZeitstempel_wartenAufMaterial;
+    }
 
 
-	public void setStatusZeitstempel_wartenAufMaterial(Timestamp statusZeitstempel_wartenAufMaterial) {
-		this.statusZeitstempel_wartenAufMaterial = statusZeitstempel_wartenAufMaterial;
-	}
+    public void setStatusZeitstempel_wartenAufMaterial(Timestamp statusZeitstempel_wartenAufMaterial) {
+        this.statusZeitstempel_wartenAufMaterial = statusZeitstempel_wartenAufMaterial;
+    }
 
 
-	public Timestamp getStatusZeitstempel_fertigungFehlgeschlagen() {
-		return statusZeitstempel_fertigungFehlgeschlagen;
-	}
+    public Timestamp getStatusZeitstempel_fertigungFehlgeschlagen() {
+        return statusZeitstempel_fertigungFehlgeschlagen;
+    }
 
 
-	public void setStatusZeitstempel_fertigungFehlgeschlagen(Timestamp statusZeitstempel_fertigungFehlgeschlagen) {
-		this.statusZeitstempel_fertigungFehlgeschlagen = statusZeitstempel_fertigungFehlgeschlagen;
-	}
+    public void setStatusZeitstempel_fertigungFehlgeschlagen(Timestamp statusZeitstempel_fertigungFehlgeschlagen) {
+        this.statusZeitstempel_fertigungFehlgeschlagen = statusZeitstempel_fertigungFehlgeschlagen;
+    }
 
 
-	public Timestamp getStatusZeitstempel() {
+    public Timestamp getStatusZeitstempel() {
         return statusZeitstempel;
     }
 

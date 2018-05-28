@@ -4,6 +4,7 @@ import javafx.animation.PauseTransition;
 import javafx.collections.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
 
@@ -26,6 +27,7 @@ public class Controller implements Initializable {
      * Personenverwaltung
      */
     public ListView<String> personenverwaltungListe;
+    public GridPane personenverwaltungBearbeitungGrid;
     public TextField personenverwaltungNameField;
     public TextField personenverwaltungAdresseField;
     public TextField personenverwaltungTelefonField;
@@ -42,19 +44,40 @@ public class Controller implements Initializable {
      * Fertigungsverwaltung
      */
     public ListView<String> fertigungsverwaltungListe;
+    public GridPane fertigungsverwaltungBearbeitungGrid;
     public TextField fertigungsverwaltungTitelField;
     public TextField fertigungsverwaltungFertigungsartField;
     public TextField fertigungsverwaltungDateinameField;
     public TextField fertigungsverwaltungDateiortField;
     public TextField fertigungsverwaltungKostenField;
-    public Spinner<String> fertigungsverwaltungStatusSpinner;
-    private SpinnerValueFactory<String> fertigungsverwaltungStatusValueFactory;
     public TextField fertigungsverwaltungAuftraggeberField;
     public Label fertigungsverwaltungTimestampLabel;
     public TextArea fertigungsverwaltungAuftragbearbeiterArea;
     public Button fertigungsverwaltungRemoveBtn;
     public Button fertigungsverwaltungSaveBtn;
     private boolean neuerAuftragModus = false;
+    public GridPane fertigungsverwaltungStatusGrid;
+    public Spinner<String> fertigungsverwaltungAngenommenSpinner;
+    public Spinner<String> fertigungsverwaltungGefertigtSpinner;
+    public Spinner<String> fertigungsverwaltungKostenSpinner;
+    public Spinner<String> fertigungsverwaltungAbgeholtSpinner;
+    public Spinner<String> fertigungsverwaltungAbgerechnetSpinner;
+    public Spinner<String> fertigungsverwaltungMaterialSpinner;
+    public Spinner<String> fertigungsverwaltungUnterbrochenSpinner;
+    private SpinnerValueFactory<String> fertigungsverwaltungAngenommenSpinnerValueFactory;
+    private SpinnerValueFactory<String> fertigungsverwaltungGefertigtSpinnerValueFactory;
+    private SpinnerValueFactory<String> fertigungsverwaltungKostenSpinnerValueFactory;
+    private SpinnerValueFactory<String> fertigungsverwaltungAbgeholtSpinnerValueFactory;
+    private SpinnerValueFactory<String> fertigungsverwaltungAbgerechnetSpinnerValueFactory;
+    private SpinnerValueFactory<String> fertigungsverwaltungMaterialSpinnerValueFactory;
+    private SpinnerValueFactory<String> fertigungsverwaltungUnterbrochenSpinnerValueFactory;
+    public Label fertigungsverwaltungTimestampAngenommenLabel;
+    public Label fertigungsverwaltungTimestampGefertigtLabel;
+    public Label fertigungsverwaltungTimestampKostenLabel;
+    public Label fertigungsverwaltungTimestampAbgeholtLabel;
+    public Label fertigungsverwaltungTimestampAbgerechnetLabel;
+    public Label fertigungsverwaltungTimestampMaterialLabel;
+    public Label fertigungsverwaltungTimestampUnterbrochenLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,9 +98,21 @@ public class Controller implements Initializable {
          * Fertigungsverwaltung INIT
          */
         this.populateFertigungsverwaltungList();
-        //ObservableList<String> stadien = FXCollections.observableArrayList("Angenommen", "Gefertigt", "Kosten kalkuliert", "Abgeholt", "Abgerechnet", "Auf Material warten", "Fertigung unterbrochen");
-        //this.fertigungsverwaltungStatusValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        //this.fertigungsverwaltungStatusSpinner.setValueFactory(fertigungsverwaltungStatusValueFactory);
+        ObservableList<String> stadien = FXCollections.observableArrayList("Ja", "Nein");
+        this.fertigungsverwaltungAngenommenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungAngenommenSpinner.setValueFactory(fertigungsverwaltungAngenommenSpinnerValueFactory);
+        this.fertigungsverwaltungGefertigtSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungGefertigtSpinner.setValueFactory(fertigungsverwaltungGefertigtSpinnerValueFactory);
+        this.fertigungsverwaltungKostenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungKostenSpinner.setValueFactory(fertigungsverwaltungKostenSpinnerValueFactory);
+        this.fertigungsverwaltungAbgeholtSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungAbgeholtSpinner.setValueFactory(fertigungsverwaltungAbgeholtSpinnerValueFactory);
+        this.fertigungsverwaltungAbgerechnetSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungAbgerechnetSpinner.setValueFactory(fertigungsverwaltungAbgerechnetSpinnerValueFactory);
+        this.fertigungsverwaltungMaterialSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungMaterialSpinner.setValueFactory(fertigungsverwaltungMaterialSpinnerValueFactory);
+        this.fertigungsverwaltungUnterbrochenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungUnterbrochenSpinner.setValueFactory(fertigungsverwaltungUnterbrochenSpinnerValueFactory);
     }
 
     private void showError(String errorText) {
@@ -178,15 +213,16 @@ public class Controller implements Initializable {
     }
 
     private void personenverwaltungDisableInputs(boolean disabled) {
-        this.personenverwaltungNameField.setDisable(disabled);
-        this.personenverwaltungAdresseField.setDisable(disabled);
-        this.personenverwaltungTelefonField.setDisable(disabled);
-        this.personenverwaltungEmailField.setDisable(disabled);
-        this.personenverwaltungTimestampLabel.setDisable(disabled);
-        this.personenverwaltungTypSpinner.setDisable(disabled);
-        this.personenverwaltungPasswortField.setDisable(disabled);
-        this.personenverwaltungSaveBtn.setDisable(disabled);
-        this.personenverwaltungRemoveBtn.setDisable(disabled);
+        //this.personenverwaltungNameField.setDisable(disabled);
+        //this.personenverwaltungAdresseField.setDisable(disabled);
+        //this.personenverwaltungTelefonField.setDisable(disabled);
+        //this.personenverwaltungEmailField.setDisable(disabled);
+        //this.personenverwaltungTimestampLabel.setDisable(disabled);
+        //this.personenverwaltungTypSpinner.setDisable(disabled);
+        //this.personenverwaltungPasswortField.setDisable(disabled);
+        //this.personenverwaltungSaveBtn.setDisable(disabled);
+        //this.personenverwaltungRemoveBtn.setDisable(disabled);
+        personenverwaltungBearbeitungGrid.setDisable(disabled);
     }
 
     public void personenverwaltungUpdateTextFields() {
@@ -223,13 +259,13 @@ public class Controller implements Initializable {
     public void addAuftragAction() {
         this.neuerAuftragModus = true;
         this.fertigungsverwaltungDisableInputs(false);
+        this.fertigungsverwaltungStatusGrid.setDisable(true);
         this.fertigungsverwaltungListe.setDisable(true);
         this.fertigungsverwaltungTitelField.setText("");
         this.fertigungsverwaltungFertigungsartField.setText("");
         this.fertigungsverwaltungDateinameField.setText("");
         this.fertigungsverwaltungDateiortField.setText("");
         this.fertigungsverwaltungKostenField.setText("");
-        //this.fertigungsverwaltungStatusField.setText(""); // todo Spinner machen
         this.fertigungsverwaltungTimestampLabel.setText("---");
         this.fertigungsverwaltungAuftraggeberField.setText(""); //todo aktuell angemeldeter
         this.fertigungsverwaltungAuftragbearbeiterArea.setText("");
@@ -237,63 +273,84 @@ public class Controller implements Initializable {
 
 
     public void removeAuftragAction() {
-        /*int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
+        int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
         if (listId == -1) {
             showError("Keine Person zum löschen ausgewählt!");
             return;
         }
-        Person personToRemove = personenverwaltung.getPersonen().get(listId);
-        this.personenverwaltung.removePerson(personToRemove.getId());
-        this.populatePersonenverwaltungList();*/
+        Auftrag auftragToRemove = fertigungsverwaltung.getAuftraege().get(listId);
+        this.fertigungsverwaltung.removeAuftrag(auftragToRemove.getId());
+        this.populateFertigungsverwaltungList();
     }
 
     public void saveAuftragAction() {
-        /*if (this.personenverwaltungPasswortField.getText().equals("")) {
-            showError("Passwort darf nicht leer sein!");
+        if (this.fertigungsverwaltungAuftraggeberField.getText().equals("")) {
+            showError("Auftraggeber darf nicht leer sein!");
             return;
         }
-        if (this.personenverwaltungNameField.getText().equals("")) {
-            showError("Name darf nicht leer sein!");
+        if (!this.personenverwaltung.personAlreadyExists(this.fertigungsverwaltungAuftraggeberField.getText())) {
+            showError("Auftraggeber existiert nicht!");
             return;
         }
-        if (this.personenverwaltung.personAlreadyExists(this.personenverwaltungNameField.getText())) {
-            showError("Name existiert schon, bitte einen anderen wählen!");
-            return;
-        }
-        if (this.neuePersonModus) {
-            this.personenverwaltung.addPerson(this.personenverwaltungNameField.getText(),
-                    this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
-                    this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
-                    this.personenverwaltungPasswortField.getText()); //spinner oder factory
-            this.neuePersonModus = false;
-        } else {
-            int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
-            if (listId == -1) {
-                showError("Keine Person zum bearbeiten ausgewählt!");
+        for (String name : fertigungsverwaltungAuftragbearbeiterArea.getText().split("\r")) {
+            if (!this.personenverwaltung.personAlreadyExists(name)) {
+                showError("Auftragbearbeiter " + name + " existiert nicht!");
                 return;
             }
-            Person person = personenverwaltung.getPersonen().get(listId);
-            this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
-                    this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
-                    this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
-                    this.personenverwaltungPasswortField.getText()); //spinner oder factory
+        }
+        try {
+            Float.parseFloat(this.fertigungsverwaltungKostenField.getText());
+        } catch (NumberFormatException e) {
+            showError("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+            return;
+        }
+        if (this.neuerAuftragModus) {
+            this.fertigungsverwaltung.addAuftrag(this.fertigungsverwaltungTitelField.getText(), this.fertigungsverwaltungFertigungsartField.getText(),
+                    this.fertigungsverwaltungDateinameField.getText(), this.fertigungsverwaltungDateiortField.getText(),
+                    Float.parseFloat(this.fertigungsverwaltungKostenField.getText()));
+            this.neuerAuftragModus = false;
+        } else {
+            int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError("Keinen Auftrag zum bearbeiten ausgewählt!");
+                return;
+            }
+            Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
+            this.fertigungsverwaltung.updateAuftrag(auftrag.getId(), this.fertigungsverwaltungTitelField.getText(),
+                    this.fertigungsverwaltungFertigungsartField.getText(), this.fertigungsverwaltungDateinameField.getText(),
+                    this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText()));
         }
         showOk();
-        this.populatePersonenverwaltungList();*/
+        this.populatePersonenverwaltungList();
+    }
+
+    public void setFertigungsverwaltungUpdateStatus() {
+        int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            showError("Keinen Auftrag zum bearbeiten ausgewählt!");
+            return;
+        }
+        Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
+        this.fertigungsverwaltung.updateStatus(auftrag.getId(), jaNeinToBool(this.fertigungsverwaltungAngenommenSpinner.getValue()),
+                jaNeinToBool(this.fertigungsverwaltungGefertigtSpinner.getValue()), jaNeinToBool(this.fertigungsverwaltungKostenSpinner.getValue()),
+                jaNeinToBool(this.fertigungsverwaltungAbgeholtSpinner.getValue()), jaNeinToBool(this.fertigungsverwaltungAbgerechnetSpinner.getValue()),
+                jaNeinToBool(this.fertigungsverwaltungMaterialSpinner.getValue()), jaNeinToBool(this.fertigungsverwaltungUnterbrochenSpinner.getValue()));
+        showOk();
     }
 
     private void fertigungsverwaltungDisableInputs(boolean disabled) {
-        this.fertigungsverwaltungTitelField.setDisable(disabled);
-        this.fertigungsverwaltungFertigungsartField.setDisable(disabled);
-        this.fertigungsverwaltungDateinameField.setDisable(disabled);
-        this.fertigungsverwaltungDateiortField.setDisable(disabled);
-        this.fertigungsverwaltungTimestampLabel.setDisable(disabled);
-        this.fertigungsverwaltungKostenField.setDisable(disabled);
-        //this.fertigungsverwaltungStatusField.setDisable(disabled);
-        this.fertigungsverwaltungSaveBtn.setDisable(disabled);
-        this.fertigungsverwaltungRemoveBtn.setDisable(disabled);
-        this.fertigungsverwaltungAuftraggeberField.setDisable(disabled);
-        this.fertigungsverwaltungAuftragbearbeiterArea.setDisable(disabled);
+        //this.fertigungsverwaltungTitelField.setDisable(disabled);
+        //this.fertigungsverwaltungFertigungsartField.setDisable(disabled);
+        //this.fertigungsverwaltungDateinameField.setDisable(disabled);
+        //this.fertigungsverwaltungDateiortField.setDisable(disabled);
+        //this.fertigungsverwaltungTimestampLabel.setDisable(disabled);
+        //this.fertigungsverwaltungKostenField.setDisable(disabled);
+        //this.fertigungsverwaltungSaveBtn.setDisable(disabled);
+        //this.fertigungsverwaltungRemoveBtn.setDisable(disabled);
+        //this.fertigungsverwaltungAuftraggeberField.setDisable(disabled);
+        //this.fertigungsverwaltungAuftragbearbeiterArea.setDisable(disabled);
+        this.fertigungsverwaltungBearbeitungGrid.setDisable(disabled);
+        this.fertigungsverwaltungStatusGrid.setDisable(disabled);
     }
 
     public void fertigungsverwaltungUpdateTextFields() {
@@ -309,10 +366,36 @@ public class Controller implements Initializable {
             this.fertigungsverwaltungDateinameField.setText(auftrag.getDateiname());
             this.fertigungsverwaltungDateiortField.setText(auftrag.getDateiort());
             this.fertigungsverwaltungKostenField.setText(String.valueOf(auftrag.getKosten()));
-            //this.fertigungsverwaltungStatusField.setText(auftrag.getStatus()); //todo Spinner machen
             this.fertigungsverwaltungTimestampLabel.setText(auftrag.getZeitstempelString());
             this.fertigungsverwaltungAuftraggeberField.setText(auftrag.getAuftraggeber().getName());
             this.fertigungsverwaltungAuftragbearbeiterArea.setText(auftrag.getAuftragbearbeiterString());
+
+            this.fertigungsverwaltungAngenommenSpinnerValueFactory.setValue(this.boolToJaNein(auftrag.isAngenommen()));
+            this.fertigungsverwaltungGefertigtSpinnerValueFactory.setValue(this.boolToJaNein(auftrag.isGefertigt()));
+            this.fertigungsverwaltungKostenSpinnerValueFactory.setValue(this.boolToJaNein(auftrag.isKosten_kalkuliert()));
+            this.fertigungsverwaltungAbgeholtSpinnerValueFactory.setValue(this.boolToJaNein(auftrag.isAbgeholt()));
+            this.fertigungsverwaltungAbgerechnetSpinnerValueFactory.setValue(this.boolToJaNein(auftrag.isAbgerechnet()));
+            this.fertigungsverwaltungMaterialSpinnerValueFactory.setValue(this.boolToJaNein(auftrag.isWartenAufMaterial()));
+            this.fertigungsverwaltungUnterbrochenSpinnerValueFactory.setValue(this.boolToJaNein(auftrag.isFertigungFehlgeschlagen()));
+
+            //this.fertigungsverwaltungTimestampAngenommenLabel.setText(auftrag.getStatusZeitstempel_angenommenString());//todo auftrag Timestamp als String holen
+            //this.fertigungsverwaltungTimestampGefertigtLabel.setText(auftrag.getStatusZeitstempel_gefertigtString());
+            //this.fertigungsverwaltungTimestampKostenLabel.setText(auftrag.getStatusZeitstempel_kosten_kalkuliertString());
+            //this.fertigungsverwaltungTimestampAbgeholtLabel.setText(auftrag.getStatusZeitstempel_abgeholtString());
+            //this.fertigungsverwaltungTimestampAbgerechnetLabel.setText(auftrag.getStatusZeitstempel_abgerechnetString());
+            //this.fertigungsverwaltungTimestampMaterialLabel.setText(auftrag.getStatusZeitstempel_wartenAufMaterialString());
+            //this.fertigungsverwaltungTimestampUnterbrochenLabel.setText(auftrag.getStatusZeitstempel_fertigungFehlgeschlagenString());
         }
+    }
+
+    private String boolToJaNein(boolean bool) {
+        if (bool) {
+            return "Ja";
+        }
+        return "Nein";
+    }
+
+    private boolean jaNeinToBool(String jaNein) {
+        return jaNein.equals("Ja");
     }
 }
