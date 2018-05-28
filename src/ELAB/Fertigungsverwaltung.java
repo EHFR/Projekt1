@@ -105,7 +105,7 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET gefertigt = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
-    	else if(gefertigt == true)
+    	else if(gefertigt == false)
     	{
     		 sql = "UPDATE Auftrag SET gefertigt = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
@@ -113,7 +113,7 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET kosten_kalkuliert = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
-    	else if(kosten_kalkuliert == true)
+    	else if(kosten_kalkuliert == false)
     	{
     		 sql = "UPDATE Auftrag SET kosten_kalkuliert = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
@@ -125,7 +125,7 @@ public class Fertigungsverwaltung {
     	{
     		 sql = "UPDATE Auftrag SET abgeholt = " + false + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
-    	if(abgerechnet == false)
+    	if(abgerechnet == true)
     	{
     		 sql = "UPDATE Auftrag SET abgerechnet = " + true + ", statusZeitstempel_gefertigt = " + timestampNew + " WHERE ID = " + id + "";
     	}
