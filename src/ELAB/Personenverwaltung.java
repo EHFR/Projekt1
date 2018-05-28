@@ -54,10 +54,11 @@ public class Personenverwaltung {
     public void addPerson(String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) {
 
         Db db = new Db();
+        
+        
         timestamp = new Timestamp(System.currentTimeMillis());
-
-        String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, timestamp, Type, Password) "
-                + "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "'," + timestamp + ",'" + type + "','" + passwort + "')";
+        String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Timestamp, Type, Password) "
+                + "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + timestamp + "','" + type + "','" + passwort + "')";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {

@@ -15,7 +15,7 @@ public class Db {
         stmt = this.conn.prepareStatement(sql);
         return stmt.executeQuery();
     }
-
+    
     void updateQuery(String sqlquery) throws SQLException {
         String sql = sqlquery;
         PreparedStatement stmt = null;
@@ -23,7 +23,6 @@ public class Db {
         this.conn = DriverManager.getConnection(this.db_url);
         stmt = this.conn.prepareStatement(sql);
         stmt.executeUpdate();
-
     }
 
 
