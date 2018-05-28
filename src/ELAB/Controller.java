@@ -232,15 +232,6 @@ public class Controller implements Initializable {
     }
 
     private void personenverwaltungDisableInputs(boolean disabled) {
-        //this.personenverwaltungNameField.setDisable(disabled);
-        //this.personenverwaltungAdresseField.setDisable(disabled);
-        //this.personenverwaltungTelefonField.setDisable(disabled);
-        //this.personenverwaltungEmailField.setDisable(disabled);
-        //this.personenverwaltungTimestampLabel.setDisable(disabled);
-        //this.personenverwaltungTypSpinner.setDisable(disabled);
-        //this.personenverwaltungPasswortField.setDisable(disabled);
-        //this.personenverwaltungSaveBtn.setDisable(disabled);
-        //this.personenverwaltungRemoveBtn.setDisable(disabled);
         personenverwaltungBearbeitungGrid.setDisable(disabled);
     }
 
@@ -288,18 +279,39 @@ public class Controller implements Initializable {
         this.fertigungsverwaltungTimestampLabel.setText("---");
         this.fertigungsverwaltungAuftraggeberField.setText(""); //todo aktuell angemeldeter
         this.fertigungsverwaltungAuftragbearbeiterArea.setText("");
+        this.fertigungsverwaltungRemoveBtn.setText("Abbrechen");
+    }
+
+    private void neuerAuftragModusDisable() {
+        this.neuerAuftragModus = false;
+        this.fertigungsverwaltungDisableInputs(true);
+        this.fertigungsverwaltungStatusGrid.setDisable(true);
+        this.fertigungsverwaltungListe.setDisable(false);
+        this.fertigungsverwaltungTitelField.setText("");
+        this.fertigungsverwaltungFertigungsartField.setText("");
+        this.fertigungsverwaltungDateinameField.setText("");
+        this.fertigungsverwaltungDateiortField.setText("");
+        this.fertigungsverwaltungKostenField.setText("");
+        this.fertigungsverwaltungTimestampLabel.setText("---");
+        this.fertigungsverwaltungAuftraggeberField.setText("");
+        this.fertigungsverwaltungAuftragbearbeiterArea.setText("");
+        this.fertigungsverwaltungRemoveBtn.setText("Löschen");
     }
 
 
     public void removeAuftragAction() {
-        int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
-        if (listId == -1) {
-            showError("Keine Person zum löschen ausgewählt!");
-            return;
+        if (this.neuerAuftragModus) {
+            this.neuerAuftragModusDisable();
+        } else {
+            int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError("Keine Person zum löschen ausgewählt!");
+                return;
+            }
+            Auftrag auftragToRemove = fertigungsverwaltung.getAuftraege().get(listId);
+            this.fertigungsverwaltung.removeAuftrag(auftragToRemove.getId());
+            this.populateFertigungsverwaltungList();
         }
-        Auftrag auftragToRemove = fertigungsverwaltung.getAuftraege().get(listId);
-        this.fertigungsverwaltung.removeAuftrag(auftragToRemove.getId());
-        this.populateFertigungsverwaltungList();
     }
 
     public void saveAuftragAction() {
@@ -327,7 +339,7 @@ public class Controller implements Initializable {
             this.fertigungsverwaltung.addAuftrag(this.fertigungsverwaltungTitelField.getText(), this.fertigungsverwaltungFertigungsartField.getText(),
                     this.fertigungsverwaltungDateinameField.getText(), this.fertigungsverwaltungDateiortField.getText(),
                     Float.parseFloat(this.fertigungsverwaltungKostenField.getText()));
-            this.neuerAuftragModus = false;
+            this.neuerAuftragModusDisable();
         } else {
             int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
@@ -358,16 +370,6 @@ public class Controller implements Initializable {
     }
 
     private void fertigungsverwaltungDisableInputs(boolean disabled) {
-        //this.fertigungsverwaltungTitelField.setDisable(disabled);
-        //this.fertigungsverwaltungFertigungsartField.setDisable(disabled);
-        //this.fertigungsverwaltungDateinameField.setDisable(disabled);
-        //this.fertigungsverwaltungDateiortField.setDisable(disabled);
-        //this.fertigungsverwaltungTimestampLabel.setDisable(disabled);
-        //this.fertigungsverwaltungKostenField.setDisable(disabled);
-        //this.fertigungsverwaltungSaveBtn.setDisable(disabled);
-        //this.fertigungsverwaltungRemoveBtn.setDisable(disabled);
-        //this.fertigungsverwaltungAuftraggeberField.setDisable(disabled);
-        //this.fertigungsverwaltungAuftragbearbeiterArea.setDisable(disabled);
         this.fertigungsverwaltungBearbeitungGrid.setDisable(disabled);
         this.fertigungsverwaltungStatusGrid.setDisable(disabled);
     }
