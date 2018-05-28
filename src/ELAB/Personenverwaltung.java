@@ -14,6 +14,18 @@ public class Personenverwaltung {
         this.reloadPersonen();
     }
 
+    private Person getPersonByID(int id) {
+		for (Person personen : personen) {
+			if (personen.getId() == id) {
+				return personen;
+			}
+		}
+
+		return null;
+	}
+
+    
+    
     private void reloadPersonen() {
         Db db = new Db();
         this.personen.clear();
@@ -42,7 +54,6 @@ public class Personenverwaltung {
     public void addPerson(String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) {
 
         Db db = new Db();
-
         timestamp = new Timestamp(System.currentTimeMillis());
 
         String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, timestamp, Type, Password) "
@@ -57,7 +68,8 @@ public class Personenverwaltung {
 
     public void removePerson(int id) {
         Db db = new Db();
-        String sql = "DELETE FROM Personen WHERE PersonID = " + id + " ";
+        Person p = this.getPersonByID(id);
+        String sql = "DELETE FROM Personen WHERE PersonID = " + p.getId() + " ";
 
         try {
             db.updateQuery(sql);
@@ -68,9 +80,10 @@ public class Personenverwaltung {
 
     public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) {
         Db db = new Db();
-        String sql = "UPDATE Personen SET PersonName = '" + personName + "', PersonAdresse = '" + personAdresse
-                + "', PersonTel = '" + personTel + "', PersonEmail = '" + personEmail + "', Type = '" + type + "', Password = '" + passwort + "' "
-                + "WHERE PersonID = " + id + "";
+        Person p = this.getPersonByID(id);
+        String sql = "UPDATE Personen SET PersonName = '" + p.getName() + "', PersonAdresse = '" + p.getAdresse()
+                + "', PersonTel = '" + p.getTelefonnr() + "', PersonEmail = '" + p.getEmail() + "', Type = '" + p.getType() + "', Password = '" + p.getPasswort() + "' "
+                + "WHERE PersonID = " + p.getId() + "";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
