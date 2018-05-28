@@ -164,17 +164,36 @@ public class Controller implements Initializable {
         this.personenverwaltungTimestampLabel.setText("---");
         this.personenverwaltungTypeValueFactory.setValue("Kunde");
         this.personenverwaltungPasswortField.setText("");
+        this.personenverwaltungRemoveBtn.setText("Abbrechen");
+    }
+
+    private void neuePersonModusDisable() {
+        this.neuePersonModus = false;
+        this.personenverwaltungDisableInputs(true);
+        this.personenverwaltungListe.setDisable(false);
+        this.personenverwaltungNameField.setText("");
+        this.personenverwaltungAdresseField.setText("");
+        this.personenverwaltungTelefonField.setText("");
+        this.personenverwaltungEmailField.setText("");
+        this.personenverwaltungTimestampLabel.setText("---");
+        this.personenverwaltungTypeValueFactory.setValue("Kunde");
+        this.personenverwaltungPasswortField.setText("");
+        this.personenverwaltungRemoveBtn.setText("Lˆschen");
     }
 
     public void removePersonAction() {
-        int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
-        if (listId == -1) {
-            showError("Keine Person zum l√∂schen ausgew√§hlt!");
-            return;
+        if (this.neuePersonModus) {
+            this.neuePersonModusDisable();
+        } else {
+            int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError("Keine Person zum lˆschen ausgew‰hlt!");
+                return;
+            }
+            Person personToRemove = personenverwaltung.getPersonen().get(listId);
+            this.personenverwaltung.removePerson(personToRemove.getId());
+            this.populatePersonenverwaltungList();
         }
-        Person personToRemove = personenverwaltung.getPersonen().get(listId);
-        this.personenverwaltung.removePerson(personToRemove.getId());
-        this.populatePersonenverwaltungList();
     }
 
     public void savePersonAction() {
@@ -187,7 +206,7 @@ public class Controller implements Initializable {
             return;
         }
         if (this.personenverwaltung.personAlreadyExists(this.personenverwaltungNameField.getText())) {
-            showError("Name existiert schon, bitte einen anderen w√§hlen!");
+            showError("Name existiert schon, bitte einen anderen w‰hlen!");
             return;
         }
         if (this.neuePersonModus) {
@@ -195,11 +214,11 @@ public class Controller implements Initializable {
                     this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
                     this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
                     this.personenverwaltungPasswortField.getText()); //spinner oder factory
-            this.neuePersonModus = false;
+            this.neuePersonModusDisable();
         } else {
             int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                showError("Keine Person zum bearbeiten ausgew√§hlt!");
+                showError("Keine Person zum bearbeiten ausgew‰hlt!");
                 return;
             }
             Person person = personenverwaltung.getPersonen().get(listId);
@@ -275,7 +294,7 @@ public class Controller implements Initializable {
     public void removeAuftragAction() {
         int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
         if (listId == -1) {
-            showError("Keine Person zum l√∂schen ausgew√§hlt!");
+            showError("Keine Person zum lˆschen ausgew‰hlt!");
             return;
         }
         Auftrag auftragToRemove = fertigungsverwaltung.getAuftraege().get(listId);
@@ -312,7 +331,7 @@ public class Controller implements Initializable {
         } else {
             int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                showError("Keinen Auftrag zum bearbeiten ausgew√§hlt!");
+                showError("Keinen Auftrag zum bearbeiten ausgew‰hlt!");
                 return;
             }
             Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
@@ -327,7 +346,7 @@ public class Controller implements Initializable {
     public void setFertigungsverwaltungUpdateStatus() {
         int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
         if (listId == -1) {
-            showError("Keinen Auftrag zum bearbeiten ausgew√§hlt!");
+            showError("Keinen Auftrag zum bearbeiten ausgew‰hlt!");
             return;
         }
         Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
