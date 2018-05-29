@@ -54,7 +54,7 @@ public class Fertigungsverwaltung {
                 + "VALUES ('" + titel + "','" + fertigungsArt + "','" + dateiName + "','" + dateiOrt + "','" + kosten
                 + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE"
                 + "')";
-        //todo Emre geht das so mit den boolean "FALSE" ? Bitte nachprüfen :)
+        //todo Emre geht das so mit den boolean "FALSE" ? Bitte nachprüfen und diese Zeile dann löschen :)
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
