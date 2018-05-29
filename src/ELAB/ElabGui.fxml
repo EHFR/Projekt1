@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
@@ -18,8 +19,42 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ELAB.Controller">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ELAB.Controller">
    <children>
+      <HBox prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: #bbb;">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Name" />
+                  <TextField />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Passwort" />
+                  <TextField />
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="42.0" prefWidth="210.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Anmelden">
+                     <VBox.margin>
+                        <Insets left="1.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox prefHeight="42.0" prefWidth="176.0">
+               <children>
+                  <Label text="Abgemeldet" />
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Abmelden" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Personenverwaltung">
@@ -89,7 +124,7 @@
                            <children>
                               <VBox prefHeight="354.0" prefWidth="169.0">
                                  <children>
-                                    <Label text="Filter:" />
+                                    <Label text="Filtern nach Status:" />
                                     <Spinner fx:id="fertigungsverwaltungFilterSpinner" prefHeight="25.0" prefWidth="168.0" />
                                     <ListView fx:id="fertigungsverwaltungListe" onMouseClicked="#fertigungsverwaltungUpdateTextFields" prefHeight="344.0" prefWidth="172.0" />
                                  </children>
@@ -235,8 +270,379 @@
                      </children>
                   </VBox>
                </content></Tab>
-            <Tab text="Finanzverwaltung" />
-            <Tab text="Bauteileverwaltung" />
+            <Tab text="Finanzverwaltung">
+               <content>
+                  <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Konten und Töpfe">
+                           <content>
+                              <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="448.0" prefWidth="600.0">
+                                       <children>
+                                          <VBox prefHeight="354.0" prefWidth="169.0">
+                                             <children>
+                                                <ListView fx:id="kontenListe" onMouseClicked="#fertigungsverwaltungUpdateTextFields" prefHeight="376.0" prefWidth="123.0">
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" left="5.0" top="5.0" />
+                                                   </VBox.margin></ListView>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="344.0" prefWidth="205.0">
+                                             <children>
+                                                <Button fx:id="kontoNeuBtn" mnemonicParsing="false" onAction="#addKontoAction" text="Neues Konto">
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                                <GridPane fx:id="kontoBearbeitungGrid" alignment="CENTER" prefHeight="423.0" prefWidth="164.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="81.0" minHeight="0.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="102.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="104.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="104.0" minHeight="0.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="165.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Name:" />
+                                                      <TextField fx:id="kontoNameField" GridPane.columnIndex="1">
+                                                         <GridPane.margin>
+                                                            <Insets right="5.0" />
+                                                         </GridPane.margin>
+                                                      </TextField>
+                                                      <Button fx:id="kontoRemoveBtn" mnemonicParsing="false" onAction="#removeKontoAction" prefHeight="25.0" prefWidth="77.0" text="Löschen" GridPane.rowIndex="5" />
+                                                      <Button fx:id="kontoSaveBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveKontoAction" prefHeight="25.0" prefWidth="116.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <Label text="Soll-Bestand:" GridPane.rowIndex="1" />
+                                                      <Label text="Ist-Bestand" GridPane.rowIndex="2" />
+                                                      <Label fx:id="kontoIstLabel" text="Aktueller Ist-Bestand" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="kontoSollField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <GridPane.margin>
+                                                            <Insets right="5.0" />
+                                                         </GridPane.margin></TextField>
+                                                      <Label text="Typ" GridPane.rowIndex="3" />
+                                                      <Label text="Kostenstellennummer:" wrapText="true" GridPane.rowIndex="4" />
+                                                      <TextField fx:id="kontoKostenstellennummerField" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                         <GridPane.margin>
+                                                            <Insets right="5.0" />
+                                                         </GridPane.margin>
+                                                      </TextField>
+                                                      <Spinner fx:id="kontoTypSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox layoutX="115.0" layoutY="10.0" prefHeight="354.0" prefWidth="169.0">
+                                             <children>
+                                                <ListView fx:id="topfverwaltungListe" onMouseClicked="#fertigungsverwaltungUpdateTextFields" prefHeight="344.0" prefWidth="172.0">
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </VBox.margin></ListView>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" layoutX="205.0" layoutY="15.0" prefHeight="344.0" prefWidth="205.0">
+                                             <children>
+                                                <Button fx:id="topfverwaltungNeuBtn" mnemonicParsing="false" onAction="#addTopfAction" text="Neuer Topf">
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                                <GridPane fx:id="topfBearbeitungGrid" alignment="CENTER" prefHeight="423.0" prefWidth="164.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="165.0" minHeight="10.0" prefHeight="141.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Name:" />
+                                                      <TextField fx:id="topfNameField" GridPane.columnIndex="1">
+                                                         <GridPane.margin>
+                                                            <Insets right="5.0" />
+                                                         </GridPane.margin>
+                                                      </TextField>
+                                                      <Button fx:id="topfRemoveBtn" mnemonicParsing="false" onAction="#removeTopfAction" prefHeight="25.0" prefWidth="76.0" text="Löschen" GridPane.rowIndex="3" />
+                                                      <Button fx:id="topfSaveBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveTopfAction" prefHeight="25.0" prefWidth="116.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                         <GridPane.margin>
+                                                            <Insets right="5.0" />
+                                                         </GridPane.margin></Button>
+                                                      <Label text="Soll-Bestand:" GridPane.rowIndex="1" />
+                                                      <Label text="Ist-Bestand" GridPane.rowIndex="2" />
+                                                      <Label fx:id="topfIstField" text="Aktueller Ist-Bestand" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="topfSollField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <GridPane.margin>
+                                                            <Insets right="5.0" />
+                                                         </GridPane.margin></TextField>
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </Tab>
+                      <Tab text="Rechnungen">
+                           <content>
+                              <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="448.0" prefWidth="600.0">
+                                       <children>
+                                          <VBox prefHeight="325.0" prefWidth="147.0">
+                                             <children>
+                                                <Label text="Rechnungen:" />
+                                                <ListView fx:id="rechnungenListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="353.0" prefWidth="291.0">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin></ListView>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets left="5.0" right="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox prefHeight="325.0" prefWidth="137.0">
+                                             <children>
+                                                <Label text="Topf auswählen:" />
+                                                <ListView fx:id="topfListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="325.0" prefWidth="137.0">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin></ListView>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets right="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox alignment="CENTER" layoutX="165.0" layoutY="10.0" prefHeight="325.0" prefWidth="137.0">
+                                             <children>
+                                                <Label text="Daten aus Auftrag laden:" wrapText="true" />
+                                                <ListView fx:id="auftragsListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="232.0" prefWidth="107.0" />
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="282.0" prefWidth="291.0">
+                                             <children>
+                                                <Button fx:id="rechnungNeuBtn" mnemonicParsing="false" onAction="#addRechnungAction" text="Neue Rechnung" />
+                                                <GridPane fx:id="rechnungBearbeitungGrid" alignment="CENTER" prefHeight="340.0" prefWidth="291.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Rechnungsname (Zweck):" wrapText="true" />
+                                                      <Label text="Auftraggeber:" GridPane.rowIndex="1" />
+                                                      <Label text="Ansprechpartner:" GridPane.rowIndex="2" />
+                                                      <Label text="Betrag:" GridPane.rowIndex="3" />
+                                                      <Label text="Rechnungsdatum:" GridPane.rowIndex="4" />
+                                                      <TextField fx:id="rechnungNameField" GridPane.columnIndex="1" />
+                                                      <TextField fx:id="rechnungAuftraggeberField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <TextField fx:id="rechnungAnsprechpartnerField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="rechnungBetragField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label fx:id="rechnungTimestampLabel" text="Time" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Button fx:id="rechnungRemoveBtn" mnemonicParsing="false" onAction="#removeRechnungAction" prefHeight="25.0" prefWidth="124.0" text="Löschen" GridPane.rowIndex="7" />
+                                                      <Button fx:id="rechnungSaveBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveRechnungAction" prefHeight="25.0" prefWidth="116.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                      <Label text="Unklar wegen Status" GridPane.rowIndex="5" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content></Tab>
+                    </tabs>
+                  </TabPane>
+               </content></Tab>
+            <Tab text="Bauteileverwaltung">
+               <content>
+                  <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Bauteile">
+                           <content>
+                              <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="448.0" prefWidth="600.0">
+                                       <children>
+                                          <VBox prefHeight="325.0" prefWidth="154.0">
+                                             <children>
+                                                <Label text="Kategorien:" />
+                                                <ListView fx:id="kategorienListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="308.0" prefWidth="123.0" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="325.0" prefWidth="188.0">
+                                             <children>
+                                                <Label text="Produkte:" />
+                                                <ListView fx:id="produktListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="353.0" prefWidth="291.0">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin></ListView>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox alignment="TOP_CENTER" prefHeight="325.0" prefWidth="239.0">
+                                             <children>
+                                                <GridPane fx:id="produktGrid" alignment="CENTER" prefHeight="221.0" prefWidth="239.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Name:" />
+                                                      <Label text="Menge lagernd:" GridPane.rowIndex="3" />
+                                                      <Label text="Lagerort:" GridPane.rowIndex="6" />
+                                                      <Label fx:id="produktLagerortLabel" text="Ort" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                      <Label text="Einzelpreis:" GridPane.rowIndex="2" />
+                                                      <Spinner fx:id="produktMengeLagerndSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label fx:id="produktEinzelpreisLabel" text="Preis" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label fx:id="produktNameLabel" text="Produktname" GridPane.columnIndex="1" />
+                                                      <Label text="Menge bestellt:" GridPane.rowIndex="4" />
+                                                      <Label fx:id="produktMengeBestelltLabel" text="Menge" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Label text="Menge geplant:" GridPane.rowIndex="5" />
+                                                      <Label fx:id="produktMengeGeplantLabel" text="Menge" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <Label text="Link zum Produkt:" GridPane.rowIndex="1" />
+                                                      <Hyperlink fx:id="produktLink" text="Hyperlink" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </Tab>
+                      <Tab text="Verwaltung">
+                           <content>
+                              <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="448.0" prefWidth="600.0">
+                                       <children>
+                                          <VBox prefHeight="325.0" prefWidth="154.0">
+                                             <children>
+                                                <Label text="Kategorien:" />
+                                                <ListView fx:id="kategorienverwaltungListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="227.0" prefWidth="154.0" />
+                                                <Button fx:id="kategorienemoveBtn" mnemonicParsing="false" onAction="#removeKategorieAction" prefHeight="25.0" prefWidth="168.0" text="Löschen">
+                                                   <VBox.margin>
+                                                      <Insets top="3.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                                <Separator prefWidth="200.0">
+                                                   <VBox.margin>
+                                                      <Insets bottom="2.0" top="2.0" />
+                                                   </VBox.margin>
+                                                </Separator>
+                                                <Label text="Name der neuen Kategorie:" />
+                                                <TextField fx:id="kategorieNameField" />
+                                                <Button fx:id="kategorieNewBtn" mnemonicParsing="false" onAction="#addKategorieAction" prefHeight="25.0" prefWidth="166.0" text="Neue Kategorie erstellen">
+                                                   <VBox.margin>
+                                                      <Insets top="3.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="325.0" prefWidth="170.0">
+                                             <children>
+                                                <Label text="Produkte:" />
+                                                <ListView fx:id="produktverwaltungListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="308.0" prefWidth="139.0">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </ListView>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox alignment="TOP_CENTER" prefHeight="305.0" prefWidth="248.0">
+                                             <children>
+                                                <Button fx:id="produktverwaltungNewBtn" mnemonicParsing="false" onAction="#addProduktAction" text="Neues Produkt" />
+                                                <GridPane fx:id="produktverwaltungGrid" alignment="CENTER" prefHeight="244.0" prefWidth="239.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Name:" />
+                                                      <Label text="Menge lagernd:" GridPane.rowIndex="3" />
+                                                      <Label text="Lagerort:" GridPane.rowIndex="6" />
+                                                      <Label text="Einzelpreis:" GridPane.rowIndex="2" />
+                                                      <Spinner fx:id="produktverwaltungMengeLagerndSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label text="Menge bestellt:" GridPane.rowIndex="4" />
+                                                      <Label text="Link zum Produkt:" GridPane.rowIndex="1" />
+                                                      <Label text="Menge geplant:" GridPane.rowIndex="5" />
+                                                      <Spinner fx:id="produktverwaltungMengeBestelltSpinner" layoutX="130.0" layoutY="48.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Spinner fx:id="produktverwaltungMengeGeplantSpinner" layoutX="130.0" layoutY="106.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <Spinner fx:id="produktverwaltungEinzelpreisSpinner" layoutX="130.0" layoutY="137.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="produktverwaltungLagerortField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                      <TextField fx:id="produktverwaltungLinkField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Button fx:id="produktverwaltungSaveBtn" mnemonicParsing="false" onAction="#saveProduktAction" prefHeight="25.0" prefWidth="148.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                      <Button fx:id="produktverwaltungRemoveBtn" mnemonicParsing="false" onAction="#removeProduktAction" prefHeight="25.0" prefWidth="114.0" text="Löschen" GridPane.rowIndex="7" />
+                                                      <TextField fx:id="produktverwaltungNameField" GridPane.columnIndex="1" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content></Tab>
+                    </tabs>
+                  </TabPane>
+               </content></Tab>
         </tabs>
       </TabPane>
        <Label fx:id="error" alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="600.0" style="-fx-background-color: #f44336;" text="Label" textFill="WHITE" visible="false">

@@ -44,6 +44,8 @@ public class Controller implements Initializable {
      * Fertigungsverwaltung
      */
     public ListView<String> fertigungsverwaltungListe;
+    public Spinner<String> fertigungsverwaltungFilterSpinner;
+    private SpinnerValueFactory<String> fertigungsverwaltungFilerSpinnerValueFactory;
     public GridPane fertigungsverwaltungBearbeitungGrid;
     public TextField fertigungsverwaltungTitelField;
     public TextField fertigungsverwaltungFertigungsartField;
@@ -97,7 +99,6 @@ public class Controller implements Initializable {
         /**
          * Fertigungsverwaltung INIT
          */
-        this.populateFertigungsverwaltungList();
         ObservableList<String> stadien = FXCollections.observableArrayList("Ja", "Nein");
         this.fertigungsverwaltungAngenommenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
         this.fertigungsverwaltungAngenommenSpinner.setValueFactory(fertigungsverwaltungAngenommenSpinnerValueFactory);
@@ -113,6 +114,11 @@ public class Controller implements Initializable {
         this.fertigungsverwaltungMaterialSpinner.setValueFactory(fertigungsverwaltungMaterialSpinnerValueFactory);
         this.fertigungsverwaltungUnterbrochenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
         this.fertigungsverwaltungUnterbrochenSpinner.setValueFactory(fertigungsverwaltungUnterbrochenSpinnerValueFactory);
+        ObservableList<String> alleFilter = FXCollections.observableArrayList("Alles", "Angenommen", "Gefertigt", "Kosten kalkuliert",
+                "Abgeholt", "Abgerechnet", "Auf Material warten", "Fertigung unterbrochen");
+        this.fertigungsverwaltungFilerSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(alleFilter);
+        this.fertigungsverwaltungFilterSpinner.setValueFactory(fertigungsverwaltungFilerSpinnerValueFactory);
+        this.populateFertigungsverwaltungList();
     }
 
     private void showError(String errorText) {
@@ -258,8 +264,12 @@ public class Controller implements Initializable {
      */
     private void populateFertigungsverwaltungList() {
         ArrayList<String> allTitel = new ArrayList<>();
-        for (Auftrag auftrag : fertigungsverwaltung.getAuftraege()) {
-            allTitel.add(auftrag.getTitel());
+        switch (this.fertigungsverwaltungFilterSpinner.getValue()){
+            case "Alles":
+                for (Auftrag auftrag : fertigungsverwaltung.getAuftraege()) {
+                    allTitel.add(auftrag.getTitel());
+                }
+
         }
         ObservableList<String> items = FXCollections.observableArrayList(allTitel);
         fertigungsverwaltungListe.setItems(items);
@@ -323,11 +333,18 @@ public class Controller implements Initializable {
             showError("Auftraggeber existiert nicht!");
             return;
         }
-        for (String name : fertigungsverwaltungAuftragbearbeiterArea.getText().split("\r")) {
+        if (this.fertigungsverwaltungAuftragbearbeiterArea.getText().equals("")) {
+            showError("Auftragbearbeiter darf nicht leer sein!");
+            return;
+        }
+        int auftraggeberID = this.personenverwaltung.getPersonIdByName(this.fertigungsverwaltungAuftraggeberField.getText());
+        ArrayList<String> auftragbearbeiterIDs = new ArrayList<>();
+        for (String name : fertigungsverwaltungAuftragbearbeiterArea.getText().split("\n")) {
             if (!this.personenverwaltung.personAlreadyExists(name)) {
                 showError("Auftragbearbeiter " + name + " existiert nicht!");
                 return;
             }
+            auftragbearbeiterIDs.add(String.valueOf(this.personenverwaltung.getPersonIdByName(name)));
         }
         try {
             Float.parseFloat(this.fertigungsverwaltungKostenField.getText());
@@ -338,7 +355,7 @@ public class Controller implements Initializable {
         if (this.neuerAuftragModus) {
             this.fertigungsverwaltung.addAuftrag(this.fertigungsverwaltungTitelField.getText(), this.fertigungsverwaltungFertigungsartField.getText(),
                     this.fertigungsverwaltungDateinameField.getText(), this.fertigungsverwaltungDateiortField.getText(),
-                    Float.parseFloat(this.fertigungsverwaltungKostenField.getText()));
+                    Float.parseFloat(this.fertigungsverwaltungKostenField.getText()), auftraggeberID, auftragbearbeiterIDs);
             this.neuerAuftragModusDisable();
         } else {
             int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
@@ -352,7 +369,7 @@ public class Controller implements Initializable {
                     this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText()));
         }
         showOk();
-        this.populatePersonenverwaltungList();
+        this.populateFertigungsverwaltungList();
     }
 
     public void setFertigungsverwaltungUpdateStatus() {
@@ -418,5 +435,71 @@ public class Controller implements Initializable {
 
     private boolean jaNeinToBool(String jaNein) {
         return jaNein.equals("Ja");
+    }
+
+    /**
+     * Finanzverwaltung Konten und Töpfe
+     */
+    public void addKontoAction(){
+
+    }
+
+    public void removeKontoAction(){
+
+    }
+
+    public void saveKontoAction(){
+
+    }
+
+    public void addTopfAction(){
+
+    }
+
+    public void removeTopfAction(){
+
+    }
+
+    public void saveTopfAction(){
+
+    }
+
+    /**
+     * Finanzverwaltung Rechnungen
+     */
+    public void addRechnungAction(){
+
+    }
+    public void removeRechnungAction(){
+
+    }
+
+    public void saveRechnungAction(){
+
+    }
+
+
+    /**
+     * Bauteileverwaltung Bauteile
+     */
+
+
+    /**
+     * Bauteileverwaltung Verwaltung
+     */
+    public void removeKategorieAction(){
+
+    }
+    public void addKategorieAction(){
+
+    }
+    public void addProduktAction(){
+
+    }
+    public void removeProduktAction(){
+
+    }
+    public void saveProduktAction(){
+
     }
 }
