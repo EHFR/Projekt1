@@ -37,6 +37,7 @@ public class Personenverwaltung {
                 p.setZeitstempel(rs.getTimestamp("Timestamp"));
                 this.personen.add(p);
             }
+            rs.close();
         } catch (SQLException e) {
             System.out.println("Error while reading Database!");
             e.printStackTrace();
@@ -57,7 +58,9 @@ public class Personenverwaltung {
 
         timestamp = new Timestamp(System.currentTimeMillis());
         String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Timestamp, Type, Password) "
-                + "VALUES ('" + personName + "','" + personAdresse + "','" + personTel + "','" + personEmail + "','" + timestamp + "','" + type + "','" + passwort + "')";
+                	+ "VALUES ('" + personName + "','" + personAdresse + "','" 
+                	+ personTel + "','" + personEmail + "','" + timestamp + "','" 
+                	+ type + "','" + passwort + "')";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -97,11 +100,13 @@ public class Personenverwaltung {
                     return true;
                 }
             }
-
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally
+        {
+        	db.close();
         }
-
         return false;
     }
 

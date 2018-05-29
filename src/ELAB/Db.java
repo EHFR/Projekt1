@@ -7,7 +7,7 @@ public class Db {
     private String db_url = "jdbc:sqlite:ELAB.db";
     private Connection conn = null;
 
-    ResultSet exequteQuery(String sqlquery) throws SQLException {
+    ResultSet exequteQuery(String sqlquery) throws SQLException{
         String sql = sqlquery;
         PreparedStatement stmt = null;
         DriverManager.registerDriver(new org.sqlite.JDBC());
@@ -15,6 +15,7 @@ public class Db {
         stmt = this.conn.prepareStatement(sql);
         return stmt.executeQuery();
     }
+
     
     void updateQuery(String sqlquery) throws SQLException {
         String sql = sqlquery;
@@ -23,6 +24,8 @@ public class Db {
         this.conn = DriverManager.getConnection(this.db_url);
         stmt = this.conn.prepareStatement(sql);
         stmt.executeUpdate();
+        stmt.close();
+        close();
     }
 
 

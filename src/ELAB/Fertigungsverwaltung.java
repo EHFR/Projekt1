@@ -32,6 +32,7 @@ public class Fertigungsverwaltung {
                 a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
                 this.auftraege.add(a);
             }
+            rs.close();
         } catch (SQLException e) {
             System.out.println("Error while reading Database!");
             e.printStackTrace();
@@ -48,7 +49,7 @@ public class Fertigungsverwaltung {
     public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten) {
 
         Db db = new Db();
-
+       
         String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen) "
                 + "VALUES ('" + titel + "','" + fertigungsArt + "','" + dateiName + "','" + dateiOrt + "','" + kosten
                 + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE"
@@ -67,9 +68,6 @@ public class Fertigungsverwaltung {
 		Db db = new Db();
 		Auftrag a = this.getAuftragByID(id);
 		String sql = "DELETE FROM Auftrag WHERE ID = " + a.getId() + " ";
-
-
-
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
