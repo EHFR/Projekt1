@@ -130,8 +130,7 @@ public class Auftrag {
         if (t != null) {
             Date date = new Date();
             date.setTime(t.getTime());
-            String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
-            return formattedDate;
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
         }
         return "Null"; // für den Fall, dass der Zeitstempel null ist
     }

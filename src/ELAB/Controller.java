@@ -205,11 +205,11 @@ public class Controller implements Initializable {
             showError("Name darf nicht leer sein!");
             return;
         }
-        if (this.personenverwaltung.personAlreadyExists(this.personenverwaltungNameField.getText())) {
-            showError("Name existiert schon, bitte einen anderen wählen!");
-            return;
-        }
         if (this.neuePersonModus) {
+            if (this.personenverwaltung.personAlreadyExists(this.personenverwaltungNameField.getText())) {
+                showError("Name existiert schon, bitte einen anderen wählen!");
+                return;
+            }
             this.personenverwaltung.addPerson(this.personenverwaltungNameField.getText(),
                     this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
                     this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
