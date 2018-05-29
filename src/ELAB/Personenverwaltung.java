@@ -24,6 +24,10 @@ public class Personenverwaltung {
         return null;
     }
 
+    public int getPersonIdByName(String name){
+        return 0; //todo Emre, bitte implementieren. Eingabe ist der Name und return soll dann die id der Person sein, Danke!
+    }
+
 
     private void reloadPersonen() {
         Db db = new Db();
@@ -58,8 +62,8 @@ public class Personenverwaltung {
 
         timestamp = new Timestamp(System.currentTimeMillis());
         String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Timestamp, Type, Password) "
-                	+ "VALUES ('" + personName + "','" + personAdresse + "','" 
-                	+ personTel + "','" + personEmail + "','" + timestamp + "','" 
+                	+ "VALUES ('" + personName + "','" + personAdresse + "','"
+                	+ personTel + "','" + personEmail + "','" + timestamp + "','"
                 	+ type + "','" + passwort + "')";
         try {
             db.updateQuery(sql);
