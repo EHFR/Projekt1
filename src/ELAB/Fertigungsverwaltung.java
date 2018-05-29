@@ -46,8 +46,10 @@ public class Fertigungsverwaltung {
         return auftraege;
     }
 
-    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten) {
+    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten, int auftraggeberId, int[] auftragbearbeiterIds) {
 
+        //todo 2 neue Parameter, siehe oben
+        //todo Timestamp erstellen wie bei addPerson
         Db db = new Db();
        
         String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen) "
