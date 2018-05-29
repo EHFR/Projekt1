@@ -47,7 +47,7 @@ public class Fertigungsverwaltung {
         return auftraege;
     }
 
-    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten, int auftraggeberId, String auftragbearbeiterIds) {
+    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten, int auftraggeberId, ArrayList<String> auftragbearbeiterIds) {
 
         //todo 2 neue Parameter, siehe oben
         //todo Timestamp erstellen wie bei addPerson
@@ -56,7 +56,7 @@ public class Fertigungsverwaltung {
         String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen) "
                 + "VALUES ('" + titel + "','" + fertigungsArt + "','" + dateiName + "','" + dateiOrt + "','" + kosten
                 + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE"
-                + "', " + timestamp + " , " + auftraggeberId + " , '" + auftragbearbeiterIds + "')";
+                + "', " + timestamp + " , " + auftraggeberId + " , '" + String.join(",", auftragbearbeiterIds) + "')";
         //todo Emre geht das so mit den boolean "FALSE" ? Bitte nachprüfen und diese Zeile dann löschen :)
         try {
             db.updateQuery(sql);
