@@ -1,6 +1,7 @@
 package ELAB;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -61,8 +62,8 @@ public class Auftrag {
     }
 
 
-    public Timestamp getStatusZeitstempel_angenommen() {
-        return statusZeitstempel_angenommen;
+    public String getStatusZeitstempel_angenommenString() {
+        return zeitstempelToString(statusZeitstempel_angenommen);
     }
 
 
@@ -71,8 +72,8 @@ public class Auftrag {
     }
 
 
-    public Timestamp getStatusZeitstempel_gefertigt() {
-        return statusZeitstempel_gefertigt;
+    public String getStatusZeitstempel_gefertigtString() {
+        return zeitstempelToString(statusZeitstempel_gefertigt);
     }
 
 
@@ -81,8 +82,8 @@ public class Auftrag {
     }
 
 
-    public Timestamp getStatusZeitstempel_kosten_kalkuliert() {
-        return statusZeitstempel_kosten_kalkuliert;
+    public String getStatusZeitstempel_kosten_kalkuliertString() {
+        return zeitstempelToString(statusZeitstempel_kosten_kalkuliert);
     }
 
 
@@ -91,8 +92,8 @@ public class Auftrag {
     }
 
 
-    public Timestamp getStatusZeitstempel_abgeholt() {
-        return statusZeitstempel_abgeholt;
+    public String getStatusZeitstempel_abgeholtString() {
+        return zeitstempelToString(statusZeitstempel_abgeholt);
     }
 
 
@@ -101,8 +102,8 @@ public class Auftrag {
     }
 
 
-    public Timestamp getStatusZeitstempel_abgerechnet() {
-        return statusZeitstempel_abgerechnet;
+    public String getStatusZeitstempel_abgerechnetString() {
+        return zeitstempelToString(statusZeitstempel_abgerechnet);
     }
 
 
@@ -111,8 +112,8 @@ public class Auftrag {
     }
 
 
-    public Timestamp getStatusZeitstempel_wartenAufMaterial() {
-        return statusZeitstempel_wartenAufMaterial;
+    public String getStatusZeitstempel_wartenAufMaterialString() {
+        return zeitstempelToString(statusZeitstempel_wartenAufMaterial);
     }
 
 
@@ -121,8 +122,18 @@ public class Auftrag {
     }
 
 
-    public Timestamp getStatusZeitstempel_fertigungFehlgeschlagen() {
-        return statusZeitstempel_fertigungFehlgeschlagen;
+    public String getStatusZeitstempel_fertigungFehlgeschlagenString() {
+        return zeitstempelToString(statusZeitstempel_fertigungFehlgeschlagen);
+    }
+
+    private String zeitstempelToString(Timestamp t) {
+        if (t != null) {
+            Date date = new Date();
+            date.setTime(t.getTime());
+            String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
+            return formattedDate;
+        }
+        return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
 
 
@@ -256,7 +267,10 @@ public class Auftrag {
     }
 
     public String getZeitstempelString() {
-        return zeitstempel.toString();
+        if (zeitstempel != null) {
+            return zeitstempel.toString();
+        }
+        return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
 
     public void setZeitstempel(Timestamp zeitstempel) {
