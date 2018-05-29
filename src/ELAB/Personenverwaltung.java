@@ -25,6 +25,12 @@ public class Personenverwaltung {
     }
 
     public int getPersonIdByName(String name){
+    	for (Person personen : personen) {
+            if (personen.getName() == name) {
+                return personen.getId();
+            }
+        }
+    	
         return 0; //todo Emre, bitte implementieren. Eingabe ist der Name und return soll dann die id der Person sein, Danke!
     }
 
