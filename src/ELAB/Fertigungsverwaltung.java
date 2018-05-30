@@ -14,6 +14,8 @@ public class Fertigungsverwaltung {
         this.reloadAuftraege();
     }
 
+    //todo Hier muss auch Auftraggeber(Name:String) und Auftragbearbeiter(Name\r Name2...:String) geladen werden!
+    //todo \r bedeutet neue Zeile!
     private void reloadAuftraege() {
         Db db = new Db();
         this.auftraege.clear();
