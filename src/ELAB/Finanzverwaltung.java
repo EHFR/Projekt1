@@ -48,6 +48,7 @@ public class Finanzverwaltung {
       }
   }
     
+    
 	public void addTopf(String name, float sollBestand, float istBestand, String kasse, String rechnungID) throws ElabException {
 		
 		Db db = new Db();
@@ -66,6 +67,7 @@ public class Finanzverwaltung {
             e.printStackTrace();
         }
     }
+	
 
 	public void removeTopf(int id) throws ElabException {
       Db db = new Db();
@@ -78,6 +80,7 @@ public class Finanzverwaltung {
       }
   }
 	
+	
 	private Topf getTopfByID(int id) {
       for (Topf topf : toepfe) {
           if (topf.getId() == id) {
@@ -86,6 +89,7 @@ public class Finanzverwaltung {
       }
       return null;
   }
+	
 	
     public void updateTopf(int id, String name, float sollBestand, float istBestand, 
     						  String kasse, String rechnungID) throws ElabException {
@@ -110,22 +114,27 @@ public class Finanzverwaltung {
         return "hier steht später der Stand";
     }
 
+    
     public String getSollbestandBarkasse() {
         return "hier steht später der Stand";
     }
 
+    
     public String getIstbestandKonto() {
         return "hier steht später der Stand";
     }
 
+   
     public String getSollbestandKonto() {
         return "hier steht später der Stand";
     }
 
+    
     public String getIstbestandKostenstelle() {
         return "hier steht später der Stand";
     }
 
+    
     public String getSollbestandKostenstelle() {
         return "hier steht später der Stand";
     }
