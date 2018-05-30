@@ -26,18 +26,18 @@
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label text="Name" />
-                  <TextField />
+                  <TextField fx:id="anmeldungNameField" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label text="Passwort" />
-                  <TextField />
+                  <TextField fx:id="anmeldungPasswortField" />
                </children>
             </VBox>
             <VBox alignment="BOTTOM_LEFT" prefHeight="42.0" prefWidth="210.0">
                <children>
-                  <Button mnemonicParsing="false" text="Anmelden">
+                  <Button fx:id="anmeldungAnmeldenBtn" mnemonicParsing="false" onAction="#anmeldenAction" text="Anmelden">
                      <VBox.margin>
                         <Insets left="1.0" />
                      </VBox.margin>
@@ -46,8 +46,8 @@
             </VBox>
             <VBox prefHeight="42.0" prefWidth="176.0">
                <children>
-                  <Label text="Abgemeldet" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Abmelden" />
+                  <Label fx:id="anmeldungAngemeldetLabel" text="Abgemeldet" />
+                  <Button fx:id="anmeldungAbmeldenBtn" mnemonicParsing="false" onAction="#abmeldenAction" prefHeight="25.0" prefWidth="182.0" text="Abmelden" />
                </children>
             </VBox>
          </children>
