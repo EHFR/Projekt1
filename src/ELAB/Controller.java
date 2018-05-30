@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     /**
-     * Allgemein
+     * Allgemein/Logik
      */
     private Personenverwaltung personenverwaltung;
     private Fertigungsverwaltung fertigungsverwaltung;
@@ -22,6 +22,15 @@ public class Controller implements Initializable {
     private Bauteileverwaltung bauteileverwaltung;
 
     public Label error;
+
+    /**
+     * Anmeldung
+     */
+    public TextField anmeldungNameField;
+    public TextField anmeldungPasswortField;
+    public Label anmeldungAngemeldetLabel;
+    public Button anmeldungAnmeldenBtn;
+    public Button anmeldungAbmeldenBtn;
 
     /**
      * Personenverwaltung
@@ -81,6 +90,76 @@ public class Controller implements Initializable {
     public Label fertigungsverwaltungTimestampMaterialLabel;
     public Label fertigungsverwaltungTimestampUnterbrochenLabel;
 
+    /**
+     * Finanzverwaltung Konten und Töpfe
+     */
+    public ListView<String> kontenListe;
+    public TextField kontoNameField;
+    public TextField kontoSollField;
+    public Label kontoIstLabel;
+    public Spinner<String> kontoTypSpinner;
+    public TextField kontoKostenstellennummerField;
+    public Button kontoNeuBtn;
+    public Button kontoRemoveBtn;
+    public Button kontoSaveBtn;
+
+    public ListView<String> topfverwaltungListe;
+    public TextField topfNameField;
+    public TextField topfSollField;
+    public Label topfIstField;
+    public Button topfverwaltungNeuBtn;
+    public Button topfRemoveBtn;
+    public Button topfSaveBtn;
+
+    /**
+     * Finanzverwaltung Rechnungen
+     */
+    public ListView<String> rechnungenListe;
+    public ListView<String> topfListe;
+    public ListView<String> auftragsListe;
+    public TextField rechnungNameField;
+    public TextField rechnungAuftraggeberField;
+    public TextField rechnungAnsprechpartnerField;
+    public TextField rechnungBetragField;
+    public Label rechnungTimestampLabel;
+    public Button rechnungNeuBtn;
+    public Button rechnungRemoveBtn;
+    public Button rechnungSaveBtn;
+    // Status Elemente!
+
+    /**
+     * Bauteileverwaltung Bauteile
+     */
+    public ListView<String> kategorienListe;
+    public ListView<String> produktListe;
+    public Label produktNameLabel;
+    public Hyperlink produktLink;
+    public Label produktEinzelpreisLabel;
+    public Spinner<Integer> produktMengeLagerndSpinner;
+    public Label produktMengeBestelltLabel;
+    public Label produktMengeGeplantLabel;
+    public Label produktLagerortLabel;
+
+    /**
+     * Bauteileverwaltung Verwaltung
+     */
+    public ListView<String> kategorienverwaltungListe;
+    public Button kategorienemoveBtn;
+    public TextField kategorieNameField;
+    public Button kategorieNewBtn;
+    public ListView<String> produktverwaltungListe;
+    public TextField produktverwaltungNameField;
+    public TextField produktverwaltungLinkField;
+    public Spinner<Integer> produktverwaltungEinzelpreisSpinner;
+    public Spinner<Integer> produktverwaltungMengeLagerndSpinner;
+    public Spinner<Integer> produktverwaltungMengeBestelltSpinner;
+    public Spinner<Integer> produktverwaltungMengeGeplantSpinner;
+    public TextField produktverwaltungLagerortField;
+    public Button produktverwaltungNewBtn;
+    public Button produktverwaltungRemoveBtn;
+    public Button produktverwaltungSaveBtn;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.personenverwaltung = new Personenverwaltung();
@@ -119,6 +198,22 @@ public class Controller implements Initializable {
         this.fertigungsverwaltungFilerSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(alleFilter);
         this.fertigungsverwaltungFilterSpinner.setValueFactory(fertigungsverwaltungFilerSpinnerValueFactory);
         this.populateFertigungsverwaltungList();
+
+        /**
+         * Finanzverwaltung Konten und Töpfe
+         */
+
+        /**
+         * Finanzverwaltung Rechnungen
+         */
+
+        /**
+         * Bauteileverwaltung Bauteile
+         */
+
+        /**
+         * Bauteileverwaltung Verwaltung
+         */
     }
 
     private void showError(String errorText) {
@@ -143,6 +238,17 @@ public class Controller implements Initializable {
 
     private void hideErrorLabel() {
         error.setVisible(false);
+    }
+
+    /**
+     * Anmeldung
+     */
+    public void anmeldenAction() {
+
+    }
+
+    public void abmeldenAction() {
+
     }
 
     /**
@@ -264,7 +370,7 @@ public class Controller implements Initializable {
      */
     private void populateFertigungsverwaltungList() {
         ArrayList<String> allTitel = new ArrayList<>();
-        switch (this.fertigungsverwaltungFilterSpinner.getValue()){
+        switch (this.fertigungsverwaltungFilterSpinner.getValue()) {
             case "Alles":
                 for (Auftrag auftrag : fertigungsverwaltung.getAuftraege()) {
                     allTitel.add(auftrag.getTitel());
@@ -440,41 +546,42 @@ public class Controller implements Initializable {
     /**
      * Finanzverwaltung Konten und Töpfe
      */
-    public void addKontoAction(){
+    public void addKontoAction() {
 
     }
 
-    public void removeKontoAction(){
+    public void removeKontoAction() {
 
     }
 
-    public void saveKontoAction(){
+    public void saveKontoAction() {
 
     }
 
-    public void addTopfAction(){
+    public void addTopfAction() {
 
     }
 
-    public void removeTopfAction(){
+    public void removeTopfAction() {
 
     }
 
-    public void saveTopfAction(){
+    public void saveTopfAction() {
 
     }
 
     /**
      * Finanzverwaltung Rechnungen
      */
-    public void addRechnungAction(){
-
-    }
-    public void removeRechnungAction(){
+    public void addRechnungAction() {
 
     }
 
-    public void saveRechnungAction(){
+    public void removeRechnungAction() {
+
+    }
+
+    public void saveRechnungAction() {
 
     }
 
@@ -487,19 +594,23 @@ public class Controller implements Initializable {
     /**
      * Bauteileverwaltung Verwaltung
      */
-    public void removeKategorieAction(){
+    public void removeKategorieAction() {
 
     }
-    public void addKategorieAction(){
+
+    public void addKategorieAction() {
 
     }
-    public void addProduktAction(){
+
+    public void addProduktAction() {
 
     }
-    public void removeProduktAction(){
+
+    public void removeProduktAction() {
 
     }
-    public void saveProduktAction(){
+
+    public void saveProduktAction() {
 
     }
 }
