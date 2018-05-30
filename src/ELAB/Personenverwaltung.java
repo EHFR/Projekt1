@@ -65,6 +65,7 @@ public class Personenverwaltung {
         //todo hier muss alles mögliche getestet werden bevor der sql befehl ausgeführt wird, dann gegebenenfalls einen Fehler wie unten gezeigt auslösen
         //todo Achtung! Jede methode die einen Error wie unten gezeigt auslöst muss "throws ElabException" im Methodenkopf beinhalten
         //throw new ElabException("Das ist der ErrorText, der später in der GUI angezeigt wird");
+        //("Name existiert schon, bitte einen anderen wählen!") // testen und gegebenfalls error auswerfen
 
         Db db = new Db();
 
@@ -82,7 +83,7 @@ public class Personenverwaltung {
 
     }
 
-    public void removePerson(int id) {
+    public void removePerson(int id) throws ElabException {
         Db db = new Db();
         String sql = "DELETE FROM Personen WHERE PersonID = " + id + " ";
         try {
@@ -92,7 +93,7 @@ public class Personenverwaltung {
         }
     }
 
-    public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) {
+    public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) throws ElabException {
         Db db = new Db();
         String sql = "UPDATE Personen SET PersonName = '" + personName + "', PersonAdresse = '" + personAdresse
                 + "', PersonTel = '" + personTel + "', PersonEmail = '" + personEmail + "', Type = '" + type + "', Password = '" + passwort + "' "

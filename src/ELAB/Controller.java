@@ -300,35 +300,36 @@ public class Controller implements Initializable {
         } else {
             int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                //showError("Keine Person zum löschen ausgewählt!");
+                showError(new ElabException("Keine Person zum löschen ausgewählt!"));
                 return;
             }
             Person personToRemove = personenverwaltung.getPersonen().get(listId);
-            this.personenverwaltung.removePerson(personToRemove.getId());
+            try {
+                this.personenverwaltung.removePerson(personToRemove.getId());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
             this.populatePersonenverwaltungList();
         }
     }
 
     public void savePersonAction() {
         if (this.personenverwaltungPasswortField.getText().equals("")) {
-            //showError("Passwort darf nicht leer sein!");
+            showError(new ElabException("Passwort darf nicht leer sein!"));
             return;
         }
         if (this.personenverwaltungNameField.getText().equals("")) {
-            //showError("Name darf nicht leer sein!");
+            showError(new ElabException("Name darf nicht leer sein!"));
             return;
         }
         if (this.neuePersonModus) {
-            if (this.personenverwaltung.personAlreadyExists(this.personenverwaltungNameField.getText())) {
-                //showError("Name existiert schon, bitte einen anderen wählen!");
-                return;
-            }
             try {
                 this.personenverwaltung.addPerson(this.personenverwaltungNameField.getText(),
                         this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
                         this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
-                        this.personenverwaltungPasswortField.getText()); //spinner oder factory
-            }catch (ElabException e){
+                        this.personenverwaltungPasswortField.getText());
+            } catch (ElabException e) {
                 showError(e);
                 return;
             }
@@ -336,14 +337,19 @@ public class Controller implements Initializable {
         } else {
             int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                //showError("Keine Person zum bearbeiten ausgewählt!");
+                showError(new ElabException("Keine Person zum bearbeiten ausgewählt!"));
                 return;
             }
             Person person = personenverwaltung.getPersonen().get(listId);
-            this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
-                    this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
-                    this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
-                    this.personenverwaltungPasswortField.getText()); //spinner oder factory
+            try {
+                this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
+                        this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
+                        this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
+                        this.personenverwaltungPasswortField.getText());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
         }
         showOk();
         this.populatePersonenverwaltungList();
