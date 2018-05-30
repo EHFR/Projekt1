@@ -2,21 +2,27 @@ package ELAB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Finanzverwaltung {
-    private ArrayList<Kasse> kasse;
+    private ArrayList<Topf> toepfe;
+    
 
     public Finanzverwaltung() {
-        kasse = new ArrayList<>();
-        //this.reloadKasse();
+        toepfe = new ArrayList<>();
+        this.reloadToepfe();
     }
 
-    public ArrayList<Topf> getToepfe() {
-        return new ArrayList<>(); // nur provisorisch um Fehler zu vermeiden, MUSS BEI IMPLEMENTIERUNG ENTFERNT WERDEN!
-    }
+//    public ArrayList<Topf> getToepfe() {
+//        return new ArrayList<>(); // nur provisorisch um Fehler zu vermeiden, MUSS BEI IMPLEMENTIERUNG ENTFERNT WERDEN!
+//    }
 
-    public void addTopf(String name, String sollBetrag, String konto) throws ElabException {
+    public void setToepfe(ArrayList<Topf> toepfe) {
+		this.toepfe = toepfe;
+	}
+
+	public void addTopf(String name, String sollBetrag, String konto) throws ElabException {
 
     }
 
@@ -49,17 +55,19 @@ public class Finanzverwaltung {
         return "hier steht später der Stand";
     }
 
-    /*
-    private void reloadKasse() {
+    //Methoden für Töpfe
+    private void reloadToepfe() {
         Db db = new Db();
-        this.kasse.clear();
-
+        this.toepfe.clear();
         try {
-            ResultSet rs = db.exequteQuery("SELECT * FROM Kasse");
+            ResultSet rs = db.exequteQuery("SELECT * FROM Topf");
             while (rs.next()) {
-                Kasse k = new Kasse(rs.getArray("Töpfe"));
-                this.kasse.add(k);
+                Topf t = new Topf(rs.getInt("ID"), rs.getString("Name"), rs.getFloat("SollBestand"),
+                        rs.getFloat("IstBestand"), rs.getString("Kasse"));
+                t.setZeitstempel(rs.getTimestamp("Zeitstempel"));
+                this.toepfe.add(t); 
             }
+            rs.close();
         } catch (SQLException e) {
             System.out.println("Error while reading Database!");
             e.printStackTrace();
@@ -68,29 +76,23 @@ public class Finanzverwaltung {
         }
     }
     
-    public ArrayList<Kasse> getKasse() {
-        this.reloadKasse();
-        return kasse;
+    public ArrayList<Topf> getToepfe() {
+        this.reloadToepfe();
+        return toepfe;
     }
     
-    public void addKasse() {
-        
-		Db db = new Db();
-	 
-		String sql = "INSERT INTO Kasse (Töpfe) "
-				+ "VALUES ()"; 
-		try {
-			db.updateQuery(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-    }
-    
-    public void removeKasse(int id) {
-        Db db = new Db();
-        String sql = "DELETE FROM Kasse WHERE ID = " + id + " ";
+    public void addToepfe(String name, float sollBestand, float istBestand, String kasse, String rechnungID) throws ElabException {
 
+        Db db = new Db();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        String sql = "INSERT INTO Auftrag (Name, SollBestand, IstBestand, Kasse, RechnungID) "
+                + "VALUES ('" + name + "','"
+                + sollBestand + "','"
+                + istBestand + "','"
+                + kasse + "',"
+                + rechnungID + "')";
+              
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -98,14 +100,42 @@ public class Finanzverwaltung {
         }
     }
     
-    public void updateKasse() {
+    public void removeToepfe(int id) {
         Db db = new Db();
-        String sql = "UPDATE Kasse SET Titel = '"  "";
+        Topf t = this.getTopfByID(id);
+        String sql = "DELETE FROM Topf WHERE ID = " + t.getId() + " ";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }  */
+    }
+    
+    private Topf getTopfByID(int id) {
+        for (Topf topf : toepfe) {
+            if (topf.getId() == id) {
+                return topf;
+            }
+        }
+        return null;
+    }
+    
+    public void updateToepfe(int id, String name, float sollBestand, float istBestand, 
+    						  String kasse, String rechnungID) throws ElabException {
 
+    		Db db = new Db();
+    		String sql = "UPDATE Topf SET Name = '" + name + 
+    								"', SollBestand = '" + sollBestand + 
+    								"', IstBestand = '" + istBestand + 
+    								"', Kasse = '" + kasse + 
+    								"', RechnungID = '" + rechnungID + 
+    								"WHERE ID = " + id + "";
+    		try {
+    			db.updateQuery(sql);
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+    }
+
+    
 }
