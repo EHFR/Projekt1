@@ -8,6 +8,7 @@ public class Topf {
     private float sollbestand;
     private float istbestand;
     private ArrayList<Rechnung> rechnungen;
+    private String konto;
 
     public Topf(int id, String name, float sollbestand, float istbestand, ArrayList<Rechnung> rechnungen) {
         this.id = id;
@@ -57,5 +58,7 @@ public class Topf {
         rechnungen.add(r);
     }
 
-
+    public String getKonto() {
+        return konto;
+    }
 }

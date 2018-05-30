@@ -93,23 +93,24 @@ public class Controller implements Initializable {
     /**
      * Finanzverwaltung Konten und Töpfe
      */
-    public ListView<String> kontenListe;
-    public TextField kontoNameField;
-    public TextField kontoSollField;
-    public Label kontoIstLabel;
-    public Spinner<String> kontoTypSpinner;
-    public TextField kontoKostenstellennummerField;
-    public Button kontoNeuBtn;
-    public Button kontoRemoveBtn;
-    public Button kontoSaveBtn;
+    public Label kontoBarkasseIstLabel;
+    public Label kontoBarkasseSollLabel;
+    public Label kontoKontoIstLabel;
+    public Label kontoKontoSollLabel;
+    public Label kontoKostenstelleIstLabel;
+    public Label kontoKostenstelleSollLabel;
 
+    public GridPane topfBearbeitungGrid;
     public ListView<String> topfverwaltungListe;
     public TextField topfNameField;
     public TextField topfSollField;
     public Label topfIstField;
+    public Spinner<String> topfKontoSpinner;
+    private SpinnerValueFactory<String> topfKontoSpinnerValueFactory;
     public Button topfverwaltungNeuBtn;
     public Button topfRemoveBtn;
     public Button topfSaveBtn;
+    private boolean neuerTopfModus = false;
 
     /**
      * Finanzverwaltung Rechnungen
@@ -126,6 +127,8 @@ public class Controller implements Initializable {
     public Button rechnungRemoveBtn;
     public Button rechnungSaveBtn;
     // Status Elemente!
+    //public Spinner<String> topfBezahlartSpinner;
+    //private SpinnerValueFactory<String> topfBezahlartSpinnerValueFactory;
 
     /**
      * Bauteileverwaltung Bauteile
@@ -202,6 +205,10 @@ public class Controller implements Initializable {
         /**
          * Finanzverwaltung Konten und Töpfe
          */
+        this.updateKontostaende();
+        ObservableList<String> topfKonto = FXCollections.observableArrayList("Barkasse", "Konto", "Kostenstelle");
+        this.topfKontoSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(topfKonto);
+        this.topfKontoSpinner.setValueFactory(topfKontoSpinnerValueFactory);
 
         /**
          * Finanzverwaltung Rechnungen
@@ -550,28 +557,115 @@ public class Controller implements Initializable {
     /**
      * Finanzverwaltung Konten und Töpfe
      */
-    public void addKontoAction() {
-
+    private void updateKontostaende() {
+        //this.kontoBarkasseIstLabel.setText(this.finanzverwaltung.getIstbestandBarkasse());
+        //this.kontoBarkasseSollLabel.setText(this.finanzverwaltung.getSollbestandBarkasse());
+        //this.kontoKontoIstLabel.setText(this.finanzverwaltung.getIstbestandKonto());
+        //this.kontoKontoSollLabel.setText(this.finanzverwaltung.getSollbestandKonto());
+        //this.kontoKostenstelleIstLabel.setText(this.finanzverwaltung.getIstbestandKostenstelle());
+        //this.kontoKostenstelleSollLabel.setText(this.finanzverwaltung.getSollbestandKostenstelle());
     }
 
-    public void removeKontoAction() {
-
-    }
-
-    public void saveKontoAction() {
-
+    private void populateTopfverwaltungListe() {
+        ArrayList<String> allToepfe = new ArrayList<>();
+        for (Topf topf : this.finanzverwaltung.getToepfe()) {
+            allToepfe.add(topf.getName());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(allToepfe);
+        topfverwaltungListe.setItems(items);
+        this.topfverwaltungUpdateTextFields();
     }
 
     public void addTopfAction() {
+        this.neuerTopfModus = true;
+        this.topfBearbeitungGrid.setDisable(false);
+        this.topfverwaltungListe.setDisable(true);
+        this.topfNameField.setText("");
+        this.topfSollField.setText("");
+        this.topfIstField.setText("");
+        this.topfKontoSpinnerValueFactory.setValue("Barkasse");
+        this.topfRemoveBtn.setText("Abbrechen");
+    }
 
+    private void neuerTopfModusDisable() {
+        this.neuerTopfModus = false;
+        this.topfBearbeitungGrid.setDisable(true);
+        this.topfverwaltungListe.setDisable(false);
+        this.topfNameField.setText("");
+        this.topfSollField.setText("");
+        this.topfIstField.setText("");
+        this.topfKontoSpinnerValueFactory.setValue("Barkasse");
+        this.topfRemoveBtn.setText("Löschen");
     }
 
     public void removeTopfAction() {
-
+        if (this.neuerTopfModus) {
+            this.neuerTopfModusDisable();
+        } else {
+            int listId = this.topfverwaltungListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError(new ElabException("Keinen Topf zum löschen ausgewählt!"));
+                return;
+            }
+            try {
+                this.personenverwaltung.removePerson(listId);
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+            this.populateTopfverwaltungListe();
+        }
     }
 
     public void saveTopfAction() {
+        if (this.topfNameField.getText().equals("")) {
+            showError(new ElabException("Topfname darf nicht leer sein!"));
+            return;
+        }
+        if (this.topfSollField.getText().equals("")) {
+            showError(new ElabException("Soll-Bestand darf nicht leer sein!"));
+            return;
+        }
+        if (this.neuerTopfModus) {
+            try {
+                this.finanzverwaltung.addTopf(this.topfNameField.getText(),
+                        this.topfSollField.getText(), this.topfKontoSpinner.getValue());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+            this.neuerTopfModusDisable();
+        } else {
+            int listId = this.topfverwaltungListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError(new ElabException("Keinen Topf zum Bearbeiten ausgewählt!"));
+                return;
+            }
+            try {
+                this.finanzverwaltung.updateTopf(listId, this.topfNameField.getText(),
+                        this.topfSollField.getText(), this.topfKontoSpinner.getValue());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+        }
+        showOk();
+        this.populateTopfverwaltungListe();
+    }
 
+    public void topfverwaltungUpdateTextFields() {
+        int listId = this.topfverwaltungListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            this.topfBearbeitungGrid.setDisable(true);
+        } else {
+            this.topfBearbeitungGrid.setDisable(false);
+
+            Topf topf = finanzverwaltung.getToepfe().get(listId);
+            this.topfNameField.setText(topf.getName());
+            this.topfSollField.setText(String.valueOf(topf.getSollbestand()));
+            this.topfIstField.setText(String.valueOf(topf.getIstbestand()));
+            this.topfKontoSpinnerValueFactory.setValue(topf.getKonto());
+        }
     }
 
     /**

@@ -11,6 +11,19 @@ public class Finanzverwaltung {
         kasse = new ArrayList<>();
         //this.reloadKasse();
     }
+
+    public ArrayList<Topf> getToepfe() {
+        return new ArrayList<>(); // nur provisorisch um Fehler zu vermeiden, MUSS BEI IMPLEMENTIERUNG ENTFERNT WERDEN!
+    }
+
+    public void addTopf(String name, String sollBetrag, String konto) throws ElabException {
+
+    }
+
+    public void updateTopf(int id, String name, String sollBetrag, String konto) throws ElabException {
+
+    }
+
     /*
     private void reloadKasse() {
         Db db = new Db();
