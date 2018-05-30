@@ -11,10 +11,9 @@ public class Kategorie {
     private ArrayList<Produkt> produkte;
 
 
-    public Kategorie(int id, String name, ArrayList<Produkt> produkte) {
+    public Kategorie(int id, String name) {
         this.id = id;
         this.name = name;
-        this.produkte = produkte;
     }
 
     public int getId() {

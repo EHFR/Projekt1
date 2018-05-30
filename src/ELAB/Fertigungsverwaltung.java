@@ -49,15 +49,12 @@ public class Fertigungsverwaltung {
 
     public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten, int auftraggeberId, ArrayList<String> auftragbearbeiterIds) {
 
-        //todo 2 neue Parameter, siehe oben
-        //todo Timestamp erstellen wie bei addPerson
         Db db = new Db();
         timestamp = new Timestamp(System.currentTimeMillis());
         String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen) "
                 + "VALUES ('" + titel + "','" + fertigungsArt + "','" + dateiName + "','" + dateiOrt + "','" + kosten
                 + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE"
-                + "', " + timestamp + " , " + auftraggeberId + " , '" + String.join(",", auftragbearbeiterIds) + "')";
-        //todo Emre geht das so mit den boolean "FALSE" ? Bitte nachprüfen und diese Zeile dann löschen :)
+                + "', " + timestamp + " , " + auftraggeberId + " , '" + String.join("','", auftragbearbeiterIds) + "')";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {

@@ -33,21 +33,25 @@ public class Bauteileverwaltung {
 
     }
 
-//	private void reloadKategorie()
-//	{
-//		Db db = new Db();
-//		this.kategorie.clear();
-//		try {
-//			ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
-//			while (rs.next())
-//			{
-//				Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"), rs.getInt("Produkte"));
-//				
-//			}
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//	}
+	private void reloadKategorie()
+	{
+		Db db = new Db();
+		this.kategorie.clear();
+		try {
+			ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
+			while (rs.next())
+			{
+				Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"));
+			}
+			rs.close();
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			db.close();
+		}
+	}
 
     public void addProdukt(String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
         Db db = new Db();
@@ -57,15 +61,14 @@ public class Bauteileverwaltung {
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    public void addKategorie(int kategorieID, String name, int produktID) {
+    public void addKategorie(int kategorieID, String name) {
         Db db = new Db();
         String sql = "INSERT INTO Kategorie (ID, Name, Produkte)"
-                + "VALUES (" + kategorieID + ",'" + name + "'," + produktID + ")";
+                + "VALUES (" + kategorieID + ",'" + name + "')";
         try {
             db.updateQuery(sql);
         } catch (Exception e) {
@@ -86,12 +89,17 @@ public class Bauteileverwaltung {
         }
     }
 
-    public void updateKategorie(int kategorieID, String name, int produktID) {
-		/*String sql = "UPDATE Kategorie SET Name = '" + name + "', Link = '" + link 
-    			+ "', Einzelpreis = '" + einzelpreis + "', MengeLagernd = '" + mengeLagernd + "', MengeGeplant = '"
-    			+ mengeGeplant + "', MengeBestellt = '" + mengeBestellt + "', LagerOrt =  '" + lagerOrt + " "
-    			+ "WHERE PersonID = " + id + "";  */
+    public void updateKategorie(ArrayList<String> produktID) {
+    	Db db = new Db();
+		String sql = "UPDATE Kategorie SET produktID = '" + String.join("','", produktID) + "')";
+	    try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		
     }
+    			
 
     public void removeProdukt(int id) {
         Db db = new Db();
