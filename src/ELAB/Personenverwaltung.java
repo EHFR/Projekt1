@@ -60,7 +60,11 @@ public class Personenverwaltung {
         return personen;
     }
 
-    public void addPerson(String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) {
+    public void addPerson(String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) throws ElabException {
+
+        //todo hier muss alles mögliche getestet werden bevor der sql befehl ausgeführt wird, dann gegebenenfalls einen Fehler wie unten gezeigt auslösen
+        //todo Achtung! Jede methode die einen Error wie unten gezeigt auslöst muss "throws ElabException" im Methodenkopf beinhalten
+        //throw new ElabException("Das ist der ErrorText, der später in der GUI angezeigt wird");
 
         Db db = new Db();
 

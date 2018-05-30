@@ -216,7 +216,8 @@ public class Controller implements Initializable {
          */
     }
 
-    private void showError(String errorText) {
+    private void showError(ElabException error) {
+        String errorText = error.getErrorText();
         System.out.println("Error: creating Label with -> " + errorText);
         this.error.setVisible(true);
         this.error.setText(errorText);
@@ -299,7 +300,7 @@ public class Controller implements Initializable {
         } else {
             int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                showError("Keine Person zum löschen ausgewählt!");
+                //showError("Keine Person zum löschen ausgewählt!");
                 return;
             }
             Person personToRemove = personenverwaltung.getPersonen().get(listId);
@@ -310,27 +311,32 @@ public class Controller implements Initializable {
 
     public void savePersonAction() {
         if (this.personenverwaltungPasswortField.getText().equals("")) {
-            showError("Passwort darf nicht leer sein!");
+            //showError("Passwort darf nicht leer sein!");
             return;
         }
         if (this.personenverwaltungNameField.getText().equals("")) {
-            showError("Name darf nicht leer sein!");
+            //showError("Name darf nicht leer sein!");
             return;
         }
         if (this.neuePersonModus) {
             if (this.personenverwaltung.personAlreadyExists(this.personenverwaltungNameField.getText())) {
-                showError("Name existiert schon, bitte einen anderen wählen!");
+                //showError("Name existiert schon, bitte einen anderen wählen!");
                 return;
             }
-            this.personenverwaltung.addPerson(this.personenverwaltungNameField.getText(),
-                    this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
-                    this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
-                    this.personenverwaltungPasswortField.getText()); //spinner oder factory
+            try {
+                this.personenverwaltung.addPerson(this.personenverwaltungNameField.getText(),
+                        this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
+                        this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
+                        this.personenverwaltungPasswortField.getText()); //spinner oder factory
+            }catch (ElabException e){
+                showError(e);
+                return;
+            }
             this.neuePersonModusDisable();
         } else {
             int listId = this.personenverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                showError("Keine Person zum bearbeiten ausgewählt!");
+                //showError("Keine Person zum bearbeiten ausgewählt!");
                 return;
             }
             Person person = personenverwaltung.getPersonen().get(listId);
@@ -421,7 +427,7 @@ public class Controller implements Initializable {
         } else {
             int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                showError("Keine Person zum löschen ausgewählt!");
+                //showError("Keine Person zum löschen ausgewählt!");
                 return;
             }
             Auftrag auftragToRemove = fertigungsverwaltung.getAuftraege().get(listId);
@@ -432,22 +438,22 @@ public class Controller implements Initializable {
 
     public void saveAuftragAction() {
         if (this.fertigungsverwaltungAuftraggeberField.getText().equals("")) {
-            showError("Auftraggeber darf nicht leer sein!");
+            //showError("Auftraggeber darf nicht leer sein!");
             return;
         }
         if (!this.personenverwaltung.personAlreadyExists(this.fertigungsverwaltungAuftraggeberField.getText())) {
-            showError("Auftraggeber existiert nicht!");
+            //showError("Auftraggeber existiert nicht!");
             return;
         }
         if (this.fertigungsverwaltungAuftragbearbeiterArea.getText().equals("")) {
-            showError("Auftragbearbeiter darf nicht leer sein!");
+            //showError("Auftragbearbeiter darf nicht leer sein!");
             return;
         }
         int auftraggeberID = this.personenverwaltung.getPersonIdByName(this.fertigungsverwaltungAuftraggeberField.getText());
         ArrayList<String> auftragbearbeiterIDs = new ArrayList<>();
         for (String name : fertigungsverwaltungAuftragbearbeiterArea.getText().split("\n")) {
             if (!this.personenverwaltung.personAlreadyExists(name)) {
-                showError("Auftragbearbeiter " + name + " existiert nicht!");
+                //showError("Auftragbearbeiter " + name + " existiert nicht!");
                 return;
             }
             auftragbearbeiterIDs.add(String.valueOf(this.personenverwaltung.getPersonIdByName(name)));
@@ -455,7 +461,7 @@ public class Controller implements Initializable {
         try {
             Float.parseFloat(this.fertigungsverwaltungKostenField.getText());
         } catch (NumberFormatException e) {
-            showError("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+            //showError("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
             return;
         }
         if (this.neuerAuftragModus) {
@@ -466,7 +472,7 @@ public class Controller implements Initializable {
         } else {
             int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                showError("Keinen Auftrag zum bearbeiten ausgewählt!");
+                //showError("Keinen Auftrag zum bearbeiten ausgewählt!");
                 return;
             }
             Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
@@ -481,7 +487,7 @@ public class Controller implements Initializable {
     public void setFertigungsverwaltungUpdateStatus() {
         int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
         if (listId == -1) {
-            showError("Keinen Auftrag zum bearbeiten ausgewählt!");
+            //showError("Keinen Auftrag zum bearbeiten ausgewählt!");
             return;
         }
         Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
