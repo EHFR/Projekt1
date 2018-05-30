@@ -50,11 +50,18 @@ public class Fertigungsverwaltung {
     public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, float kosten, int auftraggeberId, ArrayList<String> auftragbearbeiterIds) {
 
         Db db = new Db();
-        timestamp = new Timestamp(System.currentTimeMillis());
-        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen) "
-                + "VALUES ('" + titel + "','" + fertigungsArt + "','" + dateiName + "','" + dateiOrt + "','" + kosten
-                + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE" + "','" + "FALSE"
-                + "', " + timestamp + " , " + auftraggeberId + " , '" + String.join("','", auftragbearbeiterIds) + "')";
+        timestamp = new Timestamp(System.currentTimeMillis());     
+        
+        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , AuftragbearbeiterIds) "
+        		+ "VALUES ('"  	+ titel + "','" 
+        						+ fertigungsArt + "','" 
+        						+ dateiName + "','" 
+        						+ dateiOrt + "'," 
+        						+ kosten + ",'" 
+        						+ "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
+        						+ kosten + "," 
+        						+ auftraggeberId + ",'"
+        						+ String.join(",", auftragbearbeiterIds) + "')";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -78,12 +85,11 @@ public class Fertigungsverwaltung {
 
 	public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt,
 			float kosten) {
-        //todo Emre hier stimmt was aber nicht! Die Parameter werden garnicht benutzt?
+        
 		Db db = new Db();
-		Auftrag a = this.getAuftragByID(id);
-		String sql = "UPDATE Auftrag SET Titel = '" + a.getTitel() + "', FertigungsArt = '" + a.getFertigungsart()
-				+ "', DateiName = '" + a.getDateiname() + "', DateiOrt = '" + a.getDateiort() + "', Kosten = '" + a.getKosten()
-				+ "WHERE ID = " + a.getId() + "";
+		String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
+				+ "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten
+				+ "WHERE ID = " + id + "";
 		try {
 			db.updateQuery(sql);
 		} catch (SQLException e) {
@@ -204,7 +210,6 @@ public class Fertigungsverwaltung {
                 return auftrag;
             }
         }
-
         return null;
     }
 
