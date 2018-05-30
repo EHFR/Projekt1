@@ -24,6 +24,30 @@ public class Finanzverwaltung {
 
     }
 
+    public String getIstbestandBarkasse() {
+        return "hier steht später der Stand";
+    }
+
+    public String getSollbestandBarkasse() {
+        return "hier steht später der Stand";
+    }
+
+    public String getIstbestandKonto() {
+        return "hier steht später der Stand";
+    }
+
+    public String getSollbestandKonto() {
+        return "hier steht später der Stand";
+    }
+
+    public String getIstbestandKostenstelle() {
+        return "hier steht später der Stand";
+    }
+
+    public String getSollbestandKostenstelle() {
+        return "hier steht später der Stand";
+    }
+
     /*
     private void reloadKasse() {
         Db db = new Db();
