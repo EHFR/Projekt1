@@ -433,7 +433,7 @@ public class Controller implements Initializable {
         } else {
             int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                //showError("Keine Person zum löschen ausgewählt!");
+                showError(new ElabException("Keine Person zum löschen ausgewählt!"));
                 return;
             }
             Auftrag auftragToRemove = fertigungsverwaltung.getAuftraege().get(listId);
@@ -444,47 +444,39 @@ public class Controller implements Initializable {
 
     public void saveAuftragAction() {
         if (this.fertigungsverwaltungAuftraggeberField.getText().equals("")) {
-            //showError("Auftraggeber darf nicht leer sein!");
-            return;
-        }
-        if (!this.personenverwaltung.personAlreadyExists(this.fertigungsverwaltungAuftraggeberField.getText())) {
-            //showError("Auftraggeber existiert nicht!");
+            showError(new ElabException("Auftraggeber darf nicht leer sein!"));
             return;
         }
         if (this.fertigungsverwaltungAuftragbearbeiterArea.getText().equals("")) {
-            //showError("Auftragbearbeiter darf nicht leer sein!");
-            return;
-        }
-        int auftraggeberID = this.personenverwaltung.getPersonIdByName(this.fertigungsverwaltungAuftraggeberField.getText());
-        ArrayList<String> auftragbearbeiterIDs = new ArrayList<>();
-        for (String name : fertigungsverwaltungAuftragbearbeiterArea.getText().split("\n")) {
-            if (!this.personenverwaltung.personAlreadyExists(name)) {
-                //showError("Auftragbearbeiter " + name + " existiert nicht!");
-                return;
-            }
-            auftragbearbeiterIDs.add(String.valueOf(this.personenverwaltung.getPersonIdByName(name)));
-        }
-        try {
-            Float.parseFloat(this.fertigungsverwaltungKostenField.getText());
-        } catch (NumberFormatException e) {
-            //showError("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+            showError(new ElabException("Auftragbearbeiter darf nicht leer sein!"));
             return;
         }
         if (this.neuerAuftragModus) {
-            this.fertigungsverwaltung.addAuftrag(this.fertigungsverwaltungTitelField.getText(), this.fertigungsverwaltungFertigungsartField.getText(),
-                    this.fertigungsverwaltungDateinameField.getText(), this.fertigungsverwaltungDateiortField.getText(),
-                    Float.parseFloat(this.fertigungsverwaltungKostenField.getText()), auftraggeberID, auftragbearbeiterIDs);
+            try {
+                this.fertigungsverwaltung.addAuftrag(this.fertigungsverwaltungTitelField.getText(), this.fertigungsverwaltungFertigungsartField.getText(),
+                        this.fertigungsverwaltungDateinameField.getText(), this.fertigungsverwaltungDateiortField.getText(),
+                        this.fertigungsverwaltungKostenField.getText(), this.fertigungsverwaltungAuftraggeberField.getText(),
+                        this.fertigungsverwaltungAuftragbearbeiterArea.getText());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
             this.neuerAuftragModusDisable();
         } else {
             int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
             if (listId == -1) {
-                //showError("Keinen Auftrag zum bearbeiten ausgewählt!");
+                showError(new ElabException("Keinen Auftrag zum bearbeiten ausgewählt!"));
                 return;
             }
-            Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
-            this.fertigungsverwaltung.updateAuftrag(auftrag.getId(), this.fertigungsverwaltungTitelField.getText(),
-                    this.fertigungsverwaltungFertigungsartField.getText(), this.fertigungsverwaltungDateinameField.getText(),
-                    this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText()));
+            try {
+                Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
+                this.fertigungsverwaltung.updateAuftrag(auftrag.getId(), this.fertigungsverwaltungTitelField.getText(),
+                        this.fertigungsverwaltungFertigungsartField.getText(), this.fertigungsverwaltungDateinameField.getText(),
+                        this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText()));
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
         }
         showOk();
         this.populateFertigungsverwaltungList();
@@ -493,7 +485,7 @@ public class Controller implements Initializable {
     public void setFertigungsverwaltungUpdateStatus() {
         int listId = this.fertigungsverwaltungListe.getFocusModel().getFocusedIndex();
         if (listId == -1) {
-            //showError("Keinen Auftrag zum bearbeiten ausgewählt!");
+            showError(new ElabException("Keinen Auftrag zum bearbeiten ausgewählt!"));
             return;
         }
         Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
