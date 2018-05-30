@@ -24,6 +24,7 @@ public class Finanzverwaltung {
 
     }
 
+    // todo Kontostände müssen aus den Töpfen zusammengrechnet werden und returned werden :)
     public String getIstbestandBarkasse() {
         return "hier steht später der Stand";
     }
