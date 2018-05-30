@@ -24,14 +24,13 @@ public class Personenverwaltung {
         return null;
     }
 
-    public int getPersonIdByName(String name){
-    	for (Person personen : personen) {
-            if (personen.getName() == name) {
+    public int getPersonIdByName(String name) {
+        for (Person personen : personen) {
+            if (personen.getName().equals(name)) {
                 return personen.getId();
             }
         }
-    	
-        return 0; //todo Emre, bitte implementieren. Eingabe ist der Name und return soll dann die id der Person sein, Danke!
+        return -1;
     }
 
 
@@ -68,9 +67,9 @@ public class Personenverwaltung {
 
         timestamp = new Timestamp(System.currentTimeMillis());
         String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Timestamp, Type, Password) "
-                	+ "VALUES ('" + personName + "','" + personAdresse + "','"
-                	+ personTel + "','" + personEmail + "','" + timestamp + "','"
-                	+ type + "','" + passwort + "')";
+                + "VALUES ('" + personName + "','" + personAdresse + "','"
+                + personTel + "','" + personEmail + "','" + timestamp + "','"
+                + type + "','" + passwort + "')";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -113,9 +112,8 @@ public class Personenverwaltung {
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally
-        {
-        	db.close();
+        } finally {
+            db.close();
         }
         return false;
     }

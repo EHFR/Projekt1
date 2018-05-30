@@ -78,6 +78,7 @@ public class Fertigungsverwaltung {
 
 	public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt,
 			float kosten) {
+        //todo Emre hier stimmt was aber nicht! Die Parameter werden garnicht benutzt?
 		Db db = new Db();
 		Auftrag a = this.getAuftragByID(id);
 		String sql = "UPDATE Auftrag SET Titel = '" + a.getTitel() + "', FertigungsArt = '" + a.getFertigungsart()
