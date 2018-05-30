@@ -53,12 +53,14 @@ public class Fertigungsverwaltung {
 
         //todo ("Auftraggeber existiert nicht!");
 
+        Personenverwaltung personenverwaltung = new Personenverwaltung();
+
         //todo Idee zum testen, ob alle Auftraggeber auch existieren   man müsste hier dann ein objekt von der personenverwaltung erstellen
-        //for (String name : auftragbearbeiter.split("\n")) {
-        //    if (!personAlreadyExists(name)) {
-        //        throw new ElabException("Auftragbearbeiter " + name + " existiert nicht!");
-        //    }
-        //}
+        for (String name : auftragbearbeiter.split("\n")) {
+            if (!personenverwaltung.personAlreadyExists(name)) {
+                throw new ElabException("Auftragbearbeiter " + name + " existiert nicht!");
+            }
+        }
 
         // hier schonmal der Test auf korrekte eingabe der Kosten
         float kostenFloat;
