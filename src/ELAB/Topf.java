@@ -13,14 +13,14 @@ public class Topf {
     private Timestamp zeitstempel;
 
     public Timestamp getZeitstempel() {
-		return zeitstempel;
-	}
+        return zeitstempel;
+    }
 
-	public void setZeitstempel(Timestamp zeitstempel) {
-		this.zeitstempel = zeitstempel;
-	}
+    public void setZeitstempel(Timestamp zeitstempel) {
+        this.zeitstempel = zeitstempel;
+    }
 
-	public Topf(int id, String name, float sollbestand, float istbestand, String konto) {
+    public Topf(int id, String name, float sollbestand, float istbestand, String konto) {
         this.id = id;
         this.name = name;
         this.sollbestand = sollbestand;
@@ -72,24 +72,24 @@ public class Topf {
     public String getKonto() {
         return konto;
     }
-    
-//  //Methoden bezüglich der Rechnungen
-//
-//  public void addRechnung(String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException{
-//
-//  }
-//  public void removeRechnung(int id) throws ElabException{
-//
-//  }
-//  public void updateRechnung(int id, String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException{
-//
-//  }
-//  public ArrayList<Rechnung> getRechungenFromTopf(int topfId){
-//      // todo Alle rechnung im Topf mit der gegebenen ID werden als ArrayList ausgegeben!
-//      return new ArrayList<Rechnung>(); // Vorübergehender Return
-//  }
-//
-//  public void addRechnung(){
-//
-//  }
+
+
+    // Methoden Für Rechnungen in dem Topf
+
+    public void addRechnung(String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException {
+
+    }
+
+    public void removeRechnung(int id) throws ElabException {
+
+    }
+
+    public void updateRechnung(int id, String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException {
+
+    }
+
+    public ArrayList<Rechnung> getRechungen() {
+        // todo Alle rechnung im Topf mit der gegebenen ID werden als ArrayList ausgegeben!
+        return new ArrayList<Rechnung>(); // Vor?bergehender Return
+    }
 }
