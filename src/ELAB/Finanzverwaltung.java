@@ -135,27 +135,4 @@ public class Finanzverwaltung {
         return "hier steht später der Stand";
     }
 
-
-//    //Methoden bezüglich der Rechnungen
-//
-//    public void addRechnung(String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException{
-//
-//    }
-//    public void removeRechnung(int id) throws ElabException{
-//
-//    }
-//    public void updateRechnung(int id, String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException{
-//
-//    }
-//    public ArrayList<Rechnung> getRechungenFromTopf(int topfId){
-//        // todo Alle rechnung im Topf mit der gegebenen ID werden als ArrayList ausgegeben!
-//        return new ArrayList<Rechnung>(); // Vorübergehender Return
-//    }
-//
-//    public void addRechnung(){
-//
-//    }
-
-
-
 }
