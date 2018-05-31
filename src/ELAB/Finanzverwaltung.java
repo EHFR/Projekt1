@@ -98,16 +98,16 @@ public class Finanzverwaltung {
 
     public void updateTopf(int id, String name, String sollBetrag, String kasse) throws ElabException {
     	
-    	float sollBetragFloat;
+    	float sollBetragFloat2;
         try {
-            sollBetragFloat = Float.parseFloat(sollBetrag);
+            sollBetragFloat2 = Float.parseFloat(sollBetrag);
         } catch (NumberFormatException e) {
             throw new ElabException("Sollbetrag wurde nicht als korrekte Kommazahl angegeben! (float)");
         }
     	
     	Db db = new Db();
 		String sql = "UPDATE Topf SET Name = '" + name +
-								"', SollBestand = '" + sollBetragFloat +
+								"', SollBestand = '" + sollBetragFloat2 +
 								"', Kasse = '" + kasse +
 								"WHERE ID = " + id + "";
 		try {
