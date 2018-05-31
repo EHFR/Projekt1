@@ -20,9 +20,9 @@ public class Bauteileverwaltung {
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Produkt");
             while (rs.next()) {
-                Produkt p = new Produkt(rs.getInt("ID"), rs.getString("Name"), rs.getString("Link")
-                        , rs.getDouble("Einzelpreis"), rs.getInt("MengeLagernd")
-                        , rs.getInt("MengeGeplant"), rs.getInt("MengeBestellt"), rs.getString("LagerOrt"));
+                Produkt p = new Produkt(rs.getInt("ID"), rs.getString("Name"), rs.getString("Link"),
+                        rs.getDouble("Einzelpreis"), rs.getInt("MengeLagernd"),
+                        rs.getInt("MengeGeplant"), rs.getInt("MengeBestellt"), rs.getString("LagerOrt"));
                 this.produkt.add(p);
             }
         } catch (SQLException e) {
@@ -33,25 +33,21 @@ public class Bauteileverwaltung {
 
     }
 
-	private void reloadKategorie()
-	{
-		Db db = new Db();
-		this.kategorie.clear();
-		try {
-			ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
-			while (rs.next())
-			{
-				Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"));
-			}
-			rs.close();
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			db.close();
-		}
-	}
+    private void reloadKategorie() {
+        Db db = new Db();
+        this.kategorie.clear();
+        try {
+            ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
+            while (rs.next()) {
+                Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+    }
 
     public void addProdukt(String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
         Db db = new Db();
@@ -90,16 +86,16 @@ public class Bauteileverwaltung {
     }
 
     public void updateKategorie(ArrayList<String> produktID) {
-    	Db db = new Db();
-		String sql = "UPDATE Kategorie SET produktID = '" + String.join("','", produktID) + "')";
-	    try {
+        Db db = new Db();
+        String sql = "UPDATE Kategorie SET produktID = '" + String.join("','", produktID) + "')";
+        try {
             db.updateQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-		
+
     }
-    			
+
 
     public void removeProdukt(int id) {
         Db db = new Db();
