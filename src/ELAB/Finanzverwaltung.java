@@ -61,10 +61,11 @@ public class Finanzverwaltung {
 		Db db = new Db();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        String sql = "INSERT INTO Topf (Name, SollBestand, Kasse) "
+        String sql = "INSERT INTO Topf (Name, SollBestand, Kasse, Zeitstempel) "
                 + "VALUES ('" + name + "','"
                 + sollBetragFloat + "','"
-                + kasse + "')";
+                + kasse + "','"
+                + timestamp + "')";
 
         try {
             db.updateQuery(sql);
