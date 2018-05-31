@@ -65,6 +65,7 @@ public class Topf {
     }
 
     public ArrayList<Rechnung> getRechnungen() {
+    	this.reloadRechnung();
         return rechnungen;
     }
 
@@ -175,11 +176,16 @@ public class Topf {
     }
 
     public void updateRechnung(int id, String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException {
-
+    	
+    	Db db = new Db();
+        String sql = "UPDATE Rechnung SET Name = '" + name + "', AuftragGeber = '" + auftraggeber
+                + "', AnsprechPartner = '" + ansprechpartner + "', Betrag = '" + betrag + "', Bezahlart = '" + bezahlart
+                + "WHERE ID = " + id + "";
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
-    public ArrayList<Rechnung> getRechungen() {
-        // todo Alle rechnung im Topf mit der gegebenen ID werden als ArrayList ausgegeben!
-        return new ArrayList<Rechnung>(); // Vor?bergehender Return
-    }
+   
 }
