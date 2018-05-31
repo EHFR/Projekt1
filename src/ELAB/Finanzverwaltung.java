@@ -49,7 +49,7 @@ public class Finanzverwaltung {
   }
     
     
-	public void addTopf(String name, float sollBestand, float istBestand, String kasse, String rechnungID) throws ElabException {
+	public void addTopf(String name, String sollBetrag, String konto) throws ElabException {
 		
 		Db db = new Db();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -91,8 +91,7 @@ public class Finanzverwaltung {
   }
 	
 	
-    public void updateTopf(int id, String name, float sollBestand, float istBestand, 
-    						  String kasse, String rechnungID) throws ElabException {
+    public void updateTopf(int id, String name, String sollBetrag, String konto) throws ElabException {
     	Db db = new Db();
 		String sql = "UPDATE Topf SET Name = '" + name + 
 								"', SollBestand = '" + sollBestand + 
