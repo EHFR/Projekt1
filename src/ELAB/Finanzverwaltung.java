@@ -14,10 +14,6 @@ public class Finanzverwaltung {
         this.reloadTopf();
     }
 
-//    public ArrayList<Topf> getToepfe() {
-//        return new ArrayList<>(); // nur provisorisch um Fehler zu vermeiden, MUSS BEI IMPLEMENTIERUNG ENTFERNT WERDEN!
-//    }
-
     public ArrayList<Topf> getToepfe() {
         this.reloadTopf();
         return toepfe;
@@ -61,10 +57,12 @@ public class Finanzverwaltung {
 		Db db = new Db();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        String sql = "INSERT INTO Topf (Name, SollBestand, Kasse) "
+        String sql = "INSERT INTO Topf (Name, SollBestand, Kasse, Zeitstempel) "
                 + "VALUES ('" + name + "','"
                 + sollBetragFloat + "','"
-                + kasse + "')";
+                + kasse + "','" 
+                + timestamp +
+                "')";
 
         try {
             db.updateQuery(sql);
@@ -148,5 +146,9 @@ public class Finanzverwaltung {
     public String getSollbestandKostenstelle() {
         return "hier steht später der Stand";
     }
+    
+//  public ArrayList<Topf> getToepfe() {
+//  return new ArrayList<>(); // nur provisorisch um Fehler zu vermeiden, MUSS BEI IMPLEMENTIERUNG ENTFERNT WERDEN!
+//	}
 
 }
