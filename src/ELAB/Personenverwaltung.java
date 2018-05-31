@@ -24,13 +24,13 @@ public class Personenverwaltung {
         return null;
     }
 
-    public int getPersonIdByName(String name) {
+    public int getPersonIdByName(String name) throws ElabException {
         for (Person personen : personen) {
             if (personen.getName().equals(name)) {
                 return personen.getId();
             }
         }
-        return -1;
+        throw new ElabException("Person existiert nicht");
     }
 
 
