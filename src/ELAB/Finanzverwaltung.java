@@ -14,6 +14,10 @@ public class Finanzverwaltung {
         this.reloadTopf();
     }
 
+//    public ArrayList<Topf> getToepfe() {
+//        return new ArrayList<>(); // nur provisorisch um Fehler zu vermeiden, MUSS BEI IMPLEMENTIERUNG ENTFERNT WERDEN!
+//    }
+
     public ArrayList<Topf> getToepfe() {
         this.reloadTopf();
         return toepfe;
@@ -57,12 +61,10 @@ public class Finanzverwaltung {
 		Db db = new Db();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        String sql = "INSERT INTO Topf (Name, SollBestand, Kasse, Zeitstempel) "
+        String sql = "INSERT INTO Topf (Name, SollBestand, Kasse) "
                 + "VALUES ('" + name + "','"
                 + sollBetragFloat + "','"
-                + kasse + "','" 
-                + timestamp +
-                "')";
+                + kasse + "')";
 
         try {
             db.updateQuery(sql);
@@ -119,36 +121,142 @@ public class Finanzverwaltung {
     //Kassenbestände
     // todo Kontostände müssen aus den Töpfen zusammengrechnet werden und returned werden :)
     public String getIstbestandBarkasse() {
-        return "hier steht später der Stand";
+    	
+    	String sql = "SELECT * FROM Topf";
+    	Db db = new Db();
+    	float betrag = 0;
+    	try {
+    	ResultSet rs = db.exequteQuery(sql);
+    		while(rs.next())
+    		{
+    			if(rs.getString("Kasse").equals("Barkasse"))
+    			{
+    				betrag =+ rs.getInt("IstBestand");
+    			}
+    		}
+    	} 
+    	catch (SQLException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+    	String result = String.valueOf(betrag);
+        return result;
     }
 
 
     public String getSollbestandBarkasse() {
-        return "hier steht später der Stand";
+    	String sql = "SELECT * FROM Topf";
+    	Db db = new Db();
+    	float betrag = 0;
+    	try {
+    	ResultSet rs = db.exequteQuery(sql);
+    		while(rs.next())
+    		{
+    			if(rs.getString("Kasse").equals("Barkasse"))
+    			{
+    				betrag =+ rs.getInt("SollBestand");
+    			}
+    		}
+    	} 
+    	catch (SQLException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+    	String result = String.valueOf(betrag);
+        return result;
     }
 
 
     public String getIstbestandKonto() {
-        return "hier steht später der Stand";
+    	String sql = "SELECT * FROM Topf";
+    	Db db = new Db();
+    	float betrag = 0;
+    	try {
+    	ResultSet rs = db.exequteQuery(sql);
+    		while(rs.next())
+    		{
+    			if(rs.getString("Kasse").equals("Konto"))
+    			{
+    				betrag =+ rs.getInt("IstBestand");
+    			}
+    		}
+    	} 
+    	catch (SQLException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	String result = String.valueOf(betrag);
+        return result;
     }
 
 
     public String getSollbestandKonto() {
-        return "hier steht später der Stand";
+    	String sql = "SELECT * FROM Topf";
+    	Db db = new Db();
+    	float betrag = 0;
+    	try {
+    	ResultSet rs = db.exequteQuery(sql);
+    		while(rs.next())
+    		{
+    			if(rs.getString("Kasse").equals("Konto"))
+    			{
+    				betrag =+ rs.getInt("SollBestand");
+    			}
+    		}
+    	} 
+    	catch (SQLException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	String result = String.valueOf(betrag);
+        return result;
     }
 
 
     public String getIstbestandKostenstelle() {
-        return "hier steht später der Stand";
+    	String sql = "SELECT * FROM Topf";
+    	Db db = new Db();
+    	float betrag = 0;
+    	try {
+    	ResultSet rs = db.exequteQuery(sql);
+    		while(rs.next())
+    		{
+    			if(rs.getString("Kasse").equals("Kostenstelle"))
+    			{
+    				betrag =+ rs.getInt("IstBestand");
+    			}
+    		}
+    	} 
+    	catch (SQLException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	String result = String.valueOf(betrag);
+        return result;
     }
 
 
     public String getSollbestandKostenstelle() {
-        return "hier steht später der Stand";
+    	String sql = "SELECT * FROM Topf";
+    	Db db = new Db();
+    	float betrag = 0;
+    	try {
+    	ResultSet rs = db.exequteQuery(sql);
+    		while(rs.next())
+    		{
+    			if(rs.getString("Kasse").equals("Kostenstelle"))
+    			{
+    				betrag =+ rs.getInt("SollBestand");
+    			}
+    		}
+    	} 
+    	catch (SQLException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	String result = String.valueOf(betrag);
+        return result;
     }
-    
-//  public ArrayList<Topf> getToepfe() {
-//  return new ArrayList<>(); // nur provisorisch um Fehler zu vermeiden, MUSS BEI IMPLEMENTIERUNG ENTFERNT WERDEN!
-//	}
-
 }
