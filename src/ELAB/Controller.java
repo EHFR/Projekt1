@@ -5,6 +5,7 @@ import javafx.collections.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 
@@ -105,8 +106,8 @@ public class Controller implements Initializable {
     public TextField topfNameField;
     public TextField topfSollField;
     public Label topfIstField;
-    public Spinner<String> topfKontoSpinner;
-    private SpinnerValueFactory<String> topfKontoSpinnerValueFactory;
+    public Spinner<String> topfKasseSpinner;
+    private SpinnerValueFactory<String> topfKasseSpinnerValueFactory;
     public Button topfverwaltungNeuBtn;
     public Button topfRemoveBtn;
     public Button topfSaveBtn;
@@ -115,6 +116,11 @@ public class Controller implements Initializable {
     /**
      * Finanzverwaltung Rechnungen
      */
+    public GridPane rechnungBearbeitenGrid;
+    public VBox rechnungTopfListBox;
+    public VBox rechnungRechnungListBox;
+    public VBox rechnungAuftragListBox;
+    public VBox rechnungStatusBox;
     public ListView<String> rechnungenListe;
     public ListView<String> topfListe;
     public ListView<String> auftragsListe;
@@ -122,13 +128,27 @@ public class Controller implements Initializable {
     public TextField rechnungAuftraggeberField;
     public TextField rechnungAnsprechpartnerField;
     public TextField rechnungBetragField;
+    public Spinner<String> rechnungBezahlartSpinner;
+    private SpinnerValueFactory<String> rechnungBezahlartSpinnerValueFactory;
     public Label rechnungTimestampLabel;
     public Button rechnungNeuBtn;
     public Button rechnungRemoveBtn;
     public Button rechnungSaveBtn;
-    // Status Elemente!
-    //public Spinner<String> topfBezahlartSpinner;
-    //private SpinnerValueFactory<String> topfBezahlartSpinnerValueFactory;
+    private boolean neueRechnungModus = false;
+    private int topfListID = -1;
+
+    public Spinner<String> rechnungStatusInBearbeitungSpinner;
+    private SpinnerValueFactory<String> rechnungStatusInBearbeitungSpinnerValueFactory;
+    public Spinner<String> rechnungStatusEingereichtSpinner;
+    private SpinnerValueFactory<String> rechnungStatusEingereichtSpinnerValueFactory;
+    public Spinner<String> rechnungStatusAbgewickeltSpinner;
+    private SpinnerValueFactory<String> rechnungStatusAbgewickeltSpinnerValueFactory;
+    public Spinner<String> rechnungStatusAusstehendSpinner;
+    private SpinnerValueFactory<String> rechnungStatusAusstehendSpinnerValueFactory;
+    public Label rechnungTimestampInBearbeitungLabel;
+    public Label rechnungTimestampEingereichtLabel;
+    public Label rechnungTimestampAbgewickeltLabel;
+    public Label rechnungTimestampAusstehendLabel;
 
     /**
      * Bauteileverwaltung Bauteile
@@ -206,13 +226,27 @@ public class Controller implements Initializable {
          * Finanzverwaltung Konten und Töpfe
          */
         this.updateKontostaende();
-        ObservableList<String> topfKonto = FXCollections.observableArrayList("Barkasse", "Konto", "Kostenstelle");
-        this.topfKontoSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(topfKonto);
-        this.topfKontoSpinner.setValueFactory(topfKontoSpinnerValueFactory);
+        ObservableList<String> topfKasse = FXCollections.observableArrayList("Barkasse", "Konto", "Kostenstelle");
+        this.topfKasseSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(topfKasse);
+        this.topfKasseSpinner.setValueFactory(topfKasseSpinnerValueFactory);
 
         /**
          * Finanzverwaltung Rechnungen
          */
+        ObservableList<String> bezahlarten = FXCollections.observableArrayList("Bar", "Überweisung", "Kostenstelle");
+        this.rechnungBezahlartSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(bezahlarten);
+        this.rechnungBezahlartSpinner.setValueFactory(rechnungBezahlartSpinnerValueFactory);
+
+        this.rechnungStatusInBearbeitungSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.rechnungStatusInBearbeitungSpinner.setValueFactory(rechnungStatusInBearbeitungSpinnerValueFactory);
+        this.rechnungStatusEingereichtSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.rechnungStatusEingereichtSpinner.setValueFactory(rechnungStatusEingereichtSpinnerValueFactory);
+        this.rechnungStatusAbgewickeltSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.rechnungStatusAbgewickeltSpinner.setValueFactory(rechnungStatusAbgewickeltSpinnerValueFactory);
+        this.rechnungStatusAusstehendSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.rechnungStatusAusstehendSpinner.setValueFactory(rechnungStatusAusstehendSpinnerValueFactory);
+
+        this.populateTopfList();
 
         /**
          * Bauteileverwaltung Bauteile
@@ -558,12 +592,12 @@ public class Controller implements Initializable {
      * Finanzverwaltung Konten und Töpfe
      */
     private void updateKontostaende() {
-        //this.kontoBarkasseIstLabel.setText(this.finanzverwaltung.getIstbestandBarkasse());
-        //this.kontoBarkasseSollLabel.setText(this.finanzverwaltung.getSollbestandBarkasse());
-        //this.kontoKontoIstLabel.setText(this.finanzverwaltung.getIstbestandKonto());
-        //this.kontoKontoSollLabel.setText(this.finanzverwaltung.getSollbestandKonto());
-        //this.kontoKostenstelleIstLabel.setText(this.finanzverwaltung.getIstbestandKostenstelle());
-        //this.kontoKostenstelleSollLabel.setText(this.finanzverwaltung.getSollbestandKostenstelle());
+        this.kontoBarkasseIstLabel.setText(this.finanzverwaltung.getIstbestandBarkasse());
+        this.kontoBarkasseSollLabel.setText(this.finanzverwaltung.getSollbestandBarkasse());
+        this.kontoKontoIstLabel.setText(this.finanzverwaltung.getIstbestandKonto());
+        this.kontoKontoSollLabel.setText(this.finanzverwaltung.getSollbestandKonto());
+        this.kontoKostenstelleIstLabel.setText(this.finanzverwaltung.getIstbestandKostenstelle());
+        this.kontoKostenstelleSollLabel.setText(this.finanzverwaltung.getSollbestandKostenstelle());
     }
 
     private void populateTopfverwaltungListe() {
@@ -583,7 +617,7 @@ public class Controller implements Initializable {
         this.topfNameField.setText("");
         this.topfSollField.setText("");
         this.topfIstField.setText("");
-        this.topfKontoSpinnerValueFactory.setValue("Barkasse");
+        this.topfKasseSpinnerValueFactory.setValue("Barkasse");
         this.topfRemoveBtn.setText("Abbrechen");
     }
 
@@ -594,7 +628,7 @@ public class Controller implements Initializable {
         this.topfNameField.setText("");
         this.topfSollField.setText("");
         this.topfIstField.setText("");
-        this.topfKontoSpinnerValueFactory.setValue("Barkasse");
+        this.topfKasseSpinnerValueFactory.setValue("Barkasse");
         this.topfRemoveBtn.setText("Löschen");
     }
 
@@ -608,7 +642,7 @@ public class Controller implements Initializable {
                 return;
             }
             try {
-                this.personenverwaltung.removePerson(listId);
+                this.finanzverwaltung.removeTopf(listId);
             } catch (ElabException e) {
                 showError(e);
                 return;
@@ -629,7 +663,7 @@ public class Controller implements Initializable {
         if (this.neuerTopfModus) {
             try {
                 this.finanzverwaltung.addTopf(this.topfNameField.getText(),
-                        this.topfSollField.getText(), this.topfKontoSpinner.getValue());
+                        this.topfSollField.getText(), this.topfKasseSpinner.getValue());
             } catch (ElabException e) {
                 showError(e);
                 return;
@@ -643,7 +677,7 @@ public class Controller implements Initializable {
             }
             try {
                 this.finanzverwaltung.updateTopf(listId, this.topfNameField.getText(),
-                        this.topfSollField.getText(), this.topfKontoSpinner.getValue());
+                        this.topfSollField.getText(), this.topfKasseSpinner.getValue());
             } catch (ElabException e) {
                 showError(e);
                 return;
@@ -664,23 +698,189 @@ public class Controller implements Initializable {
             this.topfNameField.setText(topf.getName());
             this.topfSollField.setText(String.valueOf(topf.getSollbestand()));
             this.topfIstField.setText(String.valueOf(topf.getIstbestand()));
-            this.topfKontoSpinnerValueFactory.setValue(topf.getKonto());
+            this.topfKasseSpinnerValueFactory.setValue(topf.getKonto());
         }
     }
 
     /**
      * Finanzverwaltung Rechnungen
      */
-    public void addRechnungAction() {
 
+    private void populateTopfList() {
+        ArrayList<String> allToepfe = new ArrayList<>();
+        for (Topf topf : this.finanzverwaltung.getToepfe()) {
+            allToepfe.add(topf.getName());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(allToepfe);
+        topfListe.setItems(items);
+    }
+
+    private void populateRechnungList() {
+        ArrayList<String> allRechnungen = new ArrayList<>();
+        for (Rechnung rechnung : this.finanzverwaltung.getToepfe().get(this.topfListID).getRechnungen()) {
+            allRechnungen.add(rechnung.getName());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(allRechnungen);
+        rechnungenListe.setItems(items);
+    }
+
+    private void populateAuftragList() {
+        ArrayList<String> allAuftraege = new ArrayList<>();
+        for (Auftrag auftrag : this.fertigungsverwaltung.getAuftraege()) {
+            allAuftraege.add(auftrag.getTitel());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(allAuftraege);
+        auftragsListe.setItems(items);
+    }
+
+    public void addRechnungAction() {
+        if (this.topfListID != -1) {
+            this.neueRechnungModus = true;
+            this.rechnungDisableInputs(false);
+            this.topfListe.setDisable(true);
+            this.rechnungenListe.setDisable(true);
+            this.rechnungNameField.setText("");
+            this.rechnungAuftraggeberField.setText("");
+            this.rechnungAnsprechpartnerField.setText("");
+            this.rechnungBetragField.setText("");
+            this.rechnungBezahlartSpinnerValueFactory.setValue("Bar");
+            this.rechnungTimestampLabel.setText("---");
+            this.rechnungRemoveBtn.setText("Abbrechen");
+        } else {
+            showError(new ElabException("Keinen Topf für die Rechnung ausgewählt!"));
+        }
+    }
+
+    private void neueRechnungModusDisable() {
+        this.neueRechnungModus = false;
+        this.rechnungDisableInputs(true);
+        this.topfListe.setDisable(false);
+        this.rechnungenListe.setDisable(false);
+        this.rechnungNameField.setText("");
+        this.rechnungAuftraggeberField.setText("");
+        this.rechnungAnsprechpartnerField.setText("");
+        this.rechnungBetragField.setText("");
+        this.rechnungBezahlartSpinnerValueFactory.setValue("Bar");
+        this.rechnungTimestampLabel.setText("---");
+        this.rechnungRemoveBtn.setText("Löschen");
     }
 
     public void removeRechnungAction() {
-
+        if (this.neueRechnungModus) {
+            this.neueRechnungModusDisable();
+        } else {
+            int listId = this.rechnungenListe.getFocusModel().getFocusedIndex();
+            //listId = this.finanzverwaltung.getRechnung HMMMMM
+            if (listId == -1) {
+                showError(new ElabException("Keine Rechnung zum löschen ausgewählt!"));
+                return;
+            }
+            Rechnung rechnungToRemove = this.finanzverwaltung.getToepfe().get(this.topfListID).getRechnungen().get(listId);
+            try {
+                this.finanzverwaltung.getToepfe().get(this.topfListID).removeRechnung(rechnungToRemove.getId());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+            this.populateRechnungList();
+        }
     }
 
     public void saveRechnungAction() {
+        if (this.rechnungNameField.getText().equals("")) {
+            showError(new ElabException("Rechnungsname darf nicht leer sein!"));
+            return;
+        }
+        if (this.rechnungAuftraggeberField.getText().equals("")) {
+            showError(new ElabException("Auftraggeber darf nicht leer sein!"));
+            return;
+        }
+        if (this.rechnungAnsprechpartnerField.getText().equals("")) {
+            showError(new ElabException("Ansprechpartner darf nicht leer sein!"));
+            return;
+        }
+        if (this.rechnungBetragField.getText().equals("")) {
+            showError(new ElabException("Betrag darf nicht leer sein!"));
+            return;
+        }
+        if (this.neueRechnungModus) {
+            try {
+                this.finanzverwaltung.getToepfe().get(this.topfListID).addRechnung(this.rechnungNameField.getText(),
+                        this.rechnungAuftraggeberField.getText(), this.rechnungAnsprechpartnerField.getText(),
+                        this.rechnungBetragField.getText(), this.rechnungBezahlartSpinner.getValue());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+            this.neueRechnungModusDisable();
+        } else {
+            int listId = this.rechnungenListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError(new ElabException("Keine Rechnung zum Bearbeiten ausgewählt!"));
+                return;
+            }
+            Rechnung rechnung = this.finanzverwaltung.getToepfe().get(this.topfListID).getRechnungen().get(listId);
+            try {
+                this.finanzverwaltung.getToepfe().get(this.topfListID).updateRechnung(rechnung.getId(), this.rechnungNameField.getText(),
+                        this.rechnungAuftraggeberField.getText(), this.rechnungAnsprechpartnerField.getText(),
+                        this.rechnungBetragField.getText(), this.rechnungBezahlartSpinner.getValue());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+        }
+        showOk();
+        this.populateRechnungList();
+    }
 
+    private void rechnungDisableInputs(boolean disabled) {
+        rechnungBearbeitenGrid.setDisable(disabled);
+        rechnungAuftragListBox.setDisable(disabled);
+    }
+
+    public void rechnungUpdateTextFields() {
+        int listId = this.rechnungenListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            this.rechnungDisableInputs(true);
+        } else {
+            this.rechnungDisableInputs(false);
+
+            //Rechnung rechnung = this.finanzverwaltung.getRechungenFromTopf(this.topfListID).get(listId);
+            Rechnung rechnung = this.finanzverwaltung.getToepfe().get(this.topfListID).getRechnungen().get(listId);
+
+            this.rechnungNameField.setText(rechnung.getName());
+            this.rechnungAuftraggeberField.setText(rechnung.getAuftraggeber().getName());
+            this.rechnungAnsprechpartnerField.setText(rechnung.getAnsprechpartner().getName());
+            this.rechnungBetragField.setText(String.valueOf(rechnung.getBetrag()));
+            this.rechnungBezahlartSpinnerValueFactory.setValue(rechnung.getBezahlart());
+            this.rechnungTimestampLabel.setText(rechnung.getZeitstempelString());
+
+            this.populateAuftragList();
+        }
+    }
+
+    public void rechnungTopfChangedAction() {
+        this.topfListID = this.topfListe.getFocusModel().getFocusedIndex();
+        this.rechnungDisableInputs(true);
+        if (this.topfListID == -1) {
+            this.rechnungRechnungListBox.setDisable(true);
+        } else {
+            this.populateRechnungList();
+        }
+        this.rechnungUpdateTextFields();
+    }
+
+    public void rechnungLoadFromAuftrag() {
+        int listId = this.auftragsListe.getFocusModel().getFocusedIndex();
+        if (listId != -1) {
+            Auftrag auftrag = this.fertigungsverwaltung.getAuftraege().get(listId);
+
+            this.rechnungAuftraggeberField.setText(auftrag.getAuftraggeber().getName());
+            this.rechnungAnsprechpartnerField.setText(auftrag.getAuftragbearbeiter().get(0).getName());
+            this.rechnungBetragField.setText(String.valueOf(auftrag.getKosten()));
+        } else {
+            showError(new ElabException("Laden des Auftrages fehlgeschlagen..."));
+        }
     }
 
 

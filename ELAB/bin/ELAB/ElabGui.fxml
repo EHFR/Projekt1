@@ -402,7 +402,7 @@
                                                             <Insets right="5.0" />
                                                          </GridPane.margin></TextField>
                                                       <Label text="Konto:" GridPane.rowIndex="3" />
-                                                      <Spinner fx:id="topfKontoSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Spinner fx:id="topfKasseSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                    </children>
                                                 </GridPane>
                                              </children>
