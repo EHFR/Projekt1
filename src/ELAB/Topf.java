@@ -107,7 +107,51 @@ public class Topf {
     }
 
     public void addRechnung(String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException {
-
+    	
+    	float BetragFloat;
+        try {
+            BetragFloat = Float.parseFloat(betrag);
+        } catch (NumberFormatException e) {
+            throw new ElabException("Betrag wurde nicht als korrekte Kommazahl angegeben! (float)");
+        }
+    	
+    	Personenverwaltung person = new Personenverwaltung();
+    	
+    	for (String namen : ansprechpartner.split("\n")) {
+            if (!person.personAlreadyExists(namen)) {
+                throw new ElabException("Auftragbearbeiter " + namen + " existiert nicht!");
+            }
+        }
+    	
+    	for (String namen : auftraggeber.split("\n")) {
+            if (!person.personAlreadyExists(namen)) {
+                throw new ElabException("Auftraggeber " + namen + " existiert nicht!");
+            }
+        }
+    	
+    	ArrayList<String> personen = new ArrayList<>();
+    	personen.add(auftraggeber);
+    	personen.add(ansprechpartner);
+    	
+    	Db db = new Db();
+        zeitstempel = new Timestamp(System.currentTimeMillis());
+        
+        String sql = "INSERT INTO Rechnung (Datum, Name, AuftragGeber, AnsprechPartner, TopfID, Betrag, Bezahlart, inBearbeitung, eingereicht, abgewickelt, ausstehend, Zeitstempel) "
+                + "VALUES ('" + zeitstempel + "','"
+                + name + "','"
+                + auftraggeber + "','"
+                + ansprechpartner + "',"
+                + id + ",'"
+                + BetragFloat + ","
+                + bezahlart + ",'"
+                + "FALSE','FALSE','FALSE','FALSE',"
+                + zeitstempel + "')";
+        
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeRechnung(int id) throws ElabException {
