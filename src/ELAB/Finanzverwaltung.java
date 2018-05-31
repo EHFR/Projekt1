@@ -50,13 +50,20 @@ public class Finanzverwaltung {
 
 
 	public void addTopf(String name, String sollBetrag, String kasse) throws ElabException {
-		float f = Float.parseFloat(sollBetrag);
+		
+		float sollBetragFloat;
+        try {
+            sollBetragFloat = Float.parseFloat(sollBetrag);
+        } catch (NumberFormatException e) {
+            throw new ElabException("Sollbetrag wurde nicht als korrekte Kommazahl angegeben! (float)");
+        }
+        
 		Db db = new Db();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         String sql = "INSERT INTO Auftrag (Name, SollBestand, Kasse) "
                 + "VALUES ('" + name + "','"
-                + f + "','"
+                + sollBetragFloat + "','"
                 + kasse + "')";
 
         try {
@@ -90,10 +97,17 @@ public class Finanzverwaltung {
 
 
     public void updateTopf(int id, String name, String sollBetrag, String kasse) throws ElabException {
-    	float f = Float.parseFloat(sollBetrag);
+    	
+    	float sollBetragFloat;
+        try {
+            sollBetragFloat = Float.parseFloat(sollBetrag);
+        } catch (NumberFormatException e) {
+            throw new ElabException("Sollbetrag wurde nicht als korrekte Kommazahl angegeben! (float)");
+        }
+    	
     	Db db = new Db();
 		String sql = "UPDATE Topf SET Name = '" + name +
-								"', SollBestand = '" + f +
+								"', SollBestand = '" + sollBetragFloat +
 								"', Kasse = '" + kasse +
 								"WHERE ID = " + id + "";
 		try {
