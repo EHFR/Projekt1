@@ -698,7 +698,7 @@ public class Controller implements Initializable {
             this.topfNameField.setText(topf.getName());
             this.topfSollField.setText(String.valueOf(topf.getSollbestand()));
             this.topfIstField.setText(String.valueOf(topf.getIstbestand()));
-            this.topfKasseSpinnerValueFactory.setValue(topf.getKonto());
+            this.topfKasseSpinnerValueFactory.setValue(topf.getKasse());
         }
     }
 

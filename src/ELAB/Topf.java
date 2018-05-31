@@ -1,5 +1,6 @@
 package ELAB;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ public class Topf {
     private float sollbestand;
     private float istbestand;
     private ArrayList<Rechnung> rechnungen;
-    private String konto;
+    private String kasse;
     private Timestamp zeitstempel;
 
     public Timestamp getZeitstempel() {
@@ -20,12 +21,12 @@ public class Topf {
         this.zeitstempel = zeitstempel;
     }
 
-    public Topf(int id, String name, float sollbestand, float istbestand, String konto) {
+    public Topf(int id, String name, float sollbestand, float istbestand, String kasse) {
         this.id = id;
         this.name = name;
         this.sollbestand = sollbestand;
         this.istbestand = istbestand;
-        this.konto = konto;
+        this.kasse = kasse;
         this.zeitstempel = new Timestamp(System.currentTimeMillis());
     }
 
@@ -69,8 +70,8 @@ public class Topf {
         rechnungen.add(r);
     }
 
-    public String getKonto() {
-        return konto;
+    public String getKasse() {
+        return kasse;
     }
 
 
@@ -81,7 +82,23 @@ public class Topf {
     }
 
     public void removeRechnung(int id) throws ElabException {
-
+    	Db db = new Db();
+        Rechnung r = this.getRechnungByID(id);
+        String sql = "DELETE FROM Rechnung WHERE ID = " + r.getId() + " ";
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private Rechnung getRechnungByID(int id) {
+        for (Rechnung rechnung : rechnungen) {
+            if (rechnung.getId() == id) {
+                return rechnung;
+            }
+        }
+        return null;
     }
 
     public void updateRechnung(int id, String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException {
