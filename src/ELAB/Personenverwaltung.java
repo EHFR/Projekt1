@@ -43,7 +43,10 @@ public class Personenverwaltung {
     }
 
     public void checkAnmeldeinfos(String name, String passwort) throws ElabException {
-        // todo prüfe, ob es eine Person mit gegebenem Namen gib. Prüfe dann, ob das Passwort stimmt, wenn Nicht werfe einen Fehler, sonst mach nichts
+        Person person = this.getPersonByName(name);
+        if (!passwort.equals(person.getPasswort())) {
+            throw new ElabException("Passwort inkorrekt");
+        }
     }
 
 
@@ -78,10 +81,12 @@ public class Personenverwaltung {
         //todo hier muss alles mögliche getestet werden bevor der sql befehl ausgeführt wird, dann gegebenenfalls einen Fehler wie unten gezeigt auslösen
         //todo Achtung! Jede methode die einen Error wie unten gezeigt auslöst muss "throws ElabException" im Methodenkopf beinhalten
         //throw new ElabException("Das ist der ErrorText, der später in der GUI angezeigt wird");
-        //("Name existiert schon, bitte einen anderen wählen!") // testen und gegebenfalls error auswerfen
+
+        if (this.personAlreadyExists(personName)) {
+            throw new ElabException("Name existiert schon, bitte einen anderen wählen!");
+        }
 
         Db db = new Db();
-
 
         timestamp = new Timestamp(System.currentTimeMillis());
         String sql = "INSERT INTO Personen (PersonName, PersonAdresse, PersonTel, PersonEmail, Timestamp, Type, Password) "
@@ -97,6 +102,19 @@ public class Personenverwaltung {
     }
 
     public void removePerson(int id) throws ElabException {
+
+        // Testen, ob das letzte Mitglied gelöscht wird.
+        boolean letztesMitglied = true;
+        for (Person person : personen) {
+            if (person.getType().equals("Mitglied") && person.getId() != id) {
+                letztesMitglied = false;
+                break;
+            }
+        }
+        if (letztesMitglied) {
+            throw new ElabException("Letztes Mitglied kann nicht gelöscht werden");
+        }
+
         Db db = new Db();
         String sql = "DELETE FROM Personen WHERE PersonID = " + id + " ";
         try {
