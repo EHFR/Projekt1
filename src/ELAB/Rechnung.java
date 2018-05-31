@@ -1,6 +1,7 @@
 package ELAB;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Rechnung {
@@ -89,6 +90,15 @@ public class Rechnung {
 
     public Timestamp getZeitstempel() {
         return zeitstempel;
+    }
+
+    public String getZeitstempelString() {
+        if (zeitstempel != null) {
+            Date date = new Date();
+            date.setTime(zeitstempel.getTime());
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
+        }
+        return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
 
     public void setZeitstempel(Timestamp zeitstempel) {
