@@ -15,6 +15,8 @@ public class Rechnung {
     private String status;
     private Timestamp zeitstempel;
 
+    //todo Hier fehlt noch Bezahlart und ein Getter Methode dafür!
+
     public Rechnung(int id, Date datum, String name, Person auftraggeber, Person ansprechpartner, Topf topf, float betrag, String status, Timestamp zeitstempel) {
         this.id = id;
         this.datum = new Date();
