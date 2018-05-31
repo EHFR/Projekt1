@@ -49,17 +49,15 @@ public class Finanzverwaltung {
   }
 
 
-	public void addTopf(String name, String sollBetrag, String konto) throws ElabException {
-
+	public void addTopf(String name, String sollBetrag, String kasse) throws ElabException {
+		float f = Float.parseFloat(sollBetrag);
 		Db db = new Db();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        String sql = "INSERT INTO Auftrag (Name, SollBestand, IstBestand, Kasse, RechnungID) "
+        String sql = "INSERT INTO Auftrag (Name, SollBestand, Kasse) "
                 + "VALUES ('" + name + "','"
-                + sollBestand + "','"
-                + istBestand + "','"
-                + kasse + "',"
-                + rechnungID + "')";
+                + f + "','"
+                + kasse + "')";
 
         try {
             db.updateQuery(sql);
@@ -91,13 +89,12 @@ public class Finanzverwaltung {
   }
 
 
-    public void updateTopf(int id, String name, String sollBetrag, String konto) throws ElabException {
+    public void updateTopf(int id, String name, String sollBetrag, String kasse) throws ElabException {
+    	float f = Float.parseFloat(sollBetrag);
     	Db db = new Db();
 		String sql = "UPDATE Topf SET Name = '" + name +
-								"', SollBestand = '" + sollBestand +
-								"', IstBestand = '" + istBestand +
+								"', SollBestand = '" + f +
 								"', Kasse = '" + kasse +
-								"', RechnungID = '" + rechnungID +
 								"WHERE ID = " + id + "";
 		try {
 			db.updateQuery(sql);
@@ -139,25 +136,25 @@ public class Finanzverwaltung {
     }
 
 
-    //Methoden bezüglich der Rechnungen
-
-    public void addRechnung(String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException{
-
-    }
-    public void removeRechnung(int id) throws ElabException{
-
-    }
-    public void updateRechnung(int id, String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException{
-
-    }
-    public ArrayList<Rechnung> getRechungenFromTopf(int topfId){
-        // todo Alle rechnung im Topf mit der gegebenen ID werden als ArrayList ausgegeben!
-        return new ArrayList<Rechnung>(); // Vorübergehender Return
-    }
-
-    public void addRechnung(){
-
-    }
+//    //Methoden bezüglich der Rechnungen
+//
+//    public void addRechnung(String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException{
+//
+//    }
+//    public void removeRechnung(int id) throws ElabException{
+//
+//    }
+//    public void updateRechnung(int id, String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException{
+//
+//    }
+//    public ArrayList<Rechnung> getRechungenFromTopf(int topfId){
+//        // todo Alle rechnung im Topf mit der gegebenen ID werden als ArrayList ausgegeben!
+//        return new ArrayList<Rechnung>(); // Vorübergehender Return
+//    }
+//
+//    public void addRechnung(){
+//
+//    }
 
 
 
