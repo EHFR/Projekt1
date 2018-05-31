@@ -20,7 +20,6 @@ public class Personenverwaltung {
                 return personen;
             }
         }
-
         return null;
     }
 
@@ -77,11 +76,6 @@ public class Personenverwaltung {
     }
 
     public void addPerson(String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) throws ElabException {
-
-        //todo hier muss alles mögliche getestet werden bevor der sql befehl ausgeführt wird, dann gegebenenfalls einen Fehler wie unten gezeigt auslösen
-        //todo Achtung! Jede methode die einen Error wie unten gezeigt auslöst muss "throws ElabException" im Methodenkopf beinhalten
-        //throw new ElabException("Das ist der ErrorText, der später in der GUI angezeigt wird");
-
         if (this.personAlreadyExists(personName)) {
             throw new ElabException("Name existiert schon, bitte einen anderen wählen!");
         }
@@ -98,11 +92,9 @@ public class Personenverwaltung {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void removePerson(int id) throws ElabException {
-
         // Testen, ob das letzte Mitglied gelöscht wird.
         boolean letztesMitglied = true;
         for (Person person : personen) {
@@ -153,5 +145,4 @@ public class Personenverwaltung {
         }
         return false;
     }
-
 }
