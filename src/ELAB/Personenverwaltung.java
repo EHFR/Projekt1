@@ -14,7 +14,7 @@ public class Personenverwaltung {
         this.reloadPersonen();
     }
 
-    private Person getPersonByID(int id) {
+    public Person getPersonByID(int id) {
         for (Person personen : personen) {
             if (personen.getId() == id) {
                 return personen;
@@ -24,13 +24,26 @@ public class Personenverwaltung {
         return null;
     }
 
-    public int getPersonIdByName(String name) throws ElabException {
+    public int getPersonIdByName(String name) {
         for (Person personen : personen) {
             if (personen.getName().equals(name)) {
                 return personen.getId();
             }
         }
-        throw new ElabException("Person existiert nicht");
+        return -1;
+    }
+
+    public Person getPersonByName(String name) throws ElabException {
+        for (Person person : personen) {
+            if (person.getName().equals(name)) {
+                return person;
+            }
+        }
+        throw new ElabException("Person existiert nicht!");
+    }
+
+    public void checkAnmeldeinfos(String name, String passwort) throws ElabException {
+        // todo prüfe, ob es eine Person mit gegebenem Namen gib. Prüfe dann, ob das Passwort stimmt, wenn Nicht werfe einen Fehler, sonst mach nichts
     }
 
 

@@ -5,6 +5,7 @@ import javafx.collections.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -27,11 +28,21 @@ public class Controller implements Initializable {
     /**
      * Anmeldung
      */
+    public VBox abmeldenBox;
+    public HBox anmeldenBox;
+    public TabPane contentTabPane;
+    public Tab tabPersonenverwaltung;
+    public Tab tabFertigungsverwaltung;
+    public Tab tabFinanzverwaltung;
+    public Tab tabBauteileverwaltung;
+    public Tab tabBauteileverwaltungVerwaltung;
     public TextField anmeldungNameField;
     public TextField anmeldungPasswortField;
     public Label anmeldungAngemeldetLabel;
     public Button anmeldungAnmeldenBtn;
     public Button anmeldungAbmeldenBtn;
+    private Person angemeldetePerson = null;
+
 
     /**
      * Personenverwaltung
@@ -116,7 +127,7 @@ public class Controller implements Initializable {
     /**
      * Finanzverwaltung Rechnungen
      */
-    public GridPane rechnungBearbeitenGrid;
+    public GridPane rechnungBearbeitungGrid;
     public VBox rechnungTopfListBox;
     public VBox rechnungRechnungListBox;
     public VBox rechnungAuftragListBox;
@@ -191,6 +202,11 @@ public class Controller implements Initializable {
         this.bauteileverwaltung = new Bauteileverwaltung();
 
         /**
+         * Anmeldung INIT
+         */
+        this.setAuthorization();
+
+        /**
          * Personenverwaltung INIT
          */
         this.populatePersonenverwaltungList();
@@ -229,6 +245,7 @@ public class Controller implements Initializable {
         ObservableList<String> topfKasse = FXCollections.observableArrayList("Barkasse", "Konto", "Kostenstelle");
         this.topfKasseSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(topfKasse);
         this.topfKasseSpinner.setValueFactory(topfKasseSpinnerValueFactory);
+        this.populateTopfverwaltungListe();
 
         /**
          * Finanzverwaltung Rechnungen
@@ -282,15 +299,81 @@ public class Controller implements Initializable {
         error.setVisible(false);
     }
 
+    private String boolToJaNein(boolean bool) {
+        if (bool) {
+            return "Ja";
+        }
+        return "Nein";
+    }
+
+    private boolean jaNeinToBool(String jaNein) {
+        return jaNein.equals("Ja");
+    }
+
+
     /**
      * Anmeldung
      */
     public void anmeldenAction() {
-
+        if (this.anmeldungNameField.getText().equals("")) {
+            showError(new ElabException("Keinen Anmeldenamen angegeben"));
+            return;
+        }
+        if (this.anmeldungPasswortField.getText().equals("")) {
+            showError(new ElabException("Kein Passwort angegeben"));
+            return;
+        }
+        try {
+            personenverwaltung.checkAnmeldeinfos(this.anmeldungNameField.getText(), this.anmeldungPasswortField.getText());
+            this.angemeldetePerson = this.personenverwaltung.getPersonByName(this.anmeldungNameField.getText());
+        } catch (ElabException e) {
+            showError(e);
+            return;
+        }
+        this.setAuthorization();
+        showOk();
     }
 
     public void abmeldenAction() {
+        this.angemeldetePerson = null;
+        this.setAuthorization();
+    }
 
+    private void setAuthorization() {
+        if (this.angemeldetePerson == null) {
+            this.abmeldenBox.setDisable(true);
+            this.anmeldenBox.setDisable(false);
+            this.contentTabPane.setDisable(true);
+            this.tabPersonenverwaltung.setDisable(true);
+            this.tabFertigungsverwaltung.setDisable(true);
+            this.tabFinanzverwaltung.setDisable(true);
+            this.tabBauteileverwaltung.setDisable(true);
+            this.tabBauteileverwaltungVerwaltung.setDisable(true);
+
+        } else if (this.angemeldetePerson.getType().equals("Mitglied")) {
+            this.abmeldenBox.setDisable(false);
+            this.anmeldenBox.setDisable(true);
+            this.contentTabPane.setDisable(false);
+            this.tabPersonenverwaltung.setDisable(false);
+            this.tabFertigungsverwaltung.setDisable(false);
+            this.tabFinanzverwaltung.setDisable(false);
+            this.tabBauteileverwaltung.setDisable(false);
+            this.tabBauteileverwaltungVerwaltung.setDisable(false);
+
+        } else if (this.angemeldetePerson.getType().equals("Kunde") || this.angemeldetePerson.getType().equals("Lehrstuhl bezogene Person")) {
+            this.abmeldenBox.setDisable(false);
+            this.anmeldenBox.setDisable(true);
+            this.contentTabPane.setDisable(false);
+            this.tabPersonenverwaltung.setDisable(true);
+            this.tabFertigungsverwaltung.setDisable(true);
+            this.tabFinanzverwaltung.setDisable(true);
+            this.tabBauteileverwaltung.setDisable(false);
+            this.tabBauteileverwaltungVerwaltung.setDisable(true);
+
+        } else {
+            showError(new ElabException("Internal Error when setting the authorization"));
+            this.contentTabPane.setDisable(true);
+        }
     }
 
     /**
@@ -577,17 +660,6 @@ public class Controller implements Initializable {
         }
     }
 
-    private String boolToJaNein(boolean bool) {
-        if (bool) {
-            return "Ja";
-        }
-        return "Nein";
-    }
-
-    private boolean jaNeinToBool(String jaNein) {
-        return jaNein.equals("Ja");
-    }
-
     /**
      * Finanzverwaltung Konten und Töpfe
      */
@@ -642,7 +714,8 @@ public class Controller implements Initializable {
                 return;
             }
             try {
-                this.finanzverwaltung.removeTopf(listId);
+                Topf topfToRemove = this.finanzverwaltung.getToepfe().get(listId);
+                this.finanzverwaltung.removeTopf(topfToRemove.getId());
             } catch (ElabException e) {
                 showError(e);
                 return;
@@ -676,7 +749,8 @@ public class Controller implements Initializable {
                 return;
             }
             try {
-                this.finanzverwaltung.updateTopf(listId, this.topfNameField.getText(),
+                Topf topf = this.finanzverwaltung.getToepfe().get(listId);
+                this.finanzverwaltung.updateTopf(topf.getId(), this.topfNameField.getText(),
                         this.topfSollField.getText(), this.topfKasseSpinner.getValue());
             } catch (ElabException e) {
                 showError(e);
@@ -770,7 +844,6 @@ public class Controller implements Initializable {
             this.neueRechnungModusDisable();
         } else {
             int listId = this.rechnungenListe.getFocusModel().getFocusedIndex();
-            //listId = this.finanzverwaltung.getRechnung HMMMMM
             if (listId == -1) {
                 showError(new ElabException("Keine Rechnung zum löschen ausgewählt!"));
                 return;
@@ -834,7 +907,7 @@ public class Controller implements Initializable {
     }
 
     private void rechnungDisableInputs(boolean disabled) {
-        rechnungBearbeitenGrid.setDisable(disabled);
+        rechnungBearbeitungGrid.setDisable(disabled);
         rechnungAuftragListBox.setDisable(disabled);
     }
 
@@ -844,8 +917,6 @@ public class Controller implements Initializable {
             this.rechnungDisableInputs(true);
         } else {
             this.rechnungDisableInputs(false);
-
-            //Rechnung rechnung = this.finanzverwaltung.getRechungenFromTopf(this.topfListID).get(listId);
             Rechnung rechnung = this.finanzverwaltung.getToepfe().get(this.topfListID).getRechnungen().get(listId);
 
             this.rechnungNameField.setText(rechnung.getName());
@@ -883,11 +954,9 @@ public class Controller implements Initializable {
         }
     }
 
-
     /**
      * Bauteileverwaltung Bauteile
      */
-
 
     /**
      * Bauteileverwaltung Verwaltung

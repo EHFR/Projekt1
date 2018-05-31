@@ -23,28 +23,32 @@
    <children>
       <HBox prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: #bbb;">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <HBox fx:id="anmeldenBox" prefHeight="42.0" prefWidth="423.0">
                <children>
-                  <Label text="Name" />
-                  <TextField fx:id="anmeldungNameField" />
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Name" />
+                        <TextField fx:id="anmeldungNameField" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Passwort" />
+                        <PasswordField fx:id="anmeldungPasswortField" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="BOTTOM_LEFT" prefHeight="42.0" prefWidth="210.0">
+                     <children>
+                        <Button fx:id="anmeldungAnmeldenBtn" mnemonicParsing="false" onAction="#anmeldenAction" text="Anmelden">
+                           <VBox.margin>
+                              <Insets left="1.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Label text="Passwort" />
-                  <TextField fx:id="anmeldungPasswortField" />
-               </children>
-            </VBox>
-            <VBox alignment="BOTTOM_LEFT" prefHeight="42.0" prefWidth="210.0">
-               <children>
-                  <Button fx:id="anmeldungAnmeldenBtn" mnemonicParsing="false" onAction="#anmeldenAction" text="Anmelden">
-                     <VBox.margin>
-                        <Insets left="1.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox prefHeight="42.0" prefWidth="176.0">
+            </HBox>
+            <VBox fx:id="abmeldenBox" prefHeight="42.0" prefWidth="176.0">
                <children>
                   <Label fx:id="anmeldungAngemeldetLabel" text="Abgemeldet" />
                   <Button fx:id="anmeldungAbmeldenBtn" mnemonicParsing="false" onAction="#abmeldenAction" prefHeight="25.0" prefWidth="182.0" text="Abmelden" />
@@ -55,9 +59,9 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="contentTabPane" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Personenverwaltung">
+          <Tab fx:id="tabPersonenverwaltung" text="Personenverwaltung">
                <content>
                   <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -116,7 +120,7 @@
                   </VBox>
                </content>
             </Tab>
-          <Tab text="Fertigungsverwaltung">
+          <Tab fx:id="tabFertigungsverwaltung" text="Fertigungsverwaltung">
                <content>
                   <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -270,7 +274,7 @@
                      </children>
                   </VBox>
                </content></Tab>
-            <Tab text="Finanzverwaltung">
+            <Tab fx:id="tabFinanzverwaltung" text="Finanzverwaltung">
                <content>
                   <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
@@ -531,7 +535,7 @@
                     </tabs>
                   </TabPane>
                </content></Tab>
-            <Tab text="Bauteileverwaltung">
+            <Tab fx:id="tabBauteileverwaltung" text="Bauteileverwaltung">
                <content>
                   <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
@@ -603,7 +607,7 @@
                               </VBox>
                            </content>
                         </Tab>
-                      <Tab text="Verwaltung">
+                      <Tab fx:id="tabBauteileverwaltungVerwaltung" text="Verwaltung">
                            <content>
                               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
