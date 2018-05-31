@@ -36,6 +36,8 @@ public class Controller implements Initializable {
     public Tab tabFinanzverwaltung;
     public Tab tabBauteileverwaltung;
     public Tab tabBauteileverwaltungVerwaltung;
+    public Tab tabBauteileverwaltungBauteile;
+    public TabPane bauteileverwaltungTabPane;
     public TextField anmeldungNameField;
     public TextField anmeldungPasswortField;
     public Label anmeldungAngemeldetLabel;
@@ -343,32 +345,37 @@ public class Controller implements Initializable {
         if (this.angemeldetePerson == null) {
             this.abmeldenBox.setDisable(true);
             this.anmeldenBox.setDisable(false);
-            this.contentTabPane.setDisable(true);
+            this.contentTabPane.setVisible(false);
             this.tabPersonenverwaltung.setDisable(true);
             this.tabFertigungsverwaltung.setDisable(true);
             this.tabFinanzverwaltung.setDisable(true);
             this.tabBauteileverwaltung.setDisable(true);
             this.tabBauteileverwaltungVerwaltung.setDisable(true);
+            this.anmeldungAngemeldetLabel.setText("Abgemeldet");
 
         } else if (this.angemeldetePerson.getType().equals("Mitglied")) {
             this.abmeldenBox.setDisable(false);
             this.anmeldenBox.setDisable(true);
-            this.contentTabPane.setDisable(false);
+            this.contentTabPane.setVisible(true);
             this.tabPersonenverwaltung.setDisable(false);
             this.tabFertigungsverwaltung.setDisable(false);
             this.tabFinanzverwaltung.setDisable(false);
             this.tabBauteileverwaltung.setDisable(false);
             this.tabBauteileverwaltungVerwaltung.setDisable(false);
+            this.anmeldungAngemeldetLabel.setText("Mitglied: " + this.angemeldetePerson.getName());
 
         } else if (this.angemeldetePerson.getType().equals("Kunde") || this.angemeldetePerson.getType().equals("Lehrstuhl bezogene Person")) {
             this.abmeldenBox.setDisable(false);
             this.anmeldenBox.setDisable(true);
-            this.contentTabPane.setDisable(false);
+            this.contentTabPane.setVisible(true);
             this.tabPersonenverwaltung.setDisable(true);
             this.tabFertigungsverwaltung.setDisable(true);
             this.tabFinanzverwaltung.setDisable(true);
             this.tabBauteileverwaltung.setDisable(false);
             this.tabBauteileverwaltungVerwaltung.setDisable(true);
+            this.contentTabPane.getSelectionModel().select(this.tabBauteileverwaltung);
+            this.bauteileverwaltungTabPane.getSelectionModel().select(this.tabBauteileverwaltungBauteile);
+            this.anmeldungAngemeldetLabel.setText(this.angemeldetePerson.getType() + ": " + this.angemeldetePerson.getName());
 
         } else {
             showError(new ElabException("Internal Error when setting the authorization"));
