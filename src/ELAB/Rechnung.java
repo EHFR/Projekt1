@@ -112,5 +112,9 @@ public class Rechnung {
 
     }
 
+    public String getBezahlart(){
+        return "Die Bezahlart"; // todo das hier ist nur ein Platzhalter
+    }
+
 
 }
