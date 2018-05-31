@@ -1,5 +1,6 @@
 package ELAB;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -12,6 +13,11 @@ public class Topf {
     private ArrayList<Rechnung> rechnungen;
     private String kasse;
     private Timestamp zeitstempel;
+    
+    public Topf() {
+        rechnungen = new ArrayList<>();
+        this.reloadRechnung();
+    }
 
     public Timestamp getZeitstempel() {
         return zeitstempel;
@@ -76,6 +82,29 @@ public class Topf {
 
 
     // Methoden Für Rechnungen in dem Topf
+    
+    private void reloadRechnung() {
+        Db db = new Db();
+        this.rechnungen.clear();
+        try {
+            ResultSet rs = db.exequteQuery("SELECT * FROM Rechnung");
+            while (rs.next()) {
+                Rechnung r = new Rechnung(rs.getInt("ID"), rs.getString("Name"), rs.getFloat("Betrag"), rs.getString("Bezahlart"), 
+                		rs.getBoolean("inBearbeitung"), rs.getTimestamp("statusZeitstempel_inBearbeitung"),
+                		rs.getBoolean("eingereicht"), rs.getTimestamp("statusZeitstempel_eingereicht"),
+                		rs.getBoolean("abgewickelt"), rs.getTimestamp("statusZeitstempel_abgewickelt"),
+                		rs.getBoolean("ausstehend"), rs.getTimestamp("statusZeitstempel_ausstehend"));
+                r.setZeitstempel(rs.getTimestamp("Zeitstempel"));
+                this.rechnungen.add(r);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error while reading Database!");
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+    }
 
     public void addRechnung(String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException {
 

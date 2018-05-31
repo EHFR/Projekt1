@@ -27,17 +27,12 @@ public class Rechnung {
 
     //todo Hier fehlt noch Bezahlart und ein Getter Methode dafür!
 
-    public Rechnung(int id, String name, Person auftraggeber, Person ansprechpartner, Topf topf, 
-			float betrag, String bezahlart, boolean inBearbeitung, Timestamp statusZeitstempel_inBearbeitung, 
+    public Rechnung(int id, String name,float betrag, String bezahlart, boolean inBearbeitung, Timestamp statusZeitstempel_inBearbeitung, 
 			boolean eingereicht, Timestamp statusZeitstempel_eingereicht, boolean abgewickelt, 
-			Timestamp statusZeitstempel_abgewickelt, boolean ausstehend, Timestamp statusZeitstempel_ausstehend,
-			Date datum) {
+			Timestamp statusZeitstempel_abgewickelt, boolean ausstehend, Timestamp statusZeitstempel_ausstehend) {
     			
     	this.id = id;
     	this.name = name;
-    	this.auftraggeber = auftraggeber;
-    	this.ansprechpartner = ansprechpartner;
-		this.topf = topf;
 		this.betrag = betrag;
 		this.bezahlart = bezahlart;
 		this.inBearbeitung = false;
