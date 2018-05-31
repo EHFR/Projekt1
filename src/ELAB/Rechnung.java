@@ -129,7 +129,7 @@ public class Rechnung {
     }
 
     public String getBezahlart(){
-        return "Die Bezahlart"; // todo das hier ist nur ein Platzhalter
+        return bezahlart; // todo das hier ist nur ein Platzhalter
     }
 
     public Timestamp getStatusZeitstempel_inBearbeitung() {
