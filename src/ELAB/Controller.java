@@ -296,7 +296,6 @@ public class Controller implements Initializable {
         this.produktverwaltungMengeBestelltSpinner.setValueFactory(produktverwaltungMengeBestelltSpinnerValueFactory);
         this.produktverwaltungMengeGeplantSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
         this.produktverwaltungMengeGeplantSpinner.setValueFactory(produktverwaltungMengeGeplantSpinnerValueFactory);
-
         this.populateKategorieverwaltungList();
     }
 
