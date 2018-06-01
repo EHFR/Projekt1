@@ -88,7 +88,10 @@ public class Kategorie {
 
     }
     
-    public void addProdukt(String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
+    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
+    	
+    	float preis = Float.parseFloat(einzelpreis);
+    	
         Db db = new Db();
         String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt"
                 + "VALUES ('" + name + "','" + link + "'," + einzelpreis + "," + menge_lagernd + "," + menge_geplant + ","
@@ -100,7 +103,8 @@ public class Kategorie {
         }
     }
     
-    public void updateProdukt(int id, String name, String link, float einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) {
+    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) {
+    	float preis = Float.parseFloat(einzelpreis);
         Db db = new Db();
         String sql = "UPDATE Produkt SET Name = '" + name + "', Link = '" + link
                 + "', Einzelpreis = '" + einzelpreis + "', MengeLagernd = '" + mengeLagernd + "', MengeGeplant = '"

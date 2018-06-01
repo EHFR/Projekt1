@@ -30,10 +30,10 @@ public class Bauteileverwaltung {
         }
     }
 
-    public void addKategorie(int kategorieID, String name) {
+    public void addKategorie(String name) {
         Db db = new Db();
-        String sql = "INSERT INTO Kategorie (ID, Name, Produkte)"
-                + "VALUES (" + kategorieID + ",'" + name + "')";
+        String sql = "INSERT INTO Kategorie (Name)"
+                + "VALUES ('" + name + "')";
         try {
             db.updateQuery(sql);
         } catch (Exception e) {
