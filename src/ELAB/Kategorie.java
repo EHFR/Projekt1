@@ -100,7 +100,7 @@ public class Kategorie {
 
         Db db = new Db();
         String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt) "
-                + "VALUES ('" + name + "','" + link + "'," + einzelpreis + "," + menge_lagernd + "," + menge_geplant + ","
+                + "VALUES ('" + name + "','" + link + "'," + preis + "," + menge_lagernd + "," + menge_geplant + ","
                 + menge_bestellt + ",'" + lagerort + "')";
         try {
             db.updateQuery(sql);
@@ -114,7 +114,7 @@ public class Kategorie {
 
         Db db = new Db();
         String sql = "UPDATE Produkt SET Name = '" + name + "', Link = '" + link
-                + "', Einzelpreis = '" + einzelpreis + "', MengeLagernd = '" + mengeLagernd + "', MengeGeplant = '"
+                + "', Einzelpreis = " + preis + ", MengeLagernd = '" + mengeLagernd + "', MengeGeplant = '"
                 + mengeGeplant + "', MengeBestellt = '" + mengeBestellt + "', LagerOrt =  '" + lagerOrt + " "
                 + "WHERE PersonID = " + id + "";
         try {
