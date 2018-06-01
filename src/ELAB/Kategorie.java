@@ -97,7 +97,7 @@ public class Kategorie {
     	float preis = Float.parseFloat(einzelpreis);
 
         Db db = new Db();
-        String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt"
+        String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt) "
                 + "VALUES ('" + name + "','" + link + "'," + einzelpreis + "," + menge_lagernd + "," + menge_geplant + ","
                 + menge_bestellt + ",'" + lagerort + "')";
         try {
