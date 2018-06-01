@@ -139,7 +139,7 @@ public class Topf {
                 + name + "','"
                 + auftraggeber + "','"
                 + ansprechpartner + "',"
-                + id + ",'"
+                + this.id + ",'"
                 + BetragFloat + ","
                 + bezahlart + ",'"
                 + "FALSE','FALSE','FALSE','FALSE',"
