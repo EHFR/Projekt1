@@ -14,11 +14,7 @@ public class Topf {
     private String kasse;
     private Timestamp zeitstempel;
     
-    public Topf() {
-        rechnungen = new ArrayList<>();
-        this.reloadRechnung();
-    }
-
+    
     public Timestamp getZeitstempel() {
         return zeitstempel;
     }
@@ -34,6 +30,7 @@ public class Topf {
         this.istbestand = istbestand;
         this.kasse = kasse;
         this.zeitstempel = new Timestamp(System.currentTimeMillis());
+        this.rechnungen = new ArrayList<>();
     }
 
     public int getId() {
