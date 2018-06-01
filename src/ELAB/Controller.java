@@ -580,7 +580,6 @@ public class Controller implements Initializable {
         this.fertigungsverwaltungRemoveBtn.setText("Löschen");
     }
 
-
     public void removeAuftragAction() {
         if (this.neuerAuftragModus) {
             this.neuerAuftragModusDisable();
@@ -956,6 +955,16 @@ public class Controller implements Initializable {
             this.rechnungBezahlartSpinnerValueFactory.setValue(rechnung.getBezahlart());
             this.rechnungTimestampLabel.setText(rechnung.getZeitstempelString());
 
+            this.rechnungStatusInBearbeitungSpinnerValueFactory.setValue(this.boolToJaNein(rechnung.isInBearbeitung()));
+            this.rechnungStatusEingereichtSpinnerValueFactory.setValue(this.boolToJaNein(rechnung.isEingereicht()));
+            this.rechnungStatusAbgewickeltSpinnerValueFactory.setValue(this.boolToJaNein(rechnung.isAbgewickelt()));
+            this.rechnungStatusAusstehendSpinnerValueFactory.setValue(this.boolToJaNein(rechnung.isAusstehend()));
+
+            this.rechnungTimestampInBearbeitungLabel.setText(rechnung.getStatusZeitstempel_inBearbeitungString());
+            this.rechnungTimestampEingereichtLabel.setText(rechnung.getStatusZeitstempel_eingereichtString());
+            this.rechnungTimestampAbgewickeltLabel.setText(rechnung.getStatusZeitstempel_abgewickeltString());
+            this.rechnungTimestampAusstehendLabel.setText(rechnung.getStatusZeitstempel_ausstehendString());
+
             this.populateAuftragList();
         }
     }
@@ -982,6 +991,18 @@ public class Controller implements Initializable {
         } else {
             showError(new ElabException("Laden des Auftrages fehlgeschlagen..."));
         }
+    }
+
+    public void setRechungUpdateStatus() {
+        int listId = this.rechnungenListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            showError(new ElabException("Keine Rechnung zum bearbeiten ausgewählt!"));
+            return;
+        }
+        Rechnung rechnung = this.finanzverwaltung.getToepfe().get(this.topfListID).getRechnungen().get(listId);
+        rechnung.updateStatus(jaNeinToBool(this.rechnungStatusInBearbeitungSpinner.getValue()), jaNeinToBool(this.rechnungStatusEingereichtSpinner.getValue()),
+                jaNeinToBool(this.rechnungStatusAbgewickeltSpinner.getValue()), jaNeinToBool(this.rechnungStatusAusstehendSpinner.getValue()));
+        showOk();
     }
 
     /**

@@ -27,25 +27,25 @@ public class Rechnung {
 
     //todo Hier fehlt noch Bezahlart und ein Getter Methode dafür!
 
-    public Rechnung(int id, String name,float betrag, String bezahlart, boolean inBearbeitung, Timestamp statusZeitstempel_inBearbeitung, 
-			boolean eingereicht, Timestamp statusZeitstempel_eingereicht, boolean abgewickelt, 
-			Timestamp statusZeitstempel_abgewickelt, boolean ausstehend, Timestamp statusZeitstempel_ausstehend) {
-    			
-    	this.id = id;
-    	this.name = name;
-		this.betrag = betrag;
-		this.bezahlart = bezahlart;
-		this.inBearbeitung = false;
-		this.eingereicht = false;
-		this.abgewickelt = false;
-		this.ausstehend = false;
-		this.statusZeitstempel_inBearbeitung = statusZeitstempel_inBearbeitung;
-		this.statusZeitstempel_eingereicht = statusZeitstempel_eingereicht;
-		this.statusZeitstempel_abgewickelt = statusZeitstempel_abgewickelt;
-		this.statusZeitstempel_ausstehend = statusZeitstempel_ausstehend;
-		this.datum = new Timestamp(System.currentTimeMillis());
+    public Rechnung(int id, String name, float betrag, String bezahlart, boolean inBearbeitung, Timestamp statusZeitstempel_inBearbeitung,
+                    boolean eingereicht, Timestamp statusZeitstempel_eingereicht, boolean abgewickelt,
+                    Timestamp statusZeitstempel_abgewickelt, boolean ausstehend, Timestamp statusZeitstempel_ausstehend) {
+
+        this.id = id;
+        this.name = name;
+        this.betrag = betrag;
+        this.bezahlart = bezahlart;
+        this.inBearbeitung = false;
+        this.eingereicht = false;
+        this.abgewickelt = false;
+        this.ausstehend = false;
+        this.statusZeitstempel_inBearbeitung = statusZeitstempel_inBearbeitung;
+        this.statusZeitstempel_eingereicht = statusZeitstempel_eingereicht;
+        this.statusZeitstempel_abgewickelt = statusZeitstempel_abgewickelt;
+        this.statusZeitstempel_ausstehend = statusZeitstempel_ausstehend;
+        this.datum = new Timestamp(System.currentTimeMillis());
     }
-    
+
     public int getId() {
         return id;
     }
@@ -123,83 +123,98 @@ public class Rechnung {
         return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
 
-    public String getBezahlart(){
+    public String getBezahlart() {
         return bezahlart; // todo das hier ist nur ein Platzhalter
     }
 
-    public Timestamp getStatusZeitstempel_inBearbeitung() {
-		return statusZeitstempel_inBearbeitung;
-	}
+    private String zeitstempelToString(Timestamp t) {
+        if (t != null) {
+            Date date = new Date();
+            date.setTime(t.getTime());
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
+        }
+        return "Null"; // für den Fall, dass der Zeitstempel null ist
+    }
 
-	public void setStatusZeitstempel_inBearbeitung(Timestamp statusZeitstempel_inBearbeitung) {
-		this.statusZeitstempel_inBearbeitung = statusZeitstempel_inBearbeitung;
-	}
+    public String getStatusZeitstempel_inBearbeitungString() {
+        return this.zeitstempelToString(statusZeitstempel_inBearbeitung);
+    }
 
-	public Timestamp getStatusZeitstempel_eingereicht() {
-		return statusZeitstempel_eingereicht;
-	}
+    public void setStatusZeitstempel_inBearbeitung(Timestamp statusZeitstempel_inBearbeitung) {
+        this.statusZeitstempel_inBearbeitung = statusZeitstempel_inBearbeitung;
+    }
 
-	public void setStatusZeitstempel_eingereicht(Timestamp statusZeitstempel_eingereicht) {
-		this.statusZeitstempel_eingereicht = statusZeitstempel_eingereicht;
-	}
+    public String getStatusZeitstempel_eingereichtString() {
+        return this.zeitstempelToString(statusZeitstempel_eingereicht);
+    }
 
-	public Timestamp getStatusZeitstempel_abgewickelt() {
-		return statusZeitstempel_abgewickelt;
-	}
+    public void setStatusZeitstempel_eingereicht(Timestamp statusZeitstempel_eingereicht) {
+        this.statusZeitstempel_eingereicht = statusZeitstempel_eingereicht;
+    }
 
-	public void setStatusZeitstempel_abgewickelt(Timestamp statusZeitstempel_abgewickelt) {
-		this.statusZeitstempel_abgewickelt = statusZeitstempel_abgewickelt;
-	}
+    public String getStatusZeitstempel_abgewickeltString() {
+        return this.zeitstempelToString(statusZeitstempel_abgewickelt);
+    }
 
-	public Timestamp getStatusZeitstempel_ausstehend() {
-		return statusZeitstempel_ausstehend;
-	}
+    public void setStatusZeitstempel_abgewickelt(Timestamp statusZeitstempel_abgewickelt) {
+        this.statusZeitstempel_abgewickelt = statusZeitstempel_abgewickelt;
+    }
 
-	public void setStatusZeitstempel_ausstehend(Timestamp statusZeitstempel_ausstehend) {
-		this.statusZeitstempel_ausstehend = statusZeitstempel_ausstehend;
-	}
+    public String getStatusZeitstempel_ausstehendString() {
+        return this.zeitstempelToString(statusZeitstempel_ausstehend);
+    }
 
-	public boolean isInBearbeitung() {
-		return inBearbeitung;
-	}
+    public void setStatusZeitstempel_ausstehend(Timestamp statusZeitstempel_ausstehend) {
+        this.statusZeitstempel_ausstehend = statusZeitstempel_ausstehend;
+    }
 
-	public void setInBearbeitung(boolean inBearbeitung) {
-		this.inBearbeitung = inBearbeitung;
-	}
+    public boolean isInBearbeitung() {
+        return inBearbeitung;
+    }
 
-	public boolean isEingereicht() {
-		return eingereicht;
-	}
+    public void setInBearbeitung(boolean inBearbeitung) {
+        this.inBearbeitung = inBearbeitung;
+    }
 
-	public void setEingereicht(boolean eingereicht) {
-		this.eingereicht = eingereicht;
-	}
+    public boolean isEingereicht() {
+        return eingereicht;
+    }
 
-	public boolean isAbgewickelt() {
-		return abgewickelt;
-	}
+    public void setEingereicht(boolean eingereicht) {
+        this.eingereicht = eingereicht;
+    }
 
-	public void setAbgewickelt(boolean abgewickelt) {
-		this.abgewickelt = abgewickelt;
-	}
+    public boolean isAbgewickelt() {
+        return abgewickelt;
+    }
 
-	public boolean isAusstehend() {
-		return ausstehend;
-	}
+    public void setAbgewickelt(boolean abgewickelt) {
+        this.abgewickelt = abgewickelt;
+    }
 
-	public void setAusstehend(boolean ausstehend) {
-		this.ausstehend = ausstehend;
-	}
+    public boolean isAusstehend() {
+        return ausstehend;
+    }
 
-	public Timestamp getStatusZeitstempel() {
-		return statusZeitstempel;
-	}
+    public void setAusstehend(boolean ausstehend) {
+        this.ausstehend = ausstehend;
+    }
 
-	public void setStatusZeitstempel(Timestamp statusZeitstempel) {
-		this.statusZeitstempel = statusZeitstempel;
-	}
+    public Timestamp getStatusZeitstempel() {
+        return statusZeitstempel;
+    }
+
+    public void setStatusZeitstempel(Timestamp statusZeitstempel) {
+        this.statusZeitstempel = statusZeitstempel;
+    }
 
     public void exportToPDF() {
+
+    }
+
+
+    // todo Muss noch implementiert werden!
+    public void updateStatus(boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
 
     }
 }
