@@ -91,7 +91,7 @@ public class Kategorie {
 
     }
     
-    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
+    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) throws ElabException{
     	
     	float preis = Float.parseFloat(einzelpreis);
     	
@@ -106,7 +106,7 @@ public class Kategorie {
         }
     }
     
-    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) {
+    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) throws ElabException{
     	float preis = Float.parseFloat(einzelpreis);
     	
         Db db = new Db();
@@ -121,7 +121,7 @@ public class Kategorie {
         }
     }
     
-    public void removeProdukt(int id) {
+    public void removeProdukt(int id) throws ElabException{
         Db db = new Db();
         String sql = "DELETE FROM Produkt WHERE ID = " + id + "";
         try {

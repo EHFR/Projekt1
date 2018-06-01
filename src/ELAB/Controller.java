@@ -1236,6 +1236,7 @@ public class Controller implements Initializable {
             showError(e);
             return;
         }
+        showOk();
         populateKategorieverwaltungList();
     }
 }
