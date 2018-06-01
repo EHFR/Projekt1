@@ -7,11 +7,9 @@ import java.util.ArrayList;
 public class Bauteileverwaltung {
 
     private ArrayList<Kategorie> kategorie;
-    private ArrayList<Produkt> produkt;
 
     public Bauteileverwaltung() {
         kategorie = new ArrayList<>();
-        produkt = new ArrayList<>();
     }
 
     private void reloadKategorie() {
@@ -42,18 +40,6 @@ public class Bauteileverwaltung {
         }
     }
 
-    public void updateKategorie(ArrayList<String> produktID) {
-        Db db = new Db();
-        String sql = "UPDATE Kategorie SET produktID = '" + String.join("','", produktID) + "')";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
 
     public void removeKategorie(int id) throws ElabException {
         Db db = new Db();
@@ -66,7 +52,7 @@ public class Bauteileverwaltung {
     }
 
 
-    public ArrayList<Kategorie> getKategorien(){
+    public ArrayList<Kategorie> getKategorien() {
         this.reloadKategorie();
         return this.kategorie;
     }

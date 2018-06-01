@@ -221,82 +221,14 @@ public class Controller implements Initializable {
         this.setAuthorization();
 
         /**
-         * Personenverwaltung INIT
+         * INITS
          */
-        this.populatePersonenverwaltungList();
-        ObservableList<String> types = FXCollections.observableArrayList("Mitglied", "Kunde", "Lehrstuhl bezogene Person");
-        this.personenverwaltungTypeValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(types);
-        this.personenverwaltungTypSpinner.setValueFactory(personenverwaltungTypeValueFactory);
-
-        /**
-         * Fertigungsverwaltung INIT
-         */
-        ObservableList<String> stadien = FXCollections.observableArrayList("Ja", "Nein");
-        this.fertigungsverwaltungAngenommenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.fertigungsverwaltungAngenommenSpinner.setValueFactory(fertigungsverwaltungAngenommenSpinnerValueFactory);
-        this.fertigungsverwaltungGefertigtSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.fertigungsverwaltungGefertigtSpinner.setValueFactory(fertigungsverwaltungGefertigtSpinnerValueFactory);
-        this.fertigungsverwaltungKostenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.fertigungsverwaltungKostenSpinner.setValueFactory(fertigungsverwaltungKostenSpinnerValueFactory);
-        this.fertigungsverwaltungAbgeholtSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.fertigungsverwaltungAbgeholtSpinner.setValueFactory(fertigungsverwaltungAbgeholtSpinnerValueFactory);
-        this.fertigungsverwaltungAbgerechnetSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.fertigungsverwaltungAbgerechnetSpinner.setValueFactory(fertigungsverwaltungAbgerechnetSpinnerValueFactory);
-        this.fertigungsverwaltungMaterialSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.fertigungsverwaltungMaterialSpinner.setValueFactory(fertigungsverwaltungMaterialSpinnerValueFactory);
-        this.fertigungsverwaltungUnterbrochenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.fertigungsverwaltungUnterbrochenSpinner.setValueFactory(fertigungsverwaltungUnterbrochenSpinnerValueFactory);
-        ObservableList<String> alleFilter = FXCollections.observableArrayList("Alles", "Angenommen", "Gefertigt", "Kosten kalkuliert",
-                "Abgeholt", "Abgerechnet", "Auf Material warten", "Fertigung unterbrochen");
-        this.fertigungsverwaltungFilerSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(alleFilter);
-        this.fertigungsverwaltungFilterSpinner.setValueFactory(fertigungsverwaltungFilerSpinnerValueFactory);
-        this.populateFertigungsverwaltungList();
-
-        /**
-         * Finanzverwaltung Konten und Töpfe
-         */
-        this.updateKontostaende();
-        ObservableList<String> topfKasse = FXCollections.observableArrayList("Barkasse", "Konto", "Kostenstelle");
-        this.topfKasseSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(topfKasse);
-        this.topfKasseSpinner.setValueFactory(topfKasseSpinnerValueFactory);
-        this.populateTopfverwaltungListe();
-
-        /**
-         * Finanzverwaltung Rechnungen
-         */
-        ObservableList<String> bezahlarten = FXCollections.observableArrayList("Bar", "Überweisung", "Kostenstelle");
-        this.rechnungBezahlartSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(bezahlarten);
-        this.rechnungBezahlartSpinner.setValueFactory(rechnungBezahlartSpinnerValueFactory);
-
-        this.rechnungStatusInBearbeitungSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.rechnungStatusInBearbeitungSpinner.setValueFactory(rechnungStatusInBearbeitungSpinnerValueFactory);
-        this.rechnungStatusEingereichtSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.rechnungStatusEingereichtSpinner.setValueFactory(rechnungStatusEingereichtSpinnerValueFactory);
-        this.rechnungStatusAbgewickeltSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.rechnungStatusAbgewickeltSpinner.setValueFactory(rechnungStatusAbgewickeltSpinnerValueFactory);
-        this.rechnungStatusAusstehendSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
-        this.rechnungStatusAusstehendSpinner.setValueFactory(rechnungStatusAusstehendSpinnerValueFactory);
-
-        this.populateTopfList();
-
-        /**
-         * Bauteileverwaltung Bauteile
-         */
-        this.produktMengeLagerndSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
-        this.produktMengeLagerndSpinner.setValueFactory(produktMengeLagerndSpinnerValueFactory);
-        this.populateKategorienList();
-
-        /**
-         * Bauteileverwaltung Verwaltung
-         */
-
-        this.produktverwaltungMengeLagerndSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
-        this.produktverwaltungMengeLagerndSpinner.setValueFactory(produktverwaltungMengeLagerndSpinnerValueFactory);
-        this.produktverwaltungMengeBestelltSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
-        this.produktverwaltungMengeBestelltSpinner.setValueFactory(produktverwaltungMengeBestelltSpinnerValueFactory);
-        this.produktverwaltungMengeGeplantSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
-        this.produktverwaltungMengeGeplantSpinner.setValueFactory(produktverwaltungMengeGeplantSpinnerValueFactory);
-        this.populateKategorieverwaltungList();
+        this.initPersonenverwaltung();
+        this.initFertigungsverwaltung();
+        this.initFinanzverwaltungKontenUndToepfe();
+        this.initFinanzverwaltungRechnungen();
+        this.initBauteileverwaltungBauteile();
+        this.initBauteileverwaltungVerwaltung();
     }
 
     private void showError(ElabException error) {
@@ -404,11 +336,20 @@ public class Controller implements Initializable {
             showError(new ElabException("Internal Error when setting the authorization"));
             this.contentTabPane.setDisable(true);
         }
+        this.anmeldungNameField.setText("");
+        this.anmeldungPasswortField.setText("");
     }
 
     /**
      * Personenverwaltung
      */
+
+    private void initPersonenverwaltung() {
+        this.populatePersonenverwaltungList();
+        ObservableList<String> types = FXCollections.observableArrayList("Mitglied", "Kunde", "Lehrstuhl bezogene Person");
+        this.personenverwaltungTypeValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(types);
+        this.personenverwaltungTypSpinner.setValueFactory(personenverwaltungTypeValueFactory);
+    }
 
     private void populatePersonenverwaltungList() {
         ArrayList<String> allNames = new ArrayList<>();
@@ -534,6 +475,29 @@ public class Controller implements Initializable {
     /**
      * Fertigungsverwaltung
      */
+    private void initFertigungsverwaltung() {
+        ObservableList<String> stadien = FXCollections.observableArrayList("Ja", "Nein");
+        this.fertigungsverwaltungAngenommenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungAngenommenSpinner.setValueFactory(fertigungsverwaltungAngenommenSpinnerValueFactory);
+        this.fertigungsverwaltungGefertigtSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungGefertigtSpinner.setValueFactory(fertigungsverwaltungGefertigtSpinnerValueFactory);
+        this.fertigungsverwaltungKostenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungKostenSpinner.setValueFactory(fertigungsverwaltungKostenSpinnerValueFactory);
+        this.fertigungsverwaltungAbgeholtSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungAbgeholtSpinner.setValueFactory(fertigungsverwaltungAbgeholtSpinnerValueFactory);
+        this.fertigungsverwaltungAbgerechnetSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungAbgerechnetSpinner.setValueFactory(fertigungsverwaltungAbgerechnetSpinnerValueFactory);
+        this.fertigungsverwaltungMaterialSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungMaterialSpinner.setValueFactory(fertigungsverwaltungMaterialSpinnerValueFactory);
+        this.fertigungsverwaltungUnterbrochenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.fertigungsverwaltungUnterbrochenSpinner.setValueFactory(fertigungsverwaltungUnterbrochenSpinnerValueFactory);
+        ObservableList<String> alleFilter = FXCollections.observableArrayList("Alles", "Angenommen", "Gefertigt", "Kosten kalkuliert",
+                "Abgeholt", "Abgerechnet", "Auf Material warten", "Fertigung unterbrochen");
+        this.fertigungsverwaltungFilerSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(alleFilter);
+        this.fertigungsverwaltungFilterSpinner.setValueFactory(fertigungsverwaltungFilerSpinnerValueFactory);
+        this.populateFertigungsverwaltungList();
+    }
+
     private void populateFertigungsverwaltungList() {
         ArrayList<String> allTitel = new ArrayList<>();
         switch (this.fertigungsverwaltungFilterSpinner.getValue()) {
@@ -692,6 +656,14 @@ public class Controller implements Initializable {
     /**
      * Finanzverwaltung Konten und Töpfe
      */
+    private void initFinanzverwaltungKontenUndToepfe() {
+        this.updateKontostaende();
+        ObservableList<String> topfKasse = FXCollections.observableArrayList("Barkasse", "Konto", "Kostenstelle");
+        this.topfKasseSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(topfKasse);
+        this.topfKasseSpinner.setValueFactory(topfKasseSpinnerValueFactory);
+        this.populateTopfverwaltungListe();
+    }
+
     private void updateKontostaende() {
         this.kontoBarkasseIstLabel.setText(this.finanzverwaltung.getIstbestandBarkasse());
         this.kontoBarkasseSollLabel.setText(this.finanzverwaltung.getSollbestandBarkasse());
@@ -808,6 +780,24 @@ public class Controller implements Initializable {
     /**
      * Finanzverwaltung Rechnungen
      */
+
+    private void initFinanzverwaltungRechnungen() {
+        ObservableList<String> bezahlarten = FXCollections.observableArrayList("Bar", "Überweisung", "Kostenstelle");
+        this.rechnungBezahlartSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(bezahlarten);
+        this.rechnungBezahlartSpinner.setValueFactory(rechnungBezahlartSpinnerValueFactory);
+
+        ObservableList<String> stadien = FXCollections.observableArrayList("Ja", "Nein");
+        this.rechnungStatusInBearbeitungSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.rechnungStatusInBearbeitungSpinner.setValueFactory(rechnungStatusInBearbeitungSpinnerValueFactory);
+        this.rechnungStatusEingereichtSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.rechnungStatusEingereichtSpinner.setValueFactory(rechnungStatusEingereichtSpinnerValueFactory);
+        this.rechnungStatusAbgewickeltSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.rechnungStatusAbgewickeltSpinner.setValueFactory(rechnungStatusAbgewickeltSpinnerValueFactory);
+        this.rechnungStatusAusstehendSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
+        this.rechnungStatusAusstehendSpinner.setValueFactory(rechnungStatusAusstehendSpinnerValueFactory);
+
+        this.populateTopfList();
+    }
 
     private void populateTopfList() {
         ArrayList<String> allToepfe = new ArrayList<>();
@@ -1008,6 +998,11 @@ public class Controller implements Initializable {
     /**
      * Bauteileverwaltung Bauteile
      */
+    private void initBauteileverwaltungBauteile() {
+        this.produktMengeLagerndSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
+        this.produktMengeLagerndSpinner.setValueFactory(produktMengeLagerndSpinnerValueFactory);
+        this.populateKategorienList();
+    }
 
     private void populateKategorienList() {
         ArrayList<String> allKategorien = new ArrayList<>();
@@ -1074,6 +1069,16 @@ public class Controller implements Initializable {
     /**
      * Bauteileverwaltung Verwaltung
      */
+
+    private void initBauteileverwaltungVerwaltung() {
+        this.produktverwaltungMengeLagerndSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
+        this.produktverwaltungMengeLagerndSpinner.setValueFactory(produktverwaltungMengeLagerndSpinnerValueFactory);
+        this.produktverwaltungMengeBestelltSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
+        this.produktverwaltungMengeBestelltSpinner.setValueFactory(produktverwaltungMengeBestelltSpinnerValueFactory);
+        this.produktverwaltungMengeGeplantSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
+        this.produktverwaltungMengeGeplantSpinner.setValueFactory(produktverwaltungMengeGeplantSpinnerValueFactory);
+        this.populateKategorieverwaltungList();
+    }
 
     private void populateKategorieverwaltungList() {
         ArrayList<String> allKategorien = new ArrayList<>();

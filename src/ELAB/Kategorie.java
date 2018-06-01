@@ -3,15 +3,11 @@ package ELAB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Kategorie {
     private int id;
     private String name;
-    private int produktID;
     private ArrayList<Produkt> produkte;
-
 
     public Kategorie(int id, String name) {
         this.id = id;
@@ -23,55 +19,14 @@ public class Kategorie {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public ArrayList<Produkt> getProdukte() {
-    	this.reloadProdukt();
+        this.reloadProdukt();
         return produkte;
     }
-
-    public void setProdukte(ArrayList<Produkt> produkte) {
-        this.produkte = produkte;
-    }
-
-    public void produkteHinzufuegen(Produkt p) {
-        produkte.add(p);
-    }
-
-    public int getProduktID() {
-        return produktID;
-    }
-
-    public void setProduktID(int produktID) {
-        this.produktID = produktID;
-    }
-
-
-
-//	public Map<Integer, Produkt> getNum() {
-//		return num;
-//	}
-//
-//	public void setNum(Map<Integer, Produkt> num) {
-//		this.num = num;
-//	}
-
-    /*
-     *
-     * Produkt
-     *
-     *
-     */
 
     private void reloadProdukt() {
         Db db = new Db();
@@ -89,18 +44,20 @@ public class Kategorie {
         } finally {
             db.close();
         }
-
     }
 
-    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) throws ElabException{
+    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) throws ElabException {
 
-    	float preis = Float.parseFloat(einzelpreis);
-
-        //todo hier wird preis erzeugt, im SQL Befehl aber der alte Wert "einzelpreis"
+        float preis;
+        try {
+            preis = Float.parseFloat(einzelpreis);
+        } catch (NumberFormatException e) {
+            throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+        }
 
         Db db = new Db();
         String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt) "
-                + "VALUES ('" + name + "','" + link + "'," + einzelpreis + "," + menge_lagernd + "," + menge_geplant + ","
+                + "VALUES ('" + name + "','" + link + "'," + preis + "," + menge_lagernd + "," + menge_geplant + ","
                 + menge_bestellt + ",'" + lagerort + "')";
         try {
             db.updateQuery(sql);
@@ -109,13 +66,19 @@ public class Kategorie {
         }
     }
 
-    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) throws ElabException{
-    	float preis = Float.parseFloat(einzelpreis);
+    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) throws ElabException {
+
+        float preis;
+        try {
+            preis = Float.parseFloat(einzelpreis);
+        } catch (NumberFormatException e) {
+            throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+        }
 
         Db db = new Db();
         String sql = "UPDATE Produkt SET Name = '" + name + "', Link = '" + link
-                + "', Einzelpreis = '" + einzelpreis + "', MengeLagernd = '" + mengeLagernd + "', MengeGeplant = '"
-                + mengeGeplant + "', MengeBestellt = '" + mengeBestellt + "', LagerOrt =  '" + lagerOrt + " "
+                + "', Einzelpreis = " + preis + ", MengeLagernd = " + mengeLagernd + ", MengeGeplant = "
+                + mengeGeplant + ", MengeBestellt = " + mengeBestellt + ", LagerOrt =  '" + lagerOrt + "' "
                 + "WHERE PersonID = " + id + "";
         try {
             db.updateQuery(sql);
@@ -124,7 +87,17 @@ public class Kategorie {
         }
     }
 
-    public void removeProdukt(int id) throws ElabException{
+    public void removeProdukt(int id) throws ElabException {
+
+        reloadProdukt();
+        for (Produkt produkt : this.produkte) {
+            if (produkt.getId() == id){
+                if (produkt.getMenge_lagernd() > 0){
+                    throw new ElabException("Von dem Produkt gibt es noch " + produkt.getMenge_lagernd() + " im Lager");
+                }
+            }
+        }
+
         Db db = new Db();
         String sql = "DELETE FROM Produkt WHERE ID = " + id + "";
         try {
@@ -133,5 +106,4 @@ public class Kategorie {
             e.printStackTrace();
         }
     }
-
 }
