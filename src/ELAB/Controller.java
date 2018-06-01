@@ -183,6 +183,9 @@ public class Controller implements Initializable {
     /**
      * Bauteileverwaltung Verwaltung
      */
+    public GridPane produktverwaltungGrid;
+    public VBox produktverwaltungProdukteBox;
+    public VBox produktverwaltungKategorienBox;
     public ListView<String> kategorienverwaltungListe;
     public Button kategorienemoveBtn;
     public TextField kategorieNameField;
@@ -190,14 +193,19 @@ public class Controller implements Initializable {
     public ListView<String> produktverwaltungListe;
     public TextField produktverwaltungNameField;
     public TextField produktverwaltungLinkField;
-    public Spinner<Integer> produktverwaltungEinzelpreisSpinner;
+    public TextField produktverwaltungEinzelpreisField;
     public Spinner<Integer> produktverwaltungMengeLagerndSpinner;
     public Spinner<Integer> produktverwaltungMengeBestelltSpinner;
     public Spinner<Integer> produktverwaltungMengeGeplantSpinner;
+    public SpinnerValueFactory<Integer> produktverwaltungMengeLagerndSpinnerValueFactory;
+    public SpinnerValueFactory<Integer> produktverwaltungMengeBestelltSpinnerValueFactory;
+    public SpinnerValueFactory<Integer> produktverwaltungMengeGeplantSpinnerValueFactory;
     public TextField produktverwaltungLagerortField;
     public Button produktverwaltungNewBtn;
     public Button produktverwaltungRemoveBtn;
     public Button produktverwaltungSaveBtn;
+    private int kategorieverwaltungListID = -1;
+    private boolean neuesProduktModus = false;
 
 
     @Override
@@ -276,10 +284,20 @@ public class Controller implements Initializable {
          */
         this.produktMengeLagerndSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
         this.produktMengeLagerndSpinner.setValueFactory(produktMengeLagerndSpinnerValueFactory);
+        this.populateKategorienList();
 
         /**
          * Bauteileverwaltung Verwaltung
          */
+
+        this.produktverwaltungMengeLagerndSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
+        this.produktverwaltungMengeLagerndSpinner.setValueFactory(produktverwaltungMengeLagerndSpinnerValueFactory);
+        this.produktverwaltungMengeBestelltSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
+        this.produktverwaltungMengeBestelltSpinner.setValueFactory(produktverwaltungMengeBestelltSpinnerValueFactory);
+        this.produktverwaltungMengeGeplantSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
+        this.produktverwaltungMengeGeplantSpinner.setValueFactory(produktverwaltungMengeGeplantSpinnerValueFactory);
+
+        this.populateKategorieverwaltungList();
     }
 
     private void showError(ElabException error) {
@@ -990,8 +1008,18 @@ public class Controller implements Initializable {
             ObservableList<String> items = FXCollections.observableArrayList(allProdukte);
             produktListe.setItems(items);
             this.produkteUpdateTextFields();
-        }else{
+        } else {
 
+        }
+    }
+
+    public void produkteKategorieChangedAction() {
+        this.kategorieListID = this.kategorienListe.getFocusModel().getFocusedIndex();
+        this.produkteDisableInputs(true);
+        if (this.kategorieListID == -1) {
+            this.produktListe.setDisable(true);
+        } else {
+            this.populateProdukteList();
         }
     }
 
@@ -1017,26 +1045,197 @@ public class Controller implements Initializable {
         this.produktGrid.setDisable(disabled);
     }
 
+    public void produktChangeMengeLagernd() {
+        //todo check, Bist du sicher?
+        int newMenge = this.produktMengeLagerndSpinner.getValue();
+        this.bauteileverwaltung.getKategorien().get(this.kategorieListID).getProdukte().get(this.produktListe.getFocusModel().getFocusedIndex()).setMenge_lagernd(newMenge);
+    }
+
     /**
      * Bauteileverwaltung Verwaltung
      */
-    public void removeKategorieAction() {
 
+    private void populateKategorieverwaltungList() {
+        ArrayList<String> allKategorien = new ArrayList<>();
+        for (Kategorie kategorie : this.bauteileverwaltung.getKategorien()) {
+            allKategorien.add(kategorie.getName());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(allKategorien);
+        kategorienverwaltungListe.setItems(items);
+        this.populateProduktverwaltungList();
     }
 
-    public void addKategorieAction() {
-
+    private void populateProduktverwaltungList() {
+        ArrayList<String> allProdukte = new ArrayList<>();
+        if (this.kategorieverwaltungListID != -1) {
+            this.produktverwaltungProdukteBox.setDisable(false);
+            for (Produkt produkt : this.bauteileverwaltung.getKategorien().get(this.kategorieverwaltungListID).getProdukte()) {
+                allProdukte.add(produkt.getName());
+            }
+            ObservableList<String> items = FXCollections.observableArrayList(allProdukte);
+            rechnungenListe.setItems(items);
+        } else {
+            this.produktverwaltungDisableInputs(true);
+            this.produktverwaltungProdukteBox.setDisable(true);
+        }
     }
 
     public void addProduktAction() {
+        if (this.kategorieverwaltungListID != -1) {
+            this.neuesProduktModus = true;
+            this.produktverwaltungDisableInputs(false);
+            this.produktverwaltungKategorienBox.setDisable(true);
+            this.produktverwaltungProdukteBox.setDisable(true);
+            this.produktverwaltungNameField.setText("");
+            this.produktverwaltungLinkField.setText("");
+            this.produktverwaltungEinzelpreisField.setText("");
+            this.produktverwaltungMengeLagerndSpinnerValueFactory.setValue(0);
+            this.produktverwaltungMengeBestelltSpinnerValueFactory.setValue(0);
+            this.produktverwaltungMengeGeplantSpinnerValueFactory.setValue(0);
+            this.produktverwaltungLagerortField.setText("");
+            this.produktverwaltungRemoveBtn.setText("Abbrechen");
+        } else {
+            showError(new ElabException("Keine Kategorie für das Produkt ausgewählt!"));
+        }
+    }
 
+    private void setNeuesProduktModusDisable() {
+        this.neuesProduktModus = false;
+        this.produktverwaltungDisableInputs(true);
+        this.produktverwaltungKategorienBox.setDisable(false);
+        this.produktverwaltungProdukteBox.setDisable(false);
+        this.produktverwaltungNameField.setText("");
+        this.produktverwaltungLinkField.setText("");
+        this.produktverwaltungEinzelpreisField.setText("");
+        this.produktverwaltungMengeLagerndSpinnerValueFactory.setValue(0);
+        this.produktverwaltungMengeBestelltSpinnerValueFactory.setValue(0);
+        this.produktverwaltungMengeGeplantSpinnerValueFactory.setValue(0);
+        this.produktverwaltungLagerortField.setText("");
+        this.produktverwaltungRemoveBtn.setText("Löschen");
     }
 
     public void removeProduktAction() {
-
+        if (this.neuesProduktModus) {
+            this.setNeuesProduktModusDisable();
+        } else {
+            int listId = this.produktverwaltungListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError(new ElabException("Kein Produkt zum löschen ausgewählt!"));
+                return;
+            }
+            Produkt produktToRemove = this.bauteileverwaltung.getKategorien().get(this.kategorieverwaltungListID).getProdukte().get(listId);
+            try {
+                this.bauteileverwaltung.getKategorien().get(this.kategorieverwaltungListID).removeProdukt(produktToRemove.getId());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+            this.populateProduktverwaltungList();
+        }
     }
 
     public void saveProduktAction() {
+        if (this.produktverwaltungNameField.getText().equals("")) {
+            showError(new ElabException("Produktname darf nicht leer sein!"));
+            return;
+        }
+        if (this.produktverwaltungEinzelpreisField.getText().equals("")) {
+            showError(new ElabException("Einzelpreis des Produkts darf nicht leer sein!"));
+            return;
+        }
+        if (this.neuesProduktModus) {
+            try {
+                this.bauteileverwaltung.getKategorien().get(this.kategorieverwaltungListID).addProdukt(this.produktverwaltungNameField.getText(),
+                        this.produktverwaltungLinkField.getText(), this.produktverwaltungEinzelpreisField.getText(),
+                        this.produktverwaltungMengeLagerndSpinner.getValue(), this.produktverwaltungMengeBestelltSpinnerValueFactory.getValue(),
+                        this.produktverwaltungMengeGeplantSpinnerValueFactory.getValue(), this.produktverwaltungLagerortField.getText());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+            this.setNeuesProduktModusDisable();
+        } else {
+            int listId = this.produktverwaltungListe.getFocusModel().getFocusedIndex();
+            if (listId == -1) {
+                showError(new ElabException("Kein Produkt zum Bearbeiten ausgewählt!"));
+                return;
+            }
+            Produkt produkt = this.bauteileverwaltung.getKategorien().get(this.kategorieverwaltungListID).getProdukte().get(listId);
+            try {
+                this.bauteileverwaltung.getKategorien().get(this.kategorieverwaltungListID).updateProdukt(produkt.getId(),
+                        this.produktverwaltungNameField.getText(), this.produktverwaltungLinkField.getText(),
+                        this.produktverwaltungEinzelpreisField.getText(), this.produktverwaltungMengeLagerndSpinner.getValue(),
+                        this.produktverwaltungMengeBestelltSpinnerValueFactory.getValue(),
+                        this.produktverwaltungMengeGeplantSpinnerValueFactory.getValue(), this.produktverwaltungLagerortField.getText());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+        }
+        showOk();
+        this.populateProduktverwaltungList();
+    }
 
+    private void produktverwaltungDisableInputs(boolean disabled) {
+        this.produktverwaltungGrid.setDisable(disabled);
+    }
+
+    public void produktverwaltungUpdateTextFields() {
+        int listId = this.produktverwaltungListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            this.produkteDisableInputs(true);
+        } else {
+            this.produkteDisableInputs(false);
+            Produkt produkt = this.bauteileverwaltung.getKategorien().get(this.kategorieverwaltungListID).getProdukte().get(listId);
+
+            this.produktverwaltungNameField.setText(produkt.getName());
+            this.produktverwaltungLinkField.setText(produkt.getLink());
+            this.produktverwaltungEinzelpreisField.setText(String.valueOf(produkt.getEinzelpreis()));
+            this.produktverwaltungMengeLagerndSpinnerValueFactory.setValue(produkt.getMenge_lagernd());
+            this.produktverwaltungMengeBestelltSpinnerValueFactory.setValue(produkt.getMenge_bestellt());
+            this.produktverwaltungMengeGeplantSpinnerValueFactory.setValue(produkt.getMenge_geplant());
+            this.produktverwaltungLagerortField.setText(produkt.getLagerort());
+        }
+    }
+
+    public void produktverwaltungKategorieChangedAction() {
+        this.kategorieverwaltungListID = this.kategorienverwaltungListe.getFocusModel().getFocusedIndex();
+        this.produkteDisableInputs(true);
+        if (this.kategorieverwaltungListID == -1) {
+            this.produktProdukteBox.setDisable(true);
+        } else {
+            this.populateProduktverwaltungList();
+        }
+        this.produktverwaltungUpdateTextFields();
+    }
+
+    public void removeKategorieAction() {
+        int listId = this.kategorienverwaltungListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            showError(new ElabException("Keine Kategorie zum Löschen ausgewählt!"));
+        } else {
+            try {
+                Kategorie kategorie = this.bauteileverwaltung.getKategorien().get(listId);
+                this.bauteileverwaltung.removeKategorie(kategorie.getId());
+            } catch (ElabException e) {
+                showError(e);
+                return;
+            }
+        }
+        this.populateKategorieverwaltungList();
+    }
+
+    public void addKategorieAction() {
+        if (this.kategorieNameField.getText().equals("")) {
+            showError(new ElabException("Name der Kategorie darf nicht leer sein!"));
+            return;
+        }
+        try {
+            this.bauteileverwaltung.addKategorie(this.kategorieNameField.getText());
+        } catch (ElabException e) {
+            showError(e);
+            return;
+        }
+        populateKategorieverwaltungList();
     }
 }
