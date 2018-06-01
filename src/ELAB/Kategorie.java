@@ -63,12 +63,12 @@ public class Kategorie {
 //	}
 
     /*
-     * 
+     *
      * Produkt
-     * 
-     * 
+     *
+     *
      */
-    
+
     private void reloadProdukt() {
         Db db = new Db();
         this.produkte.clear();
@@ -87,11 +87,11 @@ public class Kategorie {
         }
 
     }
-    
-    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
-    	
+
+    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) throws ElabException {
+
     	float preis = Float.parseFloat(einzelpreis);
-    	
+
         Db db = new Db();
         String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt"
                 + "VALUES ('" + name + "','" + link + "'," + einzelpreis + "," + menge_lagernd + "," + menge_geplant + ","
@@ -102,8 +102,8 @@ public class Kategorie {
             e.printStackTrace();
         }
     }
-    
-    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) {
+
+    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) throws ElabException{
     	float preis = Float.parseFloat(einzelpreis);
         Db db = new Db();
         String sql = "UPDATE Produkt SET Name = '" + name + "', Link = '" + link
@@ -116,8 +116,8 @@ public class Kategorie {
             e.printStackTrace();
         }
     }
-    
-    public void removeProdukt(int id) {
+
+    public void removeProdukt(int id) throws ElabException {
         Db db = new Db();
         String sql = "DELETE FROM Produkt WHERE ID = " + id + "";
         try {
@@ -126,5 +126,5 @@ public class Kategorie {
             e.printStackTrace();
         }
     }
-    
+
 }

@@ -30,7 +30,7 @@ public class Bauteileverwaltung {
         }
     }
 
-    public void addKategorie(String name) {
+    public void addKategorie(String name) throws ElabException {
         Db db = new Db();
         String sql = "INSERT INTO Kategorie (Name)"
                 + "VALUES ('" + name + "')";
