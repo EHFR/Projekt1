@@ -16,12 +16,35 @@ public class Fertigungsverwaltung {
 
     //todo Hier muss auch Auftraggeber(Name:String) und Auftragbearbeiter(Name\n Name2...:String) geladen werden!
     //todo \n bedeutet neue Zeile!
+    
+    public ArrayList<Person> fillList(int id) {
+    	Db db = new Db();
+    	Personenverwaltung pw = new Personenverwaltung();
+    	ArrayList<Person> personen = new ArrayList<Person>();
+    	String sql = "SELECT * FROM AuftragPerson WHERE AuftragID = " + id + "";
+    	try{
+    	ResultSet rs = db.exequteQuery(sql);
+    	while(rs.next()) {
+    		int personID = rs.getInt("PersonID");
+    		personen.add(pw.getPersonByID(personID));
+    		}
+    	} 
+    	catch (SQLException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	return personen;
+   }
+    
+    
     private void reloadAuftraege() {
         Db db = new Db();
+        Personenverwaltung pw = new Personenverwaltung();
         this.auftraege.clear();
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Auftrag");
             while (rs.next()) {
+            	int auftragID = rs.getInt("ID");
                 Auftrag a = new Auftrag(rs.getInt("ID"), rs.getString("Titel"), rs.getString("FertigungsArt"),
                         rs.getString("DateiName"), rs.getString("DateiOrt"), rs.getFloat("Kosten"),
                         rs.getBoolean("angenommen"), rs.getTimestamp("statusZeitstempel_angenommen"),
@@ -31,7 +54,7 @@ public class Fertigungsverwaltung {
                         rs.getBoolean("abgerechnet"), rs.getTimestamp("statusZeitstempel_abgerechnet"),
                         rs.getBoolean("wartenAufMaterial"), rs.getTimestamp("statusZeitstempel_wartenAufMaterial"),
                         rs.getBoolean("fertigungFehlgeschlagen"),
-                        rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"));
+                        rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"),pw.getPersonByID(rs.getInt("AuftraggeberID")),fillList(auftragID));
                 a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
                 this.auftraege.add(a);
             }
@@ -92,6 +115,8 @@ public class Fertigungsverwaltung {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        
     }
 
 
