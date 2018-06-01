@@ -35,6 +35,7 @@ public class Kategorie {
     }
 
     public ArrayList<Produkt> getProdukte() {
+    	this.reloadProdukt();
         return produkte;
     }
 
@@ -53,6 +54,8 @@ public class Kategorie {
     public void setProduktID(int produktID) {
         this.produktID = produktID;
     }
+    
+    
 
 //	public Map<Integer, Produkt> getNum() {
 //		return num;
