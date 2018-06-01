@@ -118,4 +118,8 @@ public class Bauteileverwaltung {
     }
 
 
+    public ArrayList<Kategorie> getKategorien(){
+        this.reloadKategorie();
+        return this.kategorie;
+    }
 }

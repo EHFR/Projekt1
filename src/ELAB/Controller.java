@@ -166,15 +166,19 @@ public class Controller implements Initializable {
     /**
      * Bauteileverwaltung Bauteile
      */
+    public GridPane produktGrid;
+    public VBox produktProdukteBox;
     public ListView<String> kategorienListe;
     public ListView<String> produktListe;
     public Label produktNameLabel;
     public Hyperlink produktLink;
     public Label produktEinzelpreisLabel;
     public Spinner<Integer> produktMengeLagerndSpinner;
+    public SpinnerValueFactory<Integer> produktMengeLagerndSpinnerValueFactory;
     public Label produktMengeBestelltLabel;
     public Label produktMengeGeplantLabel;
     public Label produktLagerortLabel;
+    private int kategorieListID = -1;
 
     /**
      * Bauteileverwaltung Verwaltung
@@ -270,6 +274,8 @@ public class Controller implements Initializable {
         /**
          * Bauteileverwaltung Bauteile
          */
+        this.produktMengeLagerndSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0);
+        this.produktMengeLagerndSpinner.setValueFactory(produktMengeLagerndSpinnerValueFactory);
 
         /**
          * Bauteileverwaltung Verwaltung
@@ -964,6 +970,52 @@ public class Controller implements Initializable {
     /**
      * Bauteileverwaltung Bauteile
      */
+
+    private void populateKategorienList() {
+        ArrayList<String> allKategorien = new ArrayList<>();
+        for (Kategorie kategorie : bauteileverwaltung.getKategorien()) {
+            allKategorien.add(kategorie.getName());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(allKategorien);
+        kategorienListe.setItems(items);
+        this.populateProdukteList();
+    }
+
+    private void populateProdukteList() {
+        if (this.kategorieListID != -1) {
+            ArrayList<String> allProdukte = new ArrayList<>();
+            for (Produkt produkt : bauteileverwaltung.getKategorien().get(this.kategorieListID).getProdukte()) {
+                allProdukte.add(produkt.getName());
+            }
+            ObservableList<String> items = FXCollections.observableArrayList(allProdukte);
+            produktListe.setItems(items);
+            this.produkteUpdateTextFields();
+        }else{
+
+        }
+    }
+
+    public void produkteUpdateTextFields() {
+        int listId = this.produktListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            this.produkteDisableInputs(true);
+        } else {
+            this.produkteDisableInputs(false);
+            Produkt produkt = this.bauteileverwaltung.getKategorien().get(this.kategorieListID).getProdukte().get(listId);
+
+            this.produktNameLabel.setText(produkt.getName());
+            this.produktLink.setText(produkt.getLink());
+            this.produktEinzelpreisLabel.setText(String.valueOf(produkt.getEinzelpreis()));
+            this.produktMengeLagerndSpinnerValueFactory.setValue(produkt.getMenge_lagernd());
+            this.produktMengeBestelltLabel.setText(String.valueOf(produkt.getMenge_bestellt()));
+            this.produktMengeGeplantLabel.setText(String.valueOf(produkt.getMenge_geplant()));
+            this.produktLagerortLabel.setText(produkt.getLagerort());
+        }
+    }
+
+    private void produkteDisableInputs(boolean disabled) {
+        this.produktGrid.setDisable(disabled);
+    }
 
     /**
      * Bauteileverwaltung Verwaltung

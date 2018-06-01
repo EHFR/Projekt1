@@ -551,7 +551,7 @@
                                                 <ListView fx:id="kategorienListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="308.0" prefWidth="123.0" />
                                              </children>
                                           </VBox>
-                                          <VBox prefHeight="325.0" prefWidth="188.0">
+                                          <VBox fx:id="produktProdukteBox" prefHeight="325.0" prefWidth="188.0">
                                              <children>
                                                 <Label text="Produkte:" />
                                                 <ListView fx:id="produktListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="353.0" prefWidth="291.0">
@@ -585,7 +585,7 @@
                                                       <Label text="Lagerort:" GridPane.rowIndex="6" />
                                                       <Label fx:id="produktLagerortLabel" text="Ort" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                       <Label text="Einzelpreis:" GridPane.rowIndex="2" />
-                                                      <Spinner fx:id="produktMengeLagerndSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Spinner fx:id="produktMengeLagerndSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                       <Label fx:id="produktEinzelpreisLabel" text="Preis" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                       <Label fx:id="produktNameLabel" text="Produktname" GridPane.columnIndex="1" />
                                                       <Label text="Menge bestellt:" GridPane.rowIndex="4" />
