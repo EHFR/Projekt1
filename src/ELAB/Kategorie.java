@@ -35,6 +35,7 @@ public class Kategorie {
     }
 
     public ArrayList<Produkt> getProdukte() {
+    	this.reloadProdukt();
         return produkte;
     }
 
@@ -53,6 +54,8 @@ public class Kategorie {
     public void setProduktID(int produktID) {
         this.produktID = produktID;
     }
+    
+    
 
 //	public Map<Integer, Produkt> getNum() {
 //		return num;
@@ -63,12 +66,12 @@ public class Kategorie {
 //	}
 
     /*
-     *
+     * 
      * Produkt
-     *
-     *
+     * 
+     * 
      */
-
+    
     private void reloadProdukt() {
         Db db = new Db();
         this.produkte.clear();
@@ -87,11 +90,11 @@ public class Kategorie {
         }
 
     }
-
-    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) throws ElabException {
-
+    
+    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
+    	
     	float preis = Float.parseFloat(einzelpreis);
-
+    	
         Db db = new Db();
         String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt"
                 + "VALUES ('" + name + "','" + link + "'," + einzelpreis + "," + menge_lagernd + "," + menge_geplant + ","
@@ -102,9 +105,10 @@ public class Kategorie {
             e.printStackTrace();
         }
     }
-
-    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) throws ElabException{
+    
+    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) {
     	float preis = Float.parseFloat(einzelpreis);
+    	
         Db db = new Db();
         String sql = "UPDATE Produkt SET Name = '" + name + "', Link = '" + link
                 + "', Einzelpreis = '" + einzelpreis + "', MengeLagernd = '" + mengeLagernd + "', MengeGeplant = '"
@@ -116,8 +120,8 @@ public class Kategorie {
             e.printStackTrace();
         }
     }
-
-    public void removeProdukt(int id) throws ElabException {
+    
+    public void removeProdukt(int id) {
         Db db = new Db();
         String sql = "DELETE FROM Produkt WHERE ID = " + id + "";
         try {
@@ -126,5 +130,5 @@ public class Kategorie {
             e.printStackTrace();
         }
     }
-
+    
 }
