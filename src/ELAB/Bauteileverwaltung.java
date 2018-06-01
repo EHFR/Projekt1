@@ -61,6 +61,7 @@ public class Bauteileverwaltung {
         }
     }
 
+    // todo Kategorie ID wird doch automatisch von der Datenbank erstellt, PARAMETER LÖSCHEN!
     public void addKategorie(int kategorieID, String name) {
         Db db = new Db();
         String sql = "INSERT INTO Kategorie (ID, Name, Produkte)"
