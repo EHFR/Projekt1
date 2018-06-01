@@ -115,15 +115,15 @@ public class Topf {
     	
     	Personenverwaltung person = new Personenverwaltung();
     	
-    	for (String namen : ansprechpartner.split("\n")) {
-            if (!person.personAlreadyExists(namen)) {
-                throw new ElabException("Auftragbearbeiter " + namen + " existiert nicht!");
-            }
-        }
-    	
     	for (String namen : auftraggeber.split("\n")) {
             if (!person.personAlreadyExists(namen)) {
                 throw new ElabException("Auftraggeber " + namen + " existiert nicht!");
+            }
+        }
+    	
+    	for (String namen : ansprechpartner.split("\n")) {
+            if (!person.personAlreadyExists(namen)) {
+                throw new ElabException("Ansprechpartner " + namen + " existiert nicht!");
             }
         }
     	
@@ -142,7 +142,7 @@ public class Topf {
                 + this.id + ",'"
                 + BetragFloat + ","
                 + bezahlart + ",'"
-                + "FALSE','FALSE','FALSE','FALSE',"
+                + "'FALSE','FALSE','FALSE','FALSE',"
                 + zeitstempel + "')";
         
         try {
