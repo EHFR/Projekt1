@@ -54,7 +54,7 @@ public class Bauteileverwaltung {
 
 
 
-    public void removeKategorie(int id) {
+    public void removeKategorie(int id) throws ElabException {
         Db db = new Db();
         String sql = "DELETE FROM Kategorie WHERE ID = " + id + "";
         try {
