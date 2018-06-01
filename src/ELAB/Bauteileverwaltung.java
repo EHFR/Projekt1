@@ -14,25 +14,6 @@ public class Bauteileverwaltung {
         produkt = new ArrayList<>();
     }
 
-    private void reloadProdukt() {
-        Db db = new Db();
-        this.kategorie.clear();
-        try {
-            ResultSet rs = db.exequteQuery("SELECT * FROM Produkt");
-            while (rs.next()) {
-                Produkt p = new Produkt(rs.getInt("ID"), rs.getString("Name"), rs.getString("Link"),
-                        rs.getDouble("Einzelpreis"), rs.getInt("MengeLagernd"),
-                        rs.getInt("MengeGeplant"), rs.getInt("MengeBestellt"), rs.getString("LagerOrt"));
-                this.produkt.add(p);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            db.close();
-        }
-
-    }
-
     private void reloadKategorie() {
         Db db = new Db();
         this.kategorie.clear();
@@ -49,18 +30,6 @@ public class Bauteileverwaltung {
         }
     }
 
-    public void addProdukt(String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
-        Db db = new Db();
-        String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt"
-                + "VALUES ('" + name + "','" + link + "'," + einzelpreis + "," + menge_lagernd + "," + menge_geplant + ","
-                + menge_bestellt + ",'" + lagerort + "')";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void addKategorie(int kategorieID, String name) {
         Db db = new Db();
         String sql = "INSERT INTO Kategorie (ID, Name, Produkte)"
@@ -68,19 +37,6 @@ public class Bauteileverwaltung {
         try {
             db.updateQuery(sql);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void updateProdukt(int id, String name, String link, float einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) {
-        Db db = new Db();
-        String sql = "UPDATE Produkt SET Name = '" + name + "', Link = '" + link
-                + "', Einzelpreis = '" + einzelpreis + "', MengeLagernd = '" + mengeLagernd + "', MengeGeplant = '"
-                + mengeGeplant + "', MengeBestellt = '" + mengeBestellt + "', LagerOrt =  '" + lagerOrt + " "
-                + "WHERE PersonID = " + id + "";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -97,15 +53,6 @@ public class Bauteileverwaltung {
     }
 
 
-    public void removeProdukt(int id) {
-        Db db = new Db();
-        String sql = "DELETE FROM Produkt WHERE ID = " + id + "";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void removeKategorie(int id) {
         Db db = new Db();

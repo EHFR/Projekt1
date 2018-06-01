@@ -47,8 +47,7 @@ public class Finanzverwaltung {
           db.close();
       }
   }
-
-
+    
 	public void addTopf(String name, String sollBetrag, String kasse) throws ElabException {
 		
 		float sollBetragFloat;

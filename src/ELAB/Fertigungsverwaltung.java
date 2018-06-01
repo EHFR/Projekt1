@@ -71,12 +71,20 @@ public class Fertigungsverwaltung {
         this.reloadAuftraege();
         return auftraege;
     }
-
+    
     public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId, String auftragbearbeiter) throws ElabException {
 
         //todo ("Auftraggeber existiert nicht!");
 
         Personenverwaltung personenverwaltung = new Personenverwaltung();
+        ArrayList<Person> auftragbearbeiterListe = new ArrayList<Person>();
+        for(String name : auftragbearbeiter.split("\n"))
+        {
+        	auftragbearbeiterListe.add(personenverwaltung.getPersonByName(auftragbearbeiter));
+        }
+        
+        
+        
 
         //todo Idee zum testen, ob alle Auftraggeber auch existieren   man müsste hier dann ein objekt von der personenverwaltung erstellen
         for (String name : auftragbearbeiter.split("\n")) {
@@ -115,8 +123,6 @@ public class Fertigungsverwaltung {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
     }
 
 

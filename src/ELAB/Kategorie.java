@@ -1,5 +1,7 @@
 package ELAB;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,5 +62,65 @@ public class Kategorie {
 //		this.num = num;
 //	}
 
+    /*
+     * 
+     * Produkt
+     * 
+     * 
+     */
+    
+    private void reloadProdukt() {
+        Db db = new Db();
+        this.produkte.clear();
+        try {
+            ResultSet rs = db.exequteQuery("SELECT * FROM Produkt");
+            while (rs.next()) {
+                Produkt p = new Produkt(rs.getInt("ID"), rs.getString("Name"), rs.getString("Link"),
+                        rs.getDouble("Einzelpreis"), rs.getInt("MengeLagernd"),
+                        rs.getInt("MengeGeplant"), rs.getInt("MengeBestellt"), rs.getString("LagerOrt"));
+                this.produkte.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
 
+    }
+    
+    public void addProdukt(String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
+        Db db = new Db();
+        String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt"
+                + "VALUES ('" + name + "','" + link + "'," + einzelpreis + "," + menge_lagernd + "," + menge_geplant + ","
+                + menge_bestellt + ",'" + lagerort + "')";
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateProdukt(int id, String name, String link, float einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) {
+        Db db = new Db();
+        String sql = "UPDATE Produkt SET Name = '" + name + "', Link = '" + link
+                + "', Einzelpreis = '" + einzelpreis + "', MengeLagernd = '" + mengeLagernd + "', MengeGeplant = '"
+                + mengeGeplant + "', MengeBestellt = '" + mengeBestellt + "', LagerOrt =  '" + lagerOrt + " "
+                + "WHERE PersonID = " + id + "";
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void removeProdukt(int id) {
+        Db db = new Db();
+        String sql = "DELETE FROM Produkt WHERE ID = " + id + "";
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
