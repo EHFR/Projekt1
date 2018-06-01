@@ -1098,7 +1098,7 @@ public class Controller implements Initializable {
                 allProdukte.add(produkt.getName());
             }
             ObservableList<String> items = FXCollections.observableArrayList(allProdukte);
-            rechnungenListe.setItems(items);
+            produktverwaltungListe.setItems(items);
         } else {
             this.produktverwaltungDisableInputs(true);
             this.produktverwaltungProdukteBox.setDisable(true);

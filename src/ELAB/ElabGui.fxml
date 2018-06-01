@@ -642,7 +642,7 @@
                                           <VBox fx:id="produktverwaltungProdukteBox" prefHeight="325.0" prefWidth="170.0">
                                              <children>
                                                 <Label text="Produkte:" />
-                                                <ListView fx:id="produktverwaltungListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="308.0" prefWidth="139.0">
+                                                <ListView fx:id="produktverwaltungListe" onMouseClicked="#produktverwaltungUpdateTextFields" prefHeight="308.0" prefWidth="139.0">
                                                    <VBox.margin>
                                                       <Insets />
                                                    </VBox.margin>

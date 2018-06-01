@@ -32,7 +32,7 @@ public class Kategorie {
         Db db = new Db();
         this.produkte.clear();
         try {
-            ResultSet rs = db.exequteQuery("SELECT * FROM Produkt");
+            ResultSet rs = db.exequteQuery("SELECT * FROM Produkt WHERE KategorieID = " + this.id);
             while (rs.next()) {
                 Produkt p = new Produkt(rs.getInt("ID"), rs.getString("Name"), rs.getString("Link"),
                         rs.getDouble("Einzelpreis"), rs.getInt("MengeLagernd"),
@@ -56,9 +56,9 @@ public class Kategorie {
         }
 
         Db db = new Db();
-        String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt) "
+        String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt,KategorieID) "
                 + "VALUES ('" + name + "','" + link + "'," + preis + "," + menge_lagernd + "," + menge_geplant + ","
-                + menge_bestellt + ",'" + lagerort + "')";
+                + menge_bestellt + ",'" + lagerort + "'," + this.id + ")";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -79,7 +79,7 @@ public class Kategorie {
         String sql = "UPDATE Produkt SET Name = '" + name + "', Link = '" + link
                 + "', Einzelpreis = " + preis + ", MengeLagernd = " + mengeLagernd + ", MengeGeplant = "
                 + mengeGeplant + ", MengeBestellt = " + mengeBestellt + ", LagerOrt =  '" + lagerOrt + "' "
-                + "WHERE PersonID = " + id + "";
+                + "WHERE ID = " + id;
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -88,11 +88,10 @@ public class Kategorie {
     }
 
     public void removeProdukt(int id) throws ElabException {
-
         reloadProdukt();
         for (Produkt produkt : this.produkte) {
-            if (produkt.getId() == id){
-                if (produkt.getMenge_lagernd() > 0){
+            if (produkt.getId() == id) {
+                if (produkt.getMenge_lagernd() > 0) {
                     throw new ElabException("Von dem Produkt gibt es noch " + produkt.getMenge_lagernd() + " im Lager");
                 }
             }
