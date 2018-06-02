@@ -16,27 +16,25 @@ public class Fertigungsverwaltung {
 
     //todo Hier muss auch Auftraggeber(Name:String) und Auftragbearbeiter(Name\n Name2...:String) geladen werden!
     //todo \n bedeutet neue Zeile!
-    
+
     public ArrayList<Person> fillList(int id) {
-    	Db db = new Db();
-    	Personenverwaltung pw = new Personenverwaltung();
-    	ArrayList<Person> personen = new ArrayList<Person>();
-    	String sql = "SELECT * FROM AuftragPerson WHERE AuftragID = " + id + "";
-    	try{
-    	ResultSet rs = db.exequteQuery(sql);
-    	while(rs.next()) {
-    		int personID = rs.getInt("PersonID");
-    		personen.add(pw.getPersonByID(personID));
-    		}
-    	} 
-    	catch (SQLException e)
-    	{
-    		e.printStackTrace();
-    	}
-    	return personen;
-   }
-    
-    
+        Db db = new Db();
+        Personenverwaltung pw = new Personenverwaltung();
+        ArrayList<Person> personen = new ArrayList<Person>();
+        String sql = "SELECT * FROM AuftragPerson WHERE AuftragID = " + id + "";
+        try {
+            ResultSet rs = db.exequteQuery(sql);
+            while (rs.next()) {
+                int personID = rs.getInt("PersonID");
+                personen.add(pw.getPersonByID(personID));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personen;
+    }
+
+
     private void reloadAuftraege() {
         Db db = new Db();
         Personenverwaltung pw = new Personenverwaltung();
@@ -44,7 +42,7 @@ public class Fertigungsverwaltung {
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Auftrag");
             while (rs.next()) {
-            	int auftragID = rs.getInt("ID");
+                int auftragID = rs.getInt("ID");
                 Auftrag a = new Auftrag(rs.getInt("ID"), rs.getString("Titel"), rs.getString("FertigungsArt"),
                         rs.getString("DateiName"), rs.getString("DateiOrt"), rs.getFloat("Kosten"),
                         rs.getBoolean("angenommen"), rs.getTimestamp("statusZeitstempel_angenommen"),
@@ -54,7 +52,7 @@ public class Fertigungsverwaltung {
                         rs.getBoolean("abgerechnet"), rs.getTimestamp("statusZeitstempel_abgerechnet"),
                         rs.getBoolean("wartenAufMaterial"), rs.getTimestamp("statusZeitstempel_wartenAufMaterial"),
                         rs.getBoolean("fertigungFehlgeschlagen"),
-                        rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"),pw.getPersonByID(rs.getInt("AuftraggeberID")),fillList(auftragID));
+                        rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"), pw.getPersonByID(rs.getInt("AuftraggeberID")), fillList(auftragID));
                 a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
                 this.auftraege.add(a);
             }
@@ -71,20 +69,17 @@ public class Fertigungsverwaltung {
         this.reloadAuftraege();
         return auftraege;
     }
-    
+
     public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId, String auftragbearbeiter) throws ElabException {
 
         //todo ("Auftraggeber existiert nicht!");
 
         Personenverwaltung personenverwaltung = new Personenverwaltung();
         ArrayList<Person> auftragbearbeiterListe = new ArrayList<Person>();
-        for(String name : auftragbearbeiter.split("\n"))
-        {
-        	auftragbearbeiterListe.add(personenverwaltung.getPersonByName(auftragbearbeiter));
+        for (String name : auftragbearbeiter.split("\n")) {
+            auftragbearbeiterListe.add(personenverwaltung.getPersonByName(auftragbearbeiter));
         }
-        
-        
-        
+
 
         //todo Idee zum testen, ob alle Auftraggeber auch existieren   man müsste hier dann ein objekt von der personenverwaltung erstellen
         for (String name : auftragbearbeiter.split("\n")) {
@@ -267,6 +262,93 @@ public class Fertigungsverwaltung {
             }
         }
         return null;
+    }
+
+    public ArrayList<Auftrag> getAuftragByStatus(String status) {
+        ArrayList<Auftrag> auftraegeGefiltert = new ArrayList<>();
+
+        this.reloadAuftraege();
+        for (Auftrag auftrag : this.auftraege) {
+            switch (status) {
+                case "Alles":
+                    return getAuftraege();
+                case "Angenommen":
+                    if (auftrag.isAngenommen()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Nicht Angenommen":
+                    if (!auftrag.isAngenommen()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Gefertigt":
+                    if (auftrag.isGefertigt()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Nicht Gefertigt":
+                    if (!auftrag.isGefertigt()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Kosten kalkuliert":
+                    if (auftrag.isKosten_kalkuliert()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Kosten nicht kalkuliert":
+                    if (!auftrag.isKosten_kalkuliert()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Abgeholt":
+                    if (auftrag.isAbgeholt()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Nicht Abgeholt":
+                    if (!auftrag.isAbgeholt()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Abgerechnet":
+                    if (auftrag.isAbgerechnet()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Nicht Abgerechnet":
+                    if (!auftrag.isAbgerechnet()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Auf Material warten":
+                    if (auftrag.isWartenAufMaterial()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Material vorhanden":
+                    if (!auftrag.isWartenAufMaterial()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Fertigung unterbrochen":
+                    if (auftrag.isFertigungFehlgeschlagen()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                case "Fertigung nicht unterbrochen":
+                    if (!auftrag.isFertigungFehlgeschlagen()) {
+                        auftraegeGefiltert.add(auftrag);
+                    }
+                    break;
+                default:
+                    System.out.println("Status unbekannt in getAuftragByStatus");
+                    break;
+            }
+        }
+
+        return auftraegeGefiltert;
     }
 
     // int id, boolean angenommen, boolean gefertigt, boolean kosten_kalkuliert,

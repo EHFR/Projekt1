@@ -491,21 +491,18 @@ public class Controller implements Initializable {
         this.fertigungsverwaltungMaterialSpinner.setValueFactory(fertigungsverwaltungMaterialSpinnerValueFactory);
         this.fertigungsverwaltungUnterbrochenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
         this.fertigungsverwaltungUnterbrochenSpinner.setValueFactory(fertigungsverwaltungUnterbrochenSpinnerValueFactory);
-        ObservableList<String> alleFilter = FXCollections.observableArrayList("Alles", "Angenommen", "Gefertigt", "Kosten kalkuliert",
-                "Abgeholt", "Abgerechnet", "Auf Material warten", "Fertigung unterbrochen");
+        ObservableList<String> alleFilter = FXCollections.observableArrayList("Alles", "Angenommen", "Nicht Angenommen",
+                "Gefertigt", "Nicht Gefertigt", "Kosten kalkuliert", "Kosten nicht kalkuliert", "Abgeholt", "Nicht Abgeholt",
+                "Abgerechnet", "Nicht Abgerechnet", "Auf Material warten", "Material vorhanden", "Fertigung unterbrochen", "Fertigung nicht unterbrochen");
         this.fertigungsverwaltungFilerSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(alleFilter);
         this.fertigungsverwaltungFilterSpinner.setValueFactory(fertigungsverwaltungFilerSpinnerValueFactory);
         this.populateFertigungsverwaltungList();
     }
 
-    private void populateFertigungsverwaltungList() {
+    public void populateFertigungsverwaltungList() {
         ArrayList<String> allTitel = new ArrayList<>();
-        switch (this.fertigungsverwaltungFilterSpinner.getValue()) {
-            case "Alles":
-                for (Auftrag auftrag : fertigungsverwaltung.getAuftraege()) {
-                    allTitel.add(auftrag.getTitel());
-                }
-
+        for (Auftrag auftrag : this.fertigungsverwaltung.getAuftragByStatus(this.fertigungsverwaltungFilterSpinner.getValue())) {
+            allTitel.add(auftrag.getTitel());
         }
         ObservableList<String> items = FXCollections.observableArrayList(allTitel);
         fertigungsverwaltungListe.setItems(items);
@@ -553,7 +550,7 @@ public class Controller implements Initializable {
                 showError(new ElabException("Keine Person zum löschen ausgewählt!"));
                 return;
             }
-            Auftrag auftragToRemove = fertigungsverwaltung.getAuftraege().get(listId);
+            Auftrag auftragToRemove = this.fertigungsverwaltung.getAuftragByStatus(this.fertigungsverwaltungFilterSpinner.getValue()).get(listId);
             this.fertigungsverwaltung.removeAuftrag(auftragToRemove.getId());
             this.populateFertigungsverwaltungList();
         }
@@ -586,7 +583,7 @@ public class Controller implements Initializable {
                 return;
             }
             try {
-                Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
+                Auftrag auftrag = this.fertigungsverwaltung.getAuftragByStatus(this.fertigungsverwaltungFilterSpinner.getValue()).get(listId);
                 this.fertigungsverwaltung.updateAuftrag(auftrag.getId(), this.fertigungsverwaltungTitelField.getText(),
                         this.fertigungsverwaltungFertigungsartField.getText(), this.fertigungsverwaltungDateinameField.getText(),
                         this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText()));
@@ -605,7 +602,7 @@ public class Controller implements Initializable {
             showError(new ElabException("Keinen Auftrag zum bearbeiten ausgewählt!"));
             return;
         }
-        Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
+        Auftrag auftrag = this.fertigungsverwaltung.getAuftragByStatus(this.fertigungsverwaltungFilterSpinner.getValue()).get(listId);
         this.fertigungsverwaltung.updateStatus(auftrag.getId(), jaNeinToBool(this.fertigungsverwaltungAngenommenSpinner.getValue()),
                 jaNeinToBool(this.fertigungsverwaltungGefertigtSpinner.getValue()), jaNeinToBool(this.fertigungsverwaltungKostenSpinner.getValue()),
                 jaNeinToBool(this.fertigungsverwaltungAbgeholtSpinner.getValue()), jaNeinToBool(this.fertigungsverwaltungAbgerechnetSpinner.getValue()),
@@ -625,7 +622,7 @@ public class Controller implements Initializable {
         } else {
             this.fertigungsverwaltungDisableInputs(false);
 
-            Auftrag auftrag = fertigungsverwaltung.getAuftraege().get(listId);
+            Auftrag auftrag = this.fertigungsverwaltung.getAuftragByStatus(this.fertigungsverwaltungFilterSpinner.getValue()).get(listId);
             this.fertigungsverwaltungTitelField.setText(auftrag.getTitel());
             this.fertigungsverwaltungFertigungsartField.setText(auftrag.getFertigungsart());
             this.fertigungsverwaltungDateinameField.setText(auftrag.getDateiname());

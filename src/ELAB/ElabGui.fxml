@@ -129,7 +129,7 @@
                               <VBox prefHeight="354.0" prefWidth="169.0">
                                  <children>
                                     <Label text="Filtern nach Status:" />
-                                    <Spinner fx:id="fertigungsverwaltungFilterSpinner" prefHeight="25.0" prefWidth="168.0" />
+                                    <Spinner fx:id="fertigungsverwaltungFilterSpinner" onInputMethodTextChanged="#populateFertigungsverwaltungList" prefHeight="25.0" prefWidth="168.0" />
                                     <ListView fx:id="fertigungsverwaltungListe" onMouseClicked="#fertigungsverwaltungUpdateTextFields" prefHeight="344.0" prefWidth="172.0" />
                                  </children>
                               </VBox>

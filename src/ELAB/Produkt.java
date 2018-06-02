@@ -58,7 +58,7 @@ public class Produkt {
     public void setMenge_lagernd(int menge_lagernd) {
         Db db = new Db();
         String sql = "UPDATE Produkt SET MengeLagernd = " + menge_lagernd
-                + " WHERE PersonID = " + id;
+                + " WHERE ID = " + id;
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
