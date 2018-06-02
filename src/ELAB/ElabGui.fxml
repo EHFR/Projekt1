@@ -594,7 +594,7 @@
                                                       <Label text="Menge geplant:" GridPane.rowIndex="5" />
                                                       <Label fx:id="produktMengeGeplantLabel" text="Menge" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                       <Label text="Link zum Produkt:" GridPane.rowIndex="1" />
-                                                      <Hyperlink fx:id="produktLink" text="Hyperlink" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Hyperlink fx:id="produktLink" onAction="#produktLinkAction" text="Hyperlink" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <Button mnemonicParsing="false" onAction="#produkteUpdateTextFields" prefHeight="25.0" prefWidth="116.0" text="Zurücksetzen" GridPane.rowIndex="7" />
                                                       <Button mnemonicParsing="false" onAction="#produktChangeMengeLagernd" prefHeight="25.0" prefWidth="114.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                                    </children>
@@ -676,12 +676,12 @@
                                                       <Label text="Menge lagernd:" GridPane.rowIndex="3" />
                                                       <Label text="Lagerort:" GridPane.rowIndex="6" />
                                                       <Label text="Einzelpreis:" GridPane.rowIndex="2" />
-                                                      <Spinner fx:id="produktverwaltungMengeLagerndSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Spinner fx:id="produktverwaltungMengeLagerndSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                       <Label text="Menge bestellt:" GridPane.rowIndex="4" />
                                                       <Label text="Link zum Produkt:" GridPane.rowIndex="1" />
                                                       <Label text="Menge geplant:" GridPane.rowIndex="5" />
-                                                      <Spinner fx:id="produktverwaltungMengeBestelltSpinner" layoutX="130.0" layoutY="48.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                      <Spinner fx:id="produktverwaltungMengeGeplantSpinner" layoutX="130.0" layoutY="106.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <Spinner fx:id="produktverwaltungMengeBestelltSpinner" editable="true" layoutX="130.0" layoutY="48.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Spinner fx:id="produktverwaltungMengeGeplantSpinner" editable="true" layoutX="130.0" layoutY="106.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                       <TextField fx:id="produktverwaltungLagerortField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                       <TextField fx:id="produktverwaltungLinkField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <Button fx:id="produktverwaltungSaveBtn" mnemonicParsing="false" onAction="#saveProduktAction" prefHeight="25.0" prefWidth="148.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />

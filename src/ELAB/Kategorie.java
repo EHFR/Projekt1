@@ -52,7 +52,7 @@ public class Kategorie {
         try {
             preis = Float.parseFloat(einzelpreis);
         } catch (NumberFormatException e) {
-            throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+            throw new ElabException("Der Einzelpreis wurde nicht als korrekte Kommazahl angegeben! (float)");
         }
 
         Db db = new Db();
@@ -72,7 +72,7 @@ public class Kategorie {
         try {
             preis = Float.parseFloat(einzelpreis);
         } catch (NumberFormatException e) {
-            throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+            throw new ElabException("Der Einzelpreis wurde nicht als korrekte Kommazahl angegeben! (float)");
         }
 
         Db db = new Db();

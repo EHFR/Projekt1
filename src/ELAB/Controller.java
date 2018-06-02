@@ -4,12 +4,21 @@ import javafx.animation.PauseTransition;
 import javafx.collections.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 
+import java.awt.*;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -221,7 +230,7 @@ public class Controller implements Initializable {
         this.setAuthorization();
 
         /**
-         * INITS
+         * INIT Components
          */
         this.initPersonenverwaltung();
         this.initFertigungsverwaltung();
@@ -229,6 +238,23 @@ public class Controller implements Initializable {
         this.initFinanzverwaltungRechnungen();
         this.initBauteileverwaltungBauteile();
         this.initBauteileverwaltungVerwaltung();
+
+        /**
+         * Workaround for Spinner not updating value when editing manually without arrow navigation
+         */
+        for (Field field : getClass().getDeclaredFields()) {
+            try {
+                Object obj = field.get(this);
+                if (obj != null && obj instanceof Spinner)
+                    ((Spinner) obj).focusedProperty().addListener((observable, oldValue, newValue) -> {
+                        if (!newValue) {
+                            ((Spinner) obj).increment(0);
+                        }
+                    });
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void showError(ElabException error) {
@@ -798,6 +824,7 @@ public class Controller implements Initializable {
 
     private void populateTopfList() {
         ArrayList<String> allToepfe = new ArrayList<>();
+        this.topfListID = -1;
         for (Topf topf : this.finanzverwaltung.getToepfe()) {
             allToepfe.add(topf.getName());
         }
@@ -1003,6 +1030,7 @@ public class Controller implements Initializable {
 
     private void populateKategorienList() {
         ArrayList<String> allKategorien = new ArrayList<>();
+        this.kategorieListID = -1;
         for (Kategorie kategorie : bauteileverwaltung.getKategorien()) {
             allKategorien.add(kategorie.getName());
         }
@@ -1019,9 +1047,11 @@ public class Controller implements Initializable {
             }
             ObservableList<String> items = FXCollections.observableArrayList(allProdukte);
             produktListe.setItems(items);
+            this.produktProdukteBox.setDisable(false);
             this.produkteUpdateTextFields();
         } else {
-
+            this.produkteDisableInputs(true);
+            this.produktProdukteBox.setDisable(true);
         }
     }
 
@@ -1058,9 +1088,22 @@ public class Controller implements Initializable {
     }
 
     public void produktChangeMengeLagernd() {
-        //todo check, Bist du sicher?
         int newMenge = this.produktMengeLagerndSpinner.getValue();
-        this.bauteileverwaltung.getKategorien().get(this.kategorieListID).getProdukte().get(this.produktListe.getFocusModel().getFocusedIndex()).setMenge_lagernd(newMenge);
+        if (ConfirmBox.display("Warnung", "Sind Sie sich sicher, dass Sie den Lagerbestand des ausgewählen Produktes auf "
+                + newMenge + " ändern möchten?")) {
+            this.bauteileverwaltung.getKategorien().get(this.kategorieListID).getProdukte().get(this.produktListe.getFocusModel().getFocusedIndex()).setMenge_lagernd(newMenge);
+            showOk();
+        }
+    }
+
+    public void produktLinkAction() {
+        try {
+            URI uri = new URI(this.produktLink.getText());
+            Desktop.getDesktop().browse(uri);
+        } catch (IOException | URISyntaxException e) {
+            showError(new ElabException("Probleme beim Öffnen des Links"));
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -1079,6 +1122,7 @@ public class Controller implements Initializable {
 
     private void populateKategorieverwaltungList() {
         ArrayList<String> allKategorien = new ArrayList<>();
+        this.kategorieverwaltungListID = -1;
         for (Kategorie kategorie : this.bauteileverwaltung.getKategorien()) {
             allKategorien.add(kategorie.getName());
         }
@@ -1205,9 +1249,9 @@ public class Controller implements Initializable {
     public void produktverwaltungUpdateTextFields() {
         int listId = this.produktverwaltungListe.getFocusModel().getFocusedIndex();
         if (listId == -1) {
-            this.produkteDisableInputs(true);
+            this.produktverwaltungDisableInputs(true);
         } else {
-            this.produkteDisableInputs(false);
+            this.produktverwaltungDisableInputs(false);
             Produkt produkt = this.bauteileverwaltung.getKategorien().get(this.kategorieverwaltungListID).getProdukte().get(listId);
 
             this.produktverwaltungNameField.setText(produkt.getName());

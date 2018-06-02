@@ -6,20 +6,20 @@ import java.util.ArrayList;
 
 public class Bauteileverwaltung {
 
-    private ArrayList<Kategorie> kategorie;
+    private ArrayList<Kategorie> kategorien;
 
     public Bauteileverwaltung() {
-        kategorie = new ArrayList<>();
+        kategorien = new ArrayList<>();
     }
 
     private void reloadKategorie() {
         Db db = new Db();
-        this.kategorie.clear();
+        this.kategorien.clear();
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
             while (rs.next()) {
                 Kategorie k = new Kategorie(rs.getInt("ID"), rs.getString("Name"));
-                this.kategorie.add(k);
+                this.kategorien.add(k);
             }
             rs.close();
         } catch (SQLException e) {
@@ -42,6 +42,14 @@ public class Bauteileverwaltung {
 
 
     public void removeKategorie(int id) throws ElabException {
+        for (Kategorie kategorie : this.kategorien) {
+            if (kategorie.getId() == id) {
+                if (kategorie.getProdukte().size() > 0) {
+                    throw new ElabException("Es gibt noch Produkte in dieser Kategorie");
+                }
+            }
+        }
+
         Db db = new Db();
         String sql = "DELETE FROM Kategorie WHERE ID = " + id + "";
         try {
@@ -54,6 +62,6 @@ public class Bauteileverwaltung {
 
     public ArrayList<Kategorie> getKategorien() {
         this.reloadKategorie();
-        return this.kategorie;
+        return this.kategorien;
     }
 }
