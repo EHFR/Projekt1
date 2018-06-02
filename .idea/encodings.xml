@@ -2,19 +2,17 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/ELAB/Auftrag.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/ELAB/Barkasse.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Bauteileverwaltung.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/ELAB/ConfirmBox.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Controller.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Db.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Fertigungsverwaltung.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Finanzverwaltung.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/ELAB/Kasse.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Kategorie.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/ELAB/Konto.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/ELAB/Kostenstelle.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Main.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Person.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Personenverwaltung.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/ELAB/PopupRechnungChangeTopf.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Produkt.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Rechnung.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Topf.java" charset="ISO-8859-1" />

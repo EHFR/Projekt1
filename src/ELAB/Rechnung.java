@@ -124,7 +124,7 @@ public class Rechnung {
     }
 
     public String getBezahlart() {
-        return bezahlart; // todo das hier ist nur ein Platzhalter
+        return bezahlart;
     }
 
     private String zeitstempelToString(Timestamp t) {
@@ -208,13 +208,23 @@ public class Rechnung {
         this.statusZeitstempel = statusZeitstempel;
     }
 
+    //todo export muss implementiert werden (Nachfolgend der dazugehörige Satz in der Anforderung)
+    /*
+     F ¨ ur das Ab- ¨
+heften einer Rechnung in Papierform, mussen diese in ein leserliches Format wie einer PDF-Datei ¨
+exportierbar sein.
+     */
     public void exportToPDF() {
 
     }
 
-
-    // todo Muss noch implementiert werden!
+    // todo Muss noch implementiert werden! (Sollte Analog zu Auftragsstatus machbar sein)
     public void updateStatus(boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
+
+    }
+
+    // todo soll der Rechnung einen neuen Topf zuweisen (Wird genutzt, um Rechnungen zwischen Töpfen zu verschieben)
+    public void setNewTopfID(int id) {
 
     }
 }

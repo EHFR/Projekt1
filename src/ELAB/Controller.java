@@ -1019,6 +1019,33 @@ public class Controller implements Initializable {
         showOk();
     }
 
+    public void moveRechnungAction() {
+        int listId = this.rechnungenListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            showError(new ElabException("Keine Rechnung zum bearbeiten ausgewählt!"));
+            return;
+        }
+        int newTopfID = PopupRechnungChangeTopf.display("Rechnung verschieben", this.finanzverwaltung.getToepfe());
+        if (newTopfID >= 0) {
+            Rechnung rechnung = this.finanzverwaltung.getToepfe().get(this.topfListID).getRechnungen().get(listId);
+            rechnung.setNewTopfID(newTopfID);
+            this.populateRechnungList();
+        } else if (newTopfID == -1) {
+            showError(new ElabException("Es wurde kein Topf gewählt!"));
+        }
+    }
+
+    public void exportRechnungAction() {
+        int listId = this.rechnungenListe.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            showError(new ElabException("Keine Rechnung zum Exportieren ausgewählt!"));
+            return;
+        }
+        Rechnung rechnung = this.finanzverwaltung.getToepfe().get(this.topfListID).getRechnungen().get(listId);
+        rechnung.exportToPDF();
+        showOk();
+    }
+
     /**
      * Bauteileverwaltung Bauteile
      */
