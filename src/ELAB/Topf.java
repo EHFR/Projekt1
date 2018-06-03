@@ -101,7 +101,7 @@ public class Topf {
 					Person geber = personenVerwaltung.getPersonByName(rs.getString("AuftragGeber"));
 					  r.setAuftraggeber(geber);
 					  
-					  Person ansprechPartner = personenVerwaltung.getPersonByName(rs.getString("AnsprechPartner"));
+					Person ansprechPartner = personenVerwaltung.getPersonByName(rs.getString("AnsprechPartner"));
 					  r.setAnsprechpartner(ansprechPartner);
 					  
 				} catch (ElabException e) {
@@ -160,9 +160,7 @@ public class Topf {
                 + BetragFloat + ",'"
                 + bezahlart + "','"
                 + zeitstempel + "')";
-        
-        System.out.println(sql);
-        
+
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -172,7 +170,6 @@ public class Topf {
 
     public void removeRechnung(int id) throws ElabException {
     	Db db = new Db();
-//        Rechnung r = this.getRechnungByID(id);
         String sql = "DELETE FROM Rechnung WHERE ID = " +id + " ";
         try {
             db.updateQuery(sql);
