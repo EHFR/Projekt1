@@ -129,7 +129,7 @@
                               <VBox prefHeight="354.0" prefWidth="169.0">
                                  <children>
                                     <Label text="Filtern nach Status:" />
-                                    <Spinner fx:id="fertigungsverwaltungFilterSpinner" prefHeight="25.0" prefWidth="168.0" />
+                                    <Spinner fx:id="fertigungsverwaltungFilterSpinner" onInputMethodTextChanged="#populateFertigungsverwaltungList" prefHeight="25.0" prefWidth="168.0" />
                                     <ListView fx:id="fertigungsverwaltungListe" onMouseClicked="#fertigungsverwaltungUpdateTextFields" prefHeight="344.0" prefWidth="172.0" />
                                  </children>
                               </VBox>
@@ -423,7 +423,7 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="448.0" prefWidth="600.0">
                                        <children>
-                                          <VBox fx:id="rechnungTopfListBox" prefHeight="325.0" prefWidth="147.0">
+                                          <VBox fx:id="rechnungTopfListBox" prefHeight="325.0" prefWidth="134.0">
                                              <children>
                                                 <Label text="Topf auswählen:" />
                                                 <ListView fx:id="topfListe" onMouseClicked="#rechnungTopfChangedAction" prefHeight="353.0" prefWidth="291.0">
@@ -435,28 +435,38 @@
                                                 <Insets left="5.0" right="5.0" />
                                              </HBox.margin>
                                           </VBox>
-                                          <VBox fx:id="rechnungRechnungListBox" prefHeight="325.0" prefWidth="137.0">
+                                          <VBox fx:id="rechnungRechnungListBox" prefHeight="325.0" prefWidth="146.0">
                                              <children>
                                                 <Label prefHeight="40.0" prefWidth="103.0" text="Rechnungen im ausgeähltem Topf:" wrapText="true" />
-                                                <ListView fx:id="rechnungenListe" onMouseClicked="#rechnungUpdateTextFields" prefHeight="285.0" prefWidth="103.0">
+                                                <ListView fx:id="rechnungenListe" onMouseClicked="#rechnungUpdateTextFields" prefHeight="376.0" prefWidth="105.0">
                                                    <VBox.margin>
                                                       <Insets />
                                                    </VBox.margin></ListView>
+                                                <Button mnemonicParsing="false" onAction="#exportRechnungAction" prefHeight="0.0" prefWidth="105.0" text="Export">
+                                                   <VBox.margin>
+                                                      <Insets top="3.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#moveRechnungAction" prefHeight="8.0" prefWidth="105.0" text="Verschieben" wrapText="true">
+                                                   <VBox.margin>
+                                                      <Insets bottom="2.0" top="3.0" />
+                                                   </VBox.margin>
+                                                </Button>
                                              </children>
                                              <HBox.margin>
                                                 <Insets right="5.0" />
                                              </HBox.margin>
                                           </VBox>
-                                          <VBox fx:id="rechnungAuftragListBox" alignment="CENTER" layoutX="165.0" layoutY="10.0" prefHeight="325.0" prefWidth="137.0">
+                                          <VBox fx:id="rechnungAuftragListBox" alignment="CENTER" layoutX="165.0" layoutY="10.0" prefHeight="325.0" prefWidth="117.0">
                                              <children>
                                                 <Label text="Daten aus einem Auftrag laden:" wrapText="true" />
                                                 <ListView fx:id="auftragsListe" onMouseClicked="#rechnungLoadFromAuftrag" prefHeight="204.0" prefWidth="87.0" />
                                              </children>
                                           </VBox>
-                                          <VBox fx:id="rechnungBearbeitenBox" alignment="CENTER" prefHeight="315.0" prefWidth="246.0">
+                                          <VBox fx:id="rechnungBearbeitenBox" alignment="CENTER" prefHeight="315.0" prefWidth="231.0">
                                              <children>
                                                 <Button fx:id="rechnungNeuBtn" mnemonicParsing="false" onAction="#addRechnungAction" text="Neue Rechnung" />
-                                                <GridPane fx:id="rechnungBearbeitungGrid" alignment="CENTER" prefHeight="290.0" prefWidth="188.0">
+                                                <GridPane fx:id="rechnungBearbeitungGrid" alignment="CENTER" prefHeight="290.0" prefWidth="317.0">
                                                    <columnConstraints>
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -475,7 +485,7 @@
                                                       <Label text="Auftraggeber:" GridPane.rowIndex="1" />
                                                       <Label text="Ansprechpartner:" GridPane.rowIndex="2" />
                                                       <Label text="Betrag:" GridPane.rowIndex="3" />
-                                                      <Label text="Rechnungsdatum:" GridPane.rowIndex="5" />
+                                                      <Label text="Rechnungsdatum:" wrapText="true" GridPane.rowIndex="5" />
                                                       <TextField fx:id="rechnungNameField" GridPane.columnIndex="1" />
                                                       <TextField fx:id="rechnungAuftraggeberField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <TextField fx:id="rechnungAnsprechpartnerField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -493,7 +503,7 @@
                                              </HBox.margin>
                                           </VBox>
                                           <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                          <VBox fx:id="rechnungStatusBox" prefHeight="325.0" prefWidth="153.0">
+                                          <VBox fx:id="rechnungStatusBox" prefHeight="325.0" prefWidth="147.0">
                                              <children>
                                                 <Label contentDisplay="CENTER" text="Status">
                                                    <font>
@@ -594,7 +604,7 @@
                                                       <Label text="Menge geplant:" GridPane.rowIndex="5" />
                                                       <Label fx:id="produktMengeGeplantLabel" text="Menge" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                       <Label text="Link zum Produkt:" GridPane.rowIndex="1" />
-                                                      <Hyperlink fx:id="produktLink" text="Hyperlink" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Hyperlink fx:id="produktLink" onAction="#produktLinkAction" text="Hyperlink" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <Button mnemonicParsing="false" onAction="#produkteUpdateTextFields" prefHeight="25.0" prefWidth="116.0" text="Zurücksetzen" GridPane.rowIndex="7" />
                                                       <Button mnemonicParsing="false" onAction="#produktChangeMengeLagernd" prefHeight="25.0" prefWidth="114.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                                    </children>
@@ -642,7 +652,7 @@
                                           <VBox fx:id="produktverwaltungProdukteBox" prefHeight="325.0" prefWidth="170.0">
                                              <children>
                                                 <Label text="Produkte:" />
-                                                <ListView fx:id="produktverwaltungListe" onMouseClicked="#personenverwaltungUpdateTextFields" prefHeight="308.0" prefWidth="139.0">
+                                                <ListView fx:id="produktverwaltungListe" onMouseClicked="#produktverwaltungUpdateTextFields" prefHeight="308.0" prefWidth="139.0">
                                                    <VBox.margin>
                                                       <Insets />
                                                    </VBox.margin>
@@ -676,12 +686,12 @@
                                                       <Label text="Menge lagernd:" GridPane.rowIndex="3" />
                                                       <Label text="Lagerort:" GridPane.rowIndex="6" />
                                                       <Label text="Einzelpreis:" GridPane.rowIndex="2" />
-                                                      <Spinner fx:id="produktverwaltungMengeLagerndSpinner" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Spinner fx:id="produktverwaltungMengeLagerndSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                       <Label text="Menge bestellt:" GridPane.rowIndex="4" />
                                                       <Label text="Link zum Produkt:" GridPane.rowIndex="1" />
                                                       <Label text="Menge geplant:" GridPane.rowIndex="5" />
-                                                      <Spinner fx:id="produktverwaltungMengeBestelltSpinner" layoutX="130.0" layoutY="48.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                      <Spinner fx:id="produktverwaltungMengeGeplantSpinner" layoutX="130.0" layoutY="106.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <Spinner fx:id="produktverwaltungMengeBestelltSpinner" editable="true" layoutX="130.0" layoutY="48.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Spinner fx:id="produktverwaltungMengeGeplantSpinner" editable="true" layoutX="130.0" layoutY="106.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                       <TextField fx:id="produktverwaltungLagerortField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                       <TextField fx:id="produktverwaltungLinkField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <Button fx:id="produktverwaltungSaveBtn" mnemonicParsing="false" onAction="#saveProduktAction" prefHeight="25.0" prefWidth="148.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />

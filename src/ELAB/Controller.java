@@ -746,6 +746,7 @@ public class Controller implements Initializable {
             }
             this.populateTopfverwaltungListe();
         }
+        this.updateKontostaende();
     }
 
     public void saveTopfAction() {
@@ -783,6 +784,7 @@ public class Controller implements Initializable {
         }
         showOk();
         this.populateTopfverwaltungListe();
+        this.updateKontostaende();
     }
 
     public void topfverwaltungUpdateTextFields() {

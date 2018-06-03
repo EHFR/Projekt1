@@ -62,7 +62,7 @@ public class Topf {
     }
 
     public ArrayList<Rechnung> getRechnungen() {
-    	this.reloadRechnung();
+    	this.reloadRechnung(this.getId());
         return rechnungen;
     }
 
@@ -81,11 +81,13 @@ public class Topf {
 
     // Methoden Für Rechnungen in dem Topf
     
-    private void reloadRechnung() {
+    private Personenverwaltung personenVerwaltung = new Personenverwaltung();
+    
+    private void reloadRechnung(int topfID) {
         Db db = new Db();
         this.rechnungen.clear();
         try {
-            ResultSet rs = db.exequteQuery("SELECT * FROM Rechnung");
+            ResultSet rs = db.exequteQuery("SELECT * FROM Rechnung WHERE TopfID="+topfID);
             while (rs.next()) {
                 Rechnung r = new Rechnung(rs.getInt("ID"), rs.getString("Name"), rs.getFloat("Betrag"), rs.getString("Bezahlart"), 
                 		rs.getBoolean("inBearbeitung"), rs.getTimestamp("statusZeitstempel_inBearbeitung"),
@@ -93,6 +95,20 @@ public class Topf {
                 		rs.getBoolean("abgewickelt"), rs.getTimestamp("statusZeitstempel_abgewickelt"),
                 		rs.getBoolean("ausstehend"), rs.getTimestamp("statusZeitstempel_ausstehend"));
                 r.setZeitstempel(rs.getTimestamp("Zeitstempel"));
+            
+                
+				try {
+					Person geber = personenVerwaltung.getPersonByName(rs.getString("AuftragGeber"));
+					  r.setAuftraggeber(geber);
+					  
+					  Person ansprechPartner = personenVerwaltung.getPersonByName(rs.getString("AnsprechPartner"));
+					  r.setAnsprechpartner(ansprechPartner);
+					  
+				} catch (ElabException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+              
                 this.rechnungen.add(r);
             }
             rs.close();
@@ -134,16 +150,18 @@ public class Topf {
     	Db db = new Db();
         zeitstempel = new Timestamp(System.currentTimeMillis());
         
-        String sql = "INSERT INTO Rechnung (Datum, Name, AuftragGeber, AnsprechPartner, TopfID, Betrag, Bezahlart, inBearbeitung, eingereicht, abgewickelt, ausstehend, Zeitstempel) "
-                + "VALUES ('" + zeitstempel + "','"
+        String sql = "INSERT INTO Rechnung (Datum, Name, AuftragGeber, AnsprechPartner, TopfID, Betrag, Bezahlart, Zeitstempel) "
+                + "VALUES ('" 
+        		+ zeitstempel + "','"
                 + name + "','"
                 + auftraggeber + "','"
                 + ansprechpartner + "',"
-                + this.id + ",'"
-                + BetragFloat + ","
-                + bezahlart + ",'"
-                + "'FALSE','FALSE','FALSE','FALSE',"
+                + this.id + ","
+                + BetragFloat + ",'"
+                + bezahlart + "','"
                 + zeitstempel + "')";
+        
+        System.out.println(sql);
         
         try {
             db.updateQuery(sql);
@@ -154,8 +172,8 @@ public class Topf {
 
     public void removeRechnung(int id) throws ElabException {
     	Db db = new Db();
-        Rechnung r = this.getRechnungByID(id);
-        String sql = "DELETE FROM Rechnung WHERE ID = " + r.getId() + " ";
+//        Rechnung r = this.getRechnungByID(id);
+        String sql = "DELETE FROM Rechnung WHERE ID = " +id + " ";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -177,7 +195,7 @@ public class Topf {
     	Db db = new Db();
         String sql = "UPDATE Rechnung SET Name = '" + name + "', AuftragGeber = '" + auftraggeber
                 + "', AnsprechPartner = '" + ansprechpartner + "', Betrag = '" + betrag + "', Bezahlart = '" + bezahlart
-                + "WHERE ID = " + id + "";
+                + "' WHERE ID = " + id + "";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {

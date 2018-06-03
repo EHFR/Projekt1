@@ -109,7 +109,7 @@ public class Finanzverwaltung {
 		String sql = "UPDATE Topf SET Name = '" + name +
 								"', SollBestand = '" + sollBetragFloat2 +
 								"', Kasse = '" + kasse +
-								"WHERE ID = " + id + "";
+								"' WHERE ID = " + id + "";
 		try {
 			db.updateQuery(sql);
 		} catch (SQLException e) {
@@ -131,7 +131,7 @@ public class Finanzverwaltung {
     		{
     			if(rs.getString("Kasse").equals("Barkasse"))
     			{
-    				betrag =+ rs.getInt("IstBestand");
+    				betrag += rs.getFloat("IstBestand");
     			}
     		}
     	} 
@@ -155,7 +155,7 @@ public class Finanzverwaltung {
     		{
     			if(rs.getString("Kasse").equals("Barkasse"))
     			{
-    				betrag =+ rs.getInt("SollBestand");
+    				betrag += rs.getFloat("SollBestand");
     			}
     		}
     	} 
@@ -179,7 +179,7 @@ public class Finanzverwaltung {
     		{
     			if(rs.getString("Kasse").equals("Konto"))
     			{
-    				betrag =+ rs.getInt("IstBestand");
+    				betrag += rs.getFloat("IstBestand");
     			}
     		}
     	} 
@@ -202,7 +202,7 @@ public class Finanzverwaltung {
     		{
     			if(rs.getString("Kasse").equals("Konto"))
     			{
-    				betrag =+ rs.getInt("SollBestand");
+    				betrag += rs.getFloat("SollBestand");
     			}
     		}
     	} 
@@ -225,7 +225,7 @@ public class Finanzverwaltung {
     		{
     			if(rs.getString("Kasse").equals("Kostenstelle"))
     			{
-    				betrag =+ rs.getInt("IstBestand");
+    				betrag += rs.getFloat("IstBestand");
     			}
     		}
     	} 
@@ -248,7 +248,7 @@ public class Finanzverwaltung {
     		{
     			if(rs.getString("Kasse").equals("Kostenstelle"))
     			{
-    				betrag =+ rs.getInt("SollBestand");
+    				betrag += rs.getFloat("SollBestand");
     			}
     		}
     	} 
