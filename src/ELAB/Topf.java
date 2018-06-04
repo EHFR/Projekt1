@@ -80,7 +80,6 @@ public class Topf {
 
 
     // Methoden Für Rechnungen in dem Topf
-    
     private Personenverwaltung personenVerwaltung = new Personenverwaltung();
     
     private void reloadRechnung(int topfID) {
