@@ -208,6 +208,7 @@ public class Rechnung {
         this.statusZeitstempel = statusZeitstempel;
     }
 
+    
     //todo export muss implementiert werden (Nachfolgend der dazugehörige Satz in der Anforderung)
     /*
      F ¨ ur das Ab- ¨
@@ -219,9 +220,9 @@ exportierbar sein.
     }
 
     // todo Muss noch implementiert werden! (Sollte Analog zu Auftragsstatus machbar sein)
-    public void updateStatus(boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
-
-    }
+//    public void updateStatus(int id, boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
+//
+//    }
 
     // todo soll der Rechnung einen neuen Topf zuweisen (Wird genutzt, um Rechnungen zwischen Töpfen zu verschieben)
     public void setNewTopfID(int id) {
