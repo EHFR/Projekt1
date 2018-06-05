@@ -119,7 +119,6 @@ public class Finanzverwaltung {
     }
 
     //Kassenbestände
-    // todo Kontostände müssen aus den Töpfen zusammengrechnet werden und returned werden :)
     public String getIstbestandBarkasse() {
     	
     	String sql = "SELECT * FROM Topf";

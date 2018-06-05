@@ -283,7 +283,8 @@ public class Auftrag {
     }
 
     public void setAuftraggeber(Person auftraggeber) {
-        this.auftraggeber = auftraggeber;
+        System.out.println("Setze Auftraggeber auf: "+auftraggeber);
+    	this.auftraggeber = auftraggeber;
     }
 
     public ArrayList<Person> getAuftragbearbeiter() {
@@ -301,4 +302,5 @@ public class Auftrag {
         }
         return output.toString();
     }
+       
 }

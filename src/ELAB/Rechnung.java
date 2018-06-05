@@ -25,7 +25,7 @@ public class Rechnung {
     private Timestamp zeitstempel;
     private Timestamp statusZeitstempel;
 
-    //todo Hier fehlt noch Bezahlart und ein Getter Methode dafür!
+
 
     public Rechnung(int id, String name, float betrag, String bezahlart, boolean inBearbeitung, Timestamp statusZeitstempel_inBearbeitung,
                     boolean eingereicht, Timestamp statusZeitstempel_eingereicht, boolean abgewickelt,
