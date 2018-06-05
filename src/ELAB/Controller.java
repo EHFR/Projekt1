@@ -1000,9 +1000,9 @@ public class Controller implements Initializable {
         int listId = this.auftragsListe.getFocusModel().getFocusedIndex();
         if (listId != -1) {
             Auftrag auftrag = this.fertigungsverwaltung.getAuftraege().get(listId);
-//            System.out.println(auftrag);
-            this.rechnungAuftraggeberField.setText(auftrag.getAuftraggeber().getName());
-            this.rechnungAnsprechpartnerField.setText(auftrag.getAuftragbearbeiter().get(0).getName());
+
+            //this.rechnungAuftraggeberField.setText(auftrag.getAuftraggeber().getName()); // todo wieder einbinden!
+            //this.rechnungAnsprechpartnerField.setText(auftrag.getAuftragbearbeiter().get(0).getName());
             this.rechnungBetragField.setText(String.valueOf(auftrag.getKosten()));
         } else {
             showError(new ElabException("Laden des Auftrages fehlgeschlagen..."));

@@ -129,7 +129,7 @@
                               <VBox prefHeight="354.0" prefWidth="169.0">
                                  <children>
                                     <Label text="Filtern nach Status:" />
-                                    <Spinner fx:id="fertigungsverwaltungFilterSpinner" onInputMethodTextChanged="#populateFertigungsverwaltungList" prefHeight="25.0" prefWidth="168.0" />
+                                    <Spinner fx:id="fertigungsverwaltungFilterSpinner" onMouseClicked="#populateFertigungsverwaltungList" prefHeight="25.0" prefWidth="168.0" />
                                     <ListView fx:id="fertigungsverwaltungListe" onMouseClicked="#fertigungsverwaltungUpdateTextFields" prefHeight="344.0" prefWidth="172.0" />
                                  </children>
                               </VBox>
@@ -223,13 +223,13 @@
                                     <Label text="Fertigung unterbrochen" wrapText="true" GridPane.rowIndex="7" />
                                     <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
-                                          <Spinner fx:id="fertigungsverwaltungAngenommenSpinner" onInputMethodTextChanged="#setFertigungsverwaltungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
+                                          <Spinner fx:id="fertigungsverwaltungAngenommenSpinner" onMouseClicked="#setFertigungsverwaltungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
                                           <Label fx:id="fertigungsverwaltungTimestampAngenommenLabel" text="Time" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
-                                          <Spinner fx:id="fertigungsverwaltungGefertigtSpinner" onInputMethodTextChanged="#setFertigungsverwaltungUpdateStatus" />
+                                          <Spinner fx:id="fertigungsverwaltungGefertigtSpinner" onMouseClicked="#setFertigungsverwaltungUpdateStatus" />
                                           <Label fx:id="fertigungsverwaltungTimestampGefertigtLabel" text="Time" />
                                        </children>
                                     </VBox>
@@ -239,31 +239,31 @@
                                        </font></Label>
                                     <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <children>
-                                          <Spinner fx:id="fertigungsverwaltungKostenSpinner" onInputMethodTextChanged="#setFertigungsverwaltungUpdateStatus" />
+                                          <Spinner fx:id="fertigungsverwaltungKostenSpinner" onMouseClicked="#setFertigungsverwaltungUpdateStatus" />
                                           <Label fx:id="fertigungsverwaltungTimestampKostenLabel" text="Time" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <children>
-                                          <Spinner fx:id="fertigungsverwaltungAbgeholtSpinner" onInputMethodTextChanged="#setFertigungsverwaltungUpdateStatus" />
+                                          <Spinner fx:id="fertigungsverwaltungAbgeholtSpinner" onMouseClicked="#setFertigungsverwaltungUpdateStatus" />
                                           <Label fx:id="fertigungsverwaltungTimestampAbgeholtLabel" text="Time" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                        <children>
-                                          <Spinner fx:id="fertigungsverwaltungAbgerechnetSpinner" onInputMethodTextChanged="#setFertigungsverwaltungUpdateStatus" />
+                                          <Spinner fx:id="fertigungsverwaltungAbgerechnetSpinner" onMouseClicked="#setFertigungsverwaltungUpdateStatus" />
                                           <Label fx:id="fertigungsverwaltungTimestampAbgerechnetLabel" text="Time" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                        <children>
-                                          <Spinner fx:id="fertigungsverwaltungMaterialSpinner" onInputMethodTextChanged="#setFertigungsverwaltungUpdateStatus" />
+                                          <Spinner fx:id="fertigungsverwaltungMaterialSpinner" onMouseClicked="#setFertigungsverwaltungUpdateStatus" />
                                           <Label fx:id="fertigungsverwaltungTimestampMaterialLabel" text="Time" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                        <children>
-                                          <Spinner fx:id="fertigungsverwaltungUnterbrochenSpinner" onInputMethodTextChanged="#setFertigungsverwaltungUpdateStatus" />
+                                          <Spinner fx:id="fertigungsverwaltungUnterbrochenSpinner" onMouseClicked="#setFertigungsverwaltungUpdateStatus" />
                                           <Label fx:id="fertigungsverwaltungTimestampUnterbrochenLabel" text="Time" />
                                        </children>
                                     </VBox>
@@ -511,7 +511,7 @@
                                                    </font>
                                                 </Label>
                                                 <Label text="In Bearbeitung" wrapText="true" />
-                                                <Spinner fx:id="rechnungStatusInBearbeitungSpinner" onInputMethodTextChanged="#setRechungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
+                                                <Spinner fx:id="rechnungStatusInBearbeitungSpinner" onMouseClicked="#setRechungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
                                                 <Label fx:id="rechnungTimestampInBearbeitungLabel" text="Time" />
                                                 <Separator prefWidth="200.0">
                                                    <VBox.margin>
@@ -519,21 +519,21 @@
                                                    </VBox.margin>
                                                 </Separator>
                                                 <Label layoutX="10.0" layoutY="37.0" text="Eingereicht" wrapText="true" />
-                                                <Spinner fx:id="rechnungStatusEingereichtSpinner" layoutX="10.0" layoutY="54.0" onInputMethodTextChanged="#setRechungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
+                                                <Spinner fx:id="rechnungStatusEingereichtSpinner" layoutX="10.0" layoutY="54.0" onMouseClicked="#setRechungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
                                                 <Label fx:id="rechnungTimestampEingereichtLabel" layoutX="10.0" layoutY="79.0" text="Time" />
                                                 <Separator prefWidth="200.0">
                                                    <VBox.margin>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </VBox.margin></Separator>
                                                 <Label layoutX="10.0" layoutY="37.0" text="Abgewickelt" wrapText="true" />
-                                                <Spinner fx:id="rechnungStatusAbgewickeltSpinner" layoutX="10.0" layoutY="54.0" onInputMethodTextChanged="#setRechungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
+                                                <Spinner fx:id="rechnungStatusAbgewickeltSpinner" layoutX="10.0" layoutY="54.0" onMouseClicked="#setRechungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
                                                 <Label fx:id="rechnungTimestampAbgewickeltLabel" layoutX="10.0" layoutY="79.0" text="Time" />
                                                 <Separator prefWidth="200.0">
                                                    <VBox.margin>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </VBox.margin></Separator>
                                                 <Label layoutX="10.0" layoutY="37.0" text="Ausstehend" wrapText="true" />
-                                                <Spinner fx:id="rechnungStatusAusstehendSpinner" layoutX="10.0" layoutY="54.0" onInputMethodTextChanged="#setRechungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
+                                                <Spinner fx:id="rechnungStatusAusstehendSpinner" layoutX="10.0" layoutY="54.0" onMouseClicked="#setRechungUpdateStatus" prefHeight="13.0" prefWidth="101.0" />
                                                 <Label fx:id="rechnungTimestampAusstehendLabel" layoutX="10.0" layoutY="79.0" text="Time" />
                                              </children>
                                           </VBox>
