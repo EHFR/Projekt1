@@ -34,7 +34,7 @@ public class Fertigungsverwaltung {
         return personen;
     }
 
-
+        
     private void reloadAuftraege() {
         Db db = new Db();
         Personenverwaltung pw = new Personenverwaltung();
@@ -54,6 +54,9 @@ public class Fertigungsverwaltung {
                         rs.getBoolean("fertigungFehlgeschlagen"),
                         rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"), pw.getPersonByID(rs.getInt("AuftraggeberID")), fillList(auftragID));
                 a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
+               
+//                System.out.println("Auftrag in Aufruf: "+a);
+                
                 this.auftraege.add(a);
             }
             rs.close();
