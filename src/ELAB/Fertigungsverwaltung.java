@@ -112,10 +112,9 @@ public class Fertigungsverwaltung {
                 + dateiOrt + "',"
                 + kostenFloat + ",'"
                 + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
-                + kosten + ","
-                + timestamp + ","
-                + auftraggeberId + ",'"
-                + auftragbearbeiterIds + "')";
+                + timestamp + "','"
+                + auftraggeberId + "','"
+                + auftragbearbeiter + "')";
         System.out.println(sql);
         try {
             db.updateQuery(sql);
