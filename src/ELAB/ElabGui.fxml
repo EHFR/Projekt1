@@ -181,7 +181,7 @@
                                                 <Insets right="5.0" />
                                              </GridPane.margin></TextField>
                                           <Label text="Auftraggeber:" GridPane.rowIndex="6" />
-                                          <Label prefHeight="59.0" prefWidth="189.0" text="Aftragbearbeiter&#10;(Eine Person &#10;pro Zeile):" GridPane.rowIndex="7" />
+                                          <Label prefHeight="59.0" prefWidth="189.0" text="Auftragbearbeiter&#10;(Eine Person &#10;pro Zeile):" GridPane.rowIndex="7" />
                                           <TextArea fx:id="fertigungsverwaltungAuftragbearbeiterArea" prefHeight="62.0" prefWidth="43.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                           <TextField fx:id="fertigungsverwaltungAuftraggeberField" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                              <GridPane.margin>

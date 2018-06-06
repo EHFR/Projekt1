@@ -95,6 +95,8 @@ public class Personenverwaltung {
     }
 
     public void removePerson(int id) throws ElabException {
+        //todo Angemeldetes Mitglied darf nicht gelöscht werden
+
         // Testen, ob das letzte Mitglied gelöscht wird.
         boolean letztesMitglied = true;
         for (Person person : personen) {
