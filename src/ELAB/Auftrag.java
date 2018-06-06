@@ -30,13 +30,13 @@ public class Auftrag {
     private boolean abgerechnet;
     private boolean wartenAufMaterial;
     private boolean fertigungFehlgeschlagen;
-    private ArrayList<Person> auftragbearbeiter;
+    private String auftragbearbeiter;
 
     public Auftrag(int id, String titel, String fertigungsart, String dateiname, String dateiort,
                    float kosten, boolean angenommen, Timestamp statusZeitstempel_angenommen, boolean gefertigt, Timestamp statusZeitstempel_gefertigt,
                    boolean kosten_kalkuliert, Timestamp statusZeitstempel_kosten_kalkuliert, boolean abgeholt, Timestamp statusZeitstempel_abgeholt,
                    boolean abgerechnet, Timestamp statusZeitstempel_abgerechnet, boolean wartenAufMaterial, Timestamp statusZeitstempel_wartenAufMaterial,
-                   boolean fertigungFehlgeschlagen, Timestamp statusZeitstempel_fertigungFehlgeschlagen, Person auftaggeber, ArrayList<Person> auftragbearbeiter) {
+                   boolean fertigungFehlgeschlagen, Timestamp statusZeitstempel_fertigungFehlgeschlagen, Person auftaggeber, String auftragbearbeiter) {
 
         this.id = id;
         this.titel = titel;
@@ -287,20 +287,16 @@ public class Auftrag {
     	this.auftraggeber = auftraggeber;
     }
 
-    public ArrayList<Person> getAuftragbearbeiter() {
+    public String getAuftragbearbeiter() {
         return auftragbearbeiter;
     }
 
-    public void setAuftragbearbeiter(ArrayList<Person> auftragbearbeiter) {
+    public void setAuftragbearbeiter(String auftragbearbeiter) {
         this.auftragbearbeiter = auftragbearbeiter;
     }
 
     public String getAuftragbearbeiterString() {
-        StringBuilder output = new StringBuilder();
-        for (Person person : this.auftragbearbeiter) {
-            output.append(person.getName()).append("\r");
-        }
-        return output.toString();
+        return auftragbearbeiter;
     }
        
 }

@@ -42,7 +42,6 @@ public class Fertigungsverwaltung {
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Auftrag");
             while (rs.next()) {
-                int auftragID = rs.getInt("ID");
                 Auftrag a = new Auftrag(rs.getInt("ID"), rs.getString("Titel"), rs.getString("FertigungsArt"),
                         rs.getString("DateiName"), rs.getString("DateiOrt"), rs.getFloat("Kosten"),
                         rs.getBoolean("angenommen"), rs.getTimestamp("statusZeitstempel_angenommen"),
@@ -52,7 +51,7 @@ public class Fertigungsverwaltung {
                         rs.getBoolean("abgerechnet"), rs.getTimestamp("statusZeitstempel_abgerechnet"),
                         rs.getBoolean("wartenAufMaterial"), rs.getTimestamp("statusZeitstempel_wartenAufMaterial"),
                         rs.getBoolean("fertigungFehlgeschlagen"),
-                        rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"), pw.getPersonByID(rs.getInt("AuftraggeberID")), fillList(auftragID));
+                        rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"), pw.getPersonByID(rs.getInt("AuftraggeberID")), rs.getString("Auftragbearbearbeiter"));
                 a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
                
 //                System.out.println("Auftrag in Aufruf: "+a);
@@ -106,7 +105,7 @@ public class Fertigungsverwaltung {
         Db db = new Db();
         timestamp = new Timestamp(System.currentTimeMillis());
 
-        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , AuftragbearbeiterIds) "
+        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , Auftragbearbeiter) "
                 + "VALUES ('" + titel + "','"
                 + fertigungsArt + "','"
                 + dateiName + "','"
@@ -114,8 +113,9 @@ public class Fertigungsverwaltung {
                 + kostenFloat + ",'"
                 + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
                 + kosten + ","
+                + timestamp + ","
                 + auftraggeberId + ",'"
-                + String.join(",", auftragbearbeiterIds) + "')";
+                + auftragbearbeiterIds + "')";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
