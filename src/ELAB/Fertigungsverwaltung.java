@@ -105,7 +105,7 @@ public class Fertigungsverwaltung {
         Db db = new Db();
         timestamp = new Timestamp(System.currentTimeMillis());
 
-        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , Auftragbearbeiter) "
+        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , AuftragbearbeiterIds) "
                 + "VALUES ('" + titel + "','"
                 + fertigungsArt + "','"
                 + dateiName + "','"
