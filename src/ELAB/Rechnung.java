@@ -302,13 +302,14 @@ exportierbar sein.
     // todo soll der Rechnung einen neuen Topf zuweisen (Wird genutzt, um Rechnungen zwischen Töpfen zu verschieben)
     public void setNewTopfID(int id) {
     	
-//    	Db db = new Db();
-//        String sql = "UPDATE Topf SET ID = " + id + "";
-//        try {
-//            db.updateQuery(sql);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+    	Db db = new Db();
+        String sql = "UPDATE Rechnung SET TopfID = " + id 
+        		+ " WHERE ID = " + this.id + "";
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }
