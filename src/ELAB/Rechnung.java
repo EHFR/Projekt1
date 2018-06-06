@@ -1,7 +1,9 @@
 package ELAB;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Rechnung {
@@ -24,6 +26,7 @@ public class Rechnung {
     private boolean ausstehend;
     private Timestamp zeitstempel;
     private Timestamp statusZeitstempel;
+    private ArrayList<Rechnung> rechnungen;
 
 
 
@@ -208,6 +211,14 @@ public class Rechnung {
         this.statusZeitstempel = statusZeitstempel;
     }
 
+    private Rechnung getRechnungByID(int id) {
+        for (Rechnung rechnung : rechnungen) {
+            if (rechnung.getId() == id) {
+                return rechnung;
+            }
+        }
+        return null;
+    }
     
     //todo export muss implementiert werden (Nachfolgend der dazugehörige Satz in der Anforderung)
     /*
@@ -220,12 +231,84 @@ exportierbar sein.
     }
 
     // todo Muss noch implementiert werden! (Sollte Analog zu Auftragsstatus machbar sein)
-//    public void updateStatus(int id, boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
-//
-//    }
+    public void updateStatus(boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
+    	
+    	Db db = new Db();
+        String sql = "";
+        Timestamp timestampNew = new Timestamp(System.currentTimeMillis());
+        Rechnung r = this.getRechnungByID(id);
+        
+        if (r == null) {
+            return;
+        }
+
+        if (r.isInBearbeitung() != inBearbeitung) {
+
+            r.setInBearbeitung(inBearbeitung);
+            r.setStatusZeitstempel_inBearbeitung(timestampNew);
+
+            sql = "UPDATE Rechnung SET inBearbeitung = " + inBearbeitung + ", statusZeitstempel_inBearbeitung = " + timestampNew
+                    + " WHERE ID = " + r.getId() + "";
+            try {
+                db.updateQuery(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        if (r.isEingereicht() != eingereicht) {
+
+            r.setEingereicht(eingereicht);
+            r.setStatusZeitstempel_eingereicht(timestampNew);
+
+            sql = "UPDATE Rechnung SET eingereicht = " + eingereicht + ", statusZeitstempel_eingereicht = " + timestampNew
+                    + " WHERE ID = " + r.getId() + "";
+            try {
+                db.updateQuery(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        if (r.isAbgewickelt() != abgewickelt) {
+
+            r.setAbgewickelt(abgewickelt);
+            r.setStatusZeitstempel_abgewickelt(timestampNew);
+
+            sql = "UPDATE Rechnung SET abgewickelt = " + abgewickelt + ", statusZeitstempel_abgewickelt = " + timestampNew
+                    + " WHERE ID = " + r.getId() + "";
+            try {
+                db.updateQuery(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        if (r.isAusstehend() != ausstehend) {
+
+            r.setAusstehend(ausstehend);
+            r.setStatusZeitstempel_ausstehend(timestampNew);
+
+            sql = "UPDATE Rechnung SET ausstehend = " + ausstehend + ", statusZeitstempel_ausstehend = " + timestampNew
+                    + " WHERE ID = " + r.getId() + "";
+            try {
+                db.updateQuery(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     // todo soll der Rechnung einen neuen Topf zuweisen (Wird genutzt, um Rechnungen zwischen Töpfen zu verschieben)
     public void setNewTopfID(int id) {
+    	
+//    	Db db = new Db();
+//        String sql = "UPDATE Topf SET ID = " + id + "";
+//        try {
+//            db.updateQuery(sql);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
     }
 }

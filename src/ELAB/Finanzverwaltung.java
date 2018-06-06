@@ -14,10 +14,6 @@ public class Finanzverwaltung {
         this.reloadTopf();
     }
 
-//    public ArrayList<Topf> getToepfe() {
-//        return new ArrayList<>(); // nur provisorisch um Fehler zu vermeiden, MUSS BEI IMPLEMENTIERUNG ENTFERNT WERDEN!
-//    }
-
     public ArrayList<Topf> getToepfe() {
         this.reloadTopf();
         return toepfe;
