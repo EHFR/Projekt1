@@ -235,8 +235,9 @@ exportierbar sein.
             this.setInBearbeitung(inBearbeitung);
             this.setStatusZeitstempel_inBearbeitung(timestampNew);
 
-            sql = " UPDATE Rechnung SET inBearbeitung = '" + inBearbeitung + "', statusZeitstempel_inBearbeitung = '" + timestampNew.toString()                    + "' WHERE ID = " + this.id + "";
-            System.out.println(sql);
+            sql = " UPDATE Rechnung SET inBearbeitung = '" + inBearbeitung + "', statusZeitstempel_inBearbeitung = '" + timestampNew.toString()                
+            	+ "' WHERE ID = " + this.id + "";
+            
             try {
                 db.updateQuery(sql);
             } catch (SQLException e) {
