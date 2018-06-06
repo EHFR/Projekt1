@@ -116,6 +116,7 @@ public class Fertigungsverwaltung {
                 + timestamp + ","
                 + auftraggeberId + ",'"
                 + auftragbearbeiterIds + "')";
+        System.out.println(sql);
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
