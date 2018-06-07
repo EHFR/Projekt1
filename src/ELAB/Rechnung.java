@@ -38,10 +38,10 @@ public class Rechnung {
         this.name = name;
         this.betrag = betrag;
         this.bezahlart = bezahlart;
-        this.inBearbeitung = false;
-        this.eingereicht = false;
-        this.abgewickelt = false;
-        this.ausstehend = false;
+        this.inBearbeitung = inBearbeitung;
+        this.eingereicht = eingereicht;
+        this.abgewickelt = abgewickelt;
+        this.ausstehend = ausstehend;
         this.statusZeitstempel_inBearbeitung = statusZeitstempel_inBearbeitung;
         this.statusZeitstempel_eingereicht = statusZeitstempel_eingereicht;
         this.statusZeitstempel_abgewickelt = statusZeitstempel_abgewickelt;
