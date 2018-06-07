@@ -308,8 +308,18 @@
                                                    <children>
                                                       <Label text="Ist-Bestand" />
                                                       <Label text="Soll-Bestand:" GridPane.rowIndex="1" />
-                                                      <Label fx:id="kontoBarkasseIstLabel" text="Label" GridPane.columnIndex="1" />
-                                                      <Label fx:id="kontoBarkasseSollLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="59.0" GridPane.columnIndex="1">
+                                                         <children>
+                                                            <Label fx:id="kontoBarkasseIstLabel" text="Label" />
+                                                            <Label text=" €" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Label fx:id="kontoBarkasseSollLabel" text="Label" />
+                                                            <Label text=" €" />
+                                                         </children>
+                                                      </HBox>
                                                    </children>
                                                 </GridPane>
                                                 <Separator prefWidth="200.0" />
@@ -323,15 +333,24 @@
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                    </columnConstraints>
                                                    <rowConstraints>
-                                                      <RowConstraints />
                                                       <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                       <RowConstraints maxHeight="81.0" minHeight="0.0" prefHeight="29.0" vgrow="SOMETIMES" />
                                                    </rowConstraints>
                                                    <children>
-                                                      <Label prefWidth="60.0" text="Ist-Bestand" GridPane.rowIndex="1" />
-                                                      <Label text="Soll-Bestand:" GridPane.rowIndex="2" />
-                                                      <Label fx:id="kontoKontoIstLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                      <Label fx:id="kontoKontoSollLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label prefWidth="60.0" text="Ist-Bestand" />
+                                                      <Label text="Soll-Bestand:" GridPane.rowIndex="1" />
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="59.0" GridPane.columnIndex="1">
+                                                         <children>
+                                                            <Label fx:id="kontoKontoIstLabel" text="Label" />
+                                                            <Label text=" €" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Label fx:id="kontoKontoSollLabel" text="Label" />
+                                                            <Label text=" €" />
+                                                         </children>
+                                                      </HBox>
                                                    </children>
                                                 </GridPane>
                                                 <Separator prefWidth="200.0" />
@@ -351,8 +370,18 @@
                                                    <children>
                                                       <Label text="Ist-Bestand" />
                                                       <Label text="Soll-Bestand:" GridPane.rowIndex="1" />
-                                                      <Label fx:id="kontoKostenstelleIstLabel" text="Label" GridPane.columnIndex="1" />
-                                                      <Label fx:id="kontoKostenstelleSollLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="59.0" GridPane.columnIndex="1">
+                                                         <children>
+                                                            <Label fx:id="kontoKostenstelleIstLabel" text="Label" />
+                                                            <Label text=" €" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Label fx:id="kontoKostenstelleSollLabel" text="Label" />
+                                                            <Label text=" €" />
+                                                         </children>
+                                                      </HBox>
                                                    </children>
                                                 </GridPane>
                                              </children>
@@ -404,10 +433,10 @@
                                                          <GridPane.margin>
                                                             <Insets right="5.0" />
                                                          </GridPane.margin></Button>
-                                                      <Label text="Soll-Bestand:" GridPane.rowIndex="1" />
-                                                      <Label text="Ist-Bestand" GridPane.rowIndex="2" />
+                                                      <Label text="Soll-Bestand (€):" GridPane.rowIndex="1" />
+                                                      <Label text="Ist-Bestand (€):" GridPane.rowIndex="2" />
                                                       <Label fx:id="topfIstField" text="Aktueller Ist-Bestand" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                      <TextField fx:id="topfSollField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                      <TextField fx:id="topfSollField" prefHeight="25.0" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <GridPane.margin>
                                                             <Insets right="5.0" />
                                                          </GridPane.margin></TextField>
@@ -490,7 +519,7 @@
                                                       <Label text="Rechnungsname (Zweck):" wrapText="true" />
                                                       <Label text="Auftraggeber:" GridPane.rowIndex="1" />
                                                       <Label text="Ansprechpartner:" GridPane.rowIndex="2" />
-                                                      <Label text="Betrag:" GridPane.rowIndex="3" />
+                                                      <Label text="Betrag (€):" GridPane.rowIndex="3" />
                                                       <Label text="Rechnungsdatum:" wrapText="true" GridPane.rowIndex="5" />
                                                       <TextField fx:id="rechnungNameField" GridPane.columnIndex="1" />
                                                       <TextField fx:id="rechnungAuftraggeberField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -603,7 +632,6 @@
                                                       <Label fx:id="produktLagerortLabel" text="Ort" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                       <Label text="Einzelpreis:" GridPane.rowIndex="2" />
                                                       <Spinner fx:id="produktMengeLagerndSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                      <Label fx:id="produktEinzelpreisLabel" text="Preis" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                       <Label fx:id="produktNameLabel" text="Produktname" GridPane.columnIndex="1" />
                                                       <Label text="Menge bestellt:" GridPane.rowIndex="4" />
                                                       <Label fx:id="produktMengeBestelltLabel" text="Menge" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -613,6 +641,12 @@
                                                       <Hyperlink fx:id="produktLink" onAction="#produktLinkAction" text="Hyperlink" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <Button mnemonicParsing="false" onAction="#produkteUpdateTextFields" prefHeight="25.0" prefWidth="116.0" text="Zurücksetzen" GridPane.rowIndex="7" />
                                                       <Button mnemonicParsing="false" onAction="#produktChangeMengeLagernd" prefHeight="25.0" prefWidth="114.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                         <children>
+                                                            <Label fx:id="produktEinzelpreisLabel" text="Preis" />
+                                                            <Label text=" €" />
+                                                         </children>
+                                                      </HBox>
                                                    </children>
                                                 </GridPane>
                                              </children>
@@ -691,7 +725,7 @@
                                                       <Label text="Name:" />
                                                       <Label text="Menge lagernd:" GridPane.rowIndex="3" />
                                                       <Label text="Lagerort:" GridPane.rowIndex="6" />
-                                                      <Label text="Einzelpreis:" GridPane.rowIndex="2" />
+                                                      <Label text="Einzelpreis (€):" GridPane.rowIndex="2" />
                                                       <Spinner fx:id="produktverwaltungMengeLagerndSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                       <Label text="Menge bestellt:" GridPane.rowIndex="4" />
                                                       <Label text="Link zum Produkt:" GridPane.rowIndex="1" />

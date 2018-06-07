@@ -1165,7 +1165,7 @@ public class Controller implements Initializable {
         String name = angemeldetePerson.getName();
         String produkt = produktObj.getName();
         String kategorien = this.bauteileverwaltung.getKategorien().get(this.kategorieListID).getName();
-        String einzelpreis = String.valueOf(produktObj.getEinzelpreis());
+        String einzelpreis = String.valueOf(produktObj.getEinzelpreis()) + " \u20AC";
         String menge = String.valueOf(produktObj.getMenge_lagernd() - newMenge);
         if (ConfirmBox.display("Warnung", "Sind Sie sich sicher, dass Sie den Lagerbestand des ausgewählen Produktes auf "
                 + newMenge + " ändern möchten?\nDabei erstellen Sie eine Bestellung mit der Differenz zurm vorherigen Lagerbestand.")) {
