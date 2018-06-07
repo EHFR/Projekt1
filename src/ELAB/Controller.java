@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -217,6 +218,16 @@ public class Controller implements Initializable {
     private int kategorieverwaltungListID = -1;
     private boolean neuesProduktModus = false;
 
+    /**
+     * Bauteileverwaltung Bestellungen
+     */
+    public TableView<Bestellung> bestellungenTable;
+    public TableColumn<Bestellung, String> bestellungenNameCol;
+    public TableColumn<Bestellung, String> bestellungenProduktCol;
+    public TableColumn<Bestellung, String> bestellungenKategorieCol;
+    public TableColumn<Bestellung, String> bestellungenEinzelpreisCol;
+    public TableColumn<Bestellung, String> bestellungenMengeCol;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -239,6 +250,7 @@ public class Controller implements Initializable {
         this.initFinanzverwaltungRechnungen();
         this.initBauteileverwaltungBauteile();
         this.initBauteileverwaltungVerwaltung();
+        this.initBauteileverwaltungBestellungen();
 
         /**
          * Workaround for Spinner not updating value when editing manually without arrow navigation
@@ -818,7 +830,11 @@ public class Controller implements Initializable {
     }
 
     public void exitFinanzverwaltungKontenUndToepfe() {
-        this.initFinanzverwaltungRechnungen();
+        try {
+            this.initFinanzverwaltungRechnungen();
+        } catch (NullPointerException e) {
+            System.out.print("");
+        }
     }
 
     /**
@@ -1068,7 +1084,11 @@ public class Controller implements Initializable {
     }
 
     public void exitFinanzverwaltungRechnungen() {
-        this.initFinanzverwaltungKontenUndToepfe();
+        try {
+            this.initFinanzverwaltungKontenUndToepfe();
+        } catch (NullPointerException e) {
+            System.out.print("");
+        }
     }
 
     /**
@@ -1140,10 +1160,17 @@ public class Controller implements Initializable {
     }
 
     public void produktChangeMengeLagernd() {
+        Produkt produktObj = this.bauteileverwaltung.getKategorien().get(this.kategorieListID).getProdukte().get(this.produktListe.getFocusModel().getFocusedIndex());
         int newMenge = this.produktMengeLagerndSpinner.getValue();
+        String name = angemeldetePerson.getName();
+        String produkt = produktObj.getName();
+        String kategorien = this.bauteileverwaltung.getKategorien().get(this.kategorieListID).getName();
+        String einzelpreis = String.valueOf(produktObj.getEinzelpreis());
+        String menge = String.valueOf(produktObj.getMenge_lagernd() - newMenge);
         if (ConfirmBox.display("Warnung", "Sind Sie sich sicher, dass Sie den Lagerbestand des ausgewählen Produktes auf "
-                + newMenge + " ändern möchten?")) {
-            this.bauteileverwaltung.getKategorien().get(this.kategorieListID).getProdukte().get(this.produktListe.getFocusModel().getFocusedIndex()).setMenge_lagernd(newMenge);
+                + newMenge + " ändern möchten?\nDabei erstellen Sie eine Bestellung mit der Differenz zurm vorherigen Lagerbestand.")) {
+            produktObj.setMenge_lagernd(newMenge);
+            this.bauteileverwaltung.addBestellung(name, produkt, kategorien, einzelpreis, menge);
             showOk();
         }
     }
@@ -1159,7 +1186,12 @@ public class Controller implements Initializable {
     }
 
     public void exitBauteileverwaltungBauteile() {
-        this.initBauteileverwaltungVerwaltung();
+        try {
+            this.initBauteileverwaltungVerwaltung();
+            this.initBauteileverwaltungBestellungen();
+        } catch (NullPointerException e) {
+            System.out.print("");
+        }
     }
 
     /**
@@ -1363,6 +1395,45 @@ public class Controller implements Initializable {
     }
 
     public void exitBauteileverwaltungVerwaltung() {
-        this.initBauteileverwaltungBauteile();
+        try {
+            this.initBauteileverwaltungBauteile();
+        } catch (NullPointerException e) {
+            System.out.print("");
+        }
+    }
+
+    /**
+     * Bauteileverwaltung Bestellungen
+     */
+
+    public void initBauteileverwaltungBestellungen() {
+        this.bestellungenNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        this.bestellungenProduktCol.setCellValueFactory(new PropertyValueFactory<>("produkt"));
+        this.bestellungenKategorieCol.setCellValueFactory(new PropertyValueFactory<>("kategorie"));
+        this.bestellungenEinzelpreisCol.setCellValueFactory(new PropertyValueFactory<>("einzelpreis"));
+        this.bestellungenMengeCol.setCellValueFactory(new PropertyValueFactory<>("menge"));
+        this.populateBestellungenTable();
+    }
+
+    private void populateBestellungenTable() {
+        ObservableList<Bestellung> bestellungen = FXCollections.observableArrayList();
+        bestellungen.addAll(this.bauteileverwaltung.getBestellungen());
+        this.bestellungenTable.setItems(bestellungen);
+    }
+
+    public void bestellungenAbwickelnAction() {
+        int listId = this.bestellungenTable.getFocusModel().getFocusedIndex();
+        if (listId == -1) {
+            showError(new ElabException("Keine Bestellung zum Abwickeln ausgewählt!"));
+            return;
+        }
+        Bestellung bestellungToRemove = this.bauteileverwaltung.getBestellungen().get(listId);
+        try {
+            this.bauteileverwaltung.removeBestellung(bestellungToRemove.getId());
+        } catch (ElabException e) {
+            showError(e);
+            return;
+        }
+        this.populateBestellungenTable();
     }
 }

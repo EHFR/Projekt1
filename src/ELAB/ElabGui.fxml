@@ -10,6 +10,8 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -282,7 +284,7 @@
                <content>
                   <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                      <tabs>
-                        <Tab onClosed="#exitFinanzverwaltungKontenUndToepfe" text="Konten und Töpfe">
+                        <Tab onSelectionChanged="#exitFinanzverwaltungKontenUndToepfe" text="Konten und Töpfe">
                            <content>
                               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
@@ -421,7 +423,7 @@
                               </VBox>
                            </content>
                         </Tab>
-                        <Tab onClosed="#exitFinanzverwaltungRechnungen" text="Rechnungen">
+                        <Tab onSelectionChanged="#exitFinanzverwaltungRechnungen" text="Rechnungen">
                            <content>
                               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
@@ -553,7 +555,7 @@
                <content>
                   <TabPane fx:id="bauteileverwaltungTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                      <tabs>
-                        <Tab fx:id="tabBauteileverwaltungBauteile" onClosed="#exitBauteileverwaltungBauteile" text="Bauteile">
+                        <Tab fx:id="tabBauteileverwaltungBauteile" onSelectionChanged="#exitBauteileverwaltungBauteile" text="Bauteile">
                            <content>
                               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
@@ -624,7 +626,7 @@
                               </VBox>
                            </content>
                         </Tab>
-                        <Tab fx:id="tabBauteileverwaltungVerwaltung" onClosed="#exitBauteileverwaltungVerwaltung" text="Verwaltung">
+                        <Tab fx:id="tabBauteileverwaltungVerwaltung" onSelectionChanged="#exitBauteileverwaltungVerwaltung" text="Verwaltung">
                            <content>
                               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
@@ -713,6 +715,28 @@
                                  </children>
                               </VBox>
                            </content></Tab>
+                        <Tab text="Bestellungen">
+                           <content>
+                              <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <TableView fx:id="bestellungenTable" prefHeight="298.0" prefWidth="600.0">
+                                      <columns>
+                                        <TableColumn fx:id="bestellungenNameCol" prefWidth="103.0" text="Name" />
+                                        <TableColumn fx:id="bestellungenProduktCol" prefWidth="149.0" text="Produkt" />
+                                          <TableColumn fx:id="bestellungenKategorieCol" prefWidth="88.0" text="Kategorie" />
+                                          <TableColumn fx:id="bestellungenEinzelpreisCol" prefWidth="77.0" text="Einzelpreis" />
+                                          <TableColumn fx:id="bestellungenMengeCol" minWidth="0.0" prefWidth="102.0" text="Bestellte Menge" />
+                                      </columns>
+                                    </TableView>
+                                    <Button mnemonicParsing="false" onAction="#bestellungenAbwickelnAction" text="Abwickeln">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </Tab>
                      </tabs>
                   </TabPane>
                </content></Tab>
