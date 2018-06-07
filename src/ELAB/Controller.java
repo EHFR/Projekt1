@@ -613,7 +613,8 @@ public class Controller implements Initializable {
                 Auftrag auftrag = this.fertigungsverwaltung.getAuftragByStatus(this.fertigungsverwaltungFilterSpinner.getValue()).get(listId);
                 this.fertigungsverwaltung.updateAuftrag(auftrag.getId(), this.fertigungsverwaltungTitelField.getText(),
                         this.fertigungsverwaltungFertigungsartField.getText(), this.fertigungsverwaltungDateinameField.getText(),
-                        this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText())); //todo hier fehlen auftragbearbeiter und geber
+                        this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText()),
+                        this.fertigungsverwaltungAuftraggeberField.getText(), this.fertigungsverwaltungAuftragbearbeiterIDs); //todo hier fehlen auftragbearbeiter und geber
             } catch (ElabException e) {
                 showError(e);
                 return;
