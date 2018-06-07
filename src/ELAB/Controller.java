@@ -563,7 +563,7 @@ public class Controller implements Initializable {
         this.fertigungsverwaltungDateiortField.setText("");
         this.fertigungsverwaltungKostenField.setText("");
         this.fertigungsverwaltungTimestampLabel.setText("---");
-        this.fertigungsverwaltungAuftraggeberField.setText(""); //todo aktuell angemeldeter
+        this.fertigungsverwaltungAuftraggeberField.setText(this.angemeldetePerson.getName());
         this.fertigungsverwaltungAuftragbearbeiterLabel.setText("");
         this.fertigungsverwaltungRemoveBtn.setText("Abbrechen");
     }
@@ -630,7 +630,7 @@ public class Controller implements Initializable {
                 this.fertigungsverwaltung.updateAuftrag(auftrag.getId(), this.fertigungsverwaltungTitelField.getText(),
                         this.fertigungsverwaltungFertigungsartField.getText(), this.fertigungsverwaltungDateinameField.getText(),
                         this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText()),
-                        this.fertigungsverwaltungAuftraggeberField.getText(), this.fertigungsverwaltungAuftragbearbeiterIDs); //todo hier fehlen auftragbearbeiter und geber
+                        this.fertigungsverwaltungAuftraggeberField.getText(), this.fertigungsverwaltungAuftragbearbeiterIDs);
             } catch (ElabException e) {
                 showError(e);
                 return;

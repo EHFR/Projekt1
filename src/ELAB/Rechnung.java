@@ -288,7 +288,6 @@ exportierbar sein.
 //        }
     }
 
-    // todo soll der Rechnung einen neuen Topf zuweisen (Wird genutzt, um Rechnungen zwischen Töpfen zu verschieben)
     public void setNewTopfID(int id) {
     	
     	Db db = new Db();

@@ -41,11 +41,9 @@ public class PopupFertigungsverwaltungSetAuftraggeber {
         ObservableList<String> items = FXCollections.observableArrayList(mitgliederNamen);
         list.setItems(items);
         list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        list.getSelectionModel().select(0);
-        list.getSelectionModel().select(1); //todo nur zum testen
-        //list.getSelectionModel().select(preselected.get(0));
-        //list.getSelectionModel().select(preselected.get(1));
-
+        for (Integer id : preselected) {
+            list.getSelectionModel().select(id);
+        }
         //Create two buttons
         Button yesButton = new Button("Speichern");
         Button noButton = new Button("Abbrechen");
