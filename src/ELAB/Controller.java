@@ -86,7 +86,8 @@ public class Controller implements Initializable {
     public TextField fertigungsverwaltungKostenField;
     public TextField fertigungsverwaltungAuftraggeberField;
     public Label fertigungsverwaltungTimestampLabel;
-    public TextArea fertigungsverwaltungAuftragbearbeiterArea;
+    public Label fertigungsverwaltungAuftragbearbeiterLabel;
+    private ArrayList<Integer> fertigungsverwaltungAuftragbearbeiterIDs = new ArrayList<>();
     public Button fertigungsverwaltungRemoveBtn;
     public Button fertigungsverwaltungSaveBtn;
     private boolean neuerAuftragModus = false;
@@ -547,7 +548,7 @@ public class Controller implements Initializable {
         this.fertigungsverwaltungKostenField.setText("");
         this.fertigungsverwaltungTimestampLabel.setText("---");
         this.fertigungsverwaltungAuftraggeberField.setText(""); //todo aktuell angemeldeter
-        this.fertigungsverwaltungAuftragbearbeiterArea.setText("");
+        this.fertigungsverwaltungAuftragbearbeiterLabel.setText("");
         this.fertigungsverwaltungRemoveBtn.setText("Abbrechen");
     }
 
@@ -563,7 +564,7 @@ public class Controller implements Initializable {
         this.fertigungsverwaltungKostenField.setText("");
         this.fertigungsverwaltungTimestampLabel.setText("---");
         this.fertigungsverwaltungAuftraggeberField.setText("");
-        this.fertigungsverwaltungAuftragbearbeiterArea.setText("");
+        this.fertigungsverwaltungAuftragbearbeiterLabel.setText("");
         this.fertigungsverwaltungRemoveBtn.setText("Löschen");
     }
 
@@ -587,7 +588,7 @@ public class Controller implements Initializable {
             showError(new ElabException("Auftraggeber darf nicht leer sein!"));
             return;
         }
-        if (this.fertigungsverwaltungAuftragbearbeiterArea.getText().equals("")) {
+        if (this.fertigungsverwaltungAuftragbearbeiterIDs.size() == 0) {
             showError(new ElabException("Auftragbearbeiter darf nicht leer sein!"));
             return;
         }
@@ -596,7 +597,7 @@ public class Controller implements Initializable {
                 this.fertigungsverwaltung.addAuftrag(this.fertigungsverwaltungTitelField.getText(), this.fertigungsverwaltungFertigungsartField.getText(),
                         this.fertigungsverwaltungDateinameField.getText(), this.fertigungsverwaltungDateiortField.getText(),
                         this.fertigungsverwaltungKostenField.getText(), this.fertigungsverwaltungAuftraggeberField.getText(),
-                        this.fertigungsverwaltungAuftragbearbeiterArea.getText());
+                        this.fertigungsverwaltungAuftragbearbeiterIDs);
             } catch (ElabException e) {
                 showError(e);
                 return;
@@ -612,7 +613,7 @@ public class Controller implements Initializable {
                 Auftrag auftrag = this.fertigungsverwaltung.getAuftragByStatus(this.fertigungsverwaltungFilterSpinner.getValue()).get(listId);
                 this.fertigungsverwaltung.updateAuftrag(auftrag.getId(), this.fertigungsverwaltungTitelField.getText(),
                         this.fertigungsverwaltungFertigungsartField.getText(), this.fertigungsverwaltungDateinameField.getText(),
-                        this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText()));
+                        this.fertigungsverwaltungDateiortField.getText(), Float.parseFloat(this.fertigungsverwaltungKostenField.getText())); //todo hier fehlen auftragbearbeiter und geber
             } catch (ElabException e) {
                 showError(e);
                 return;
@@ -656,7 +657,11 @@ public class Controller implements Initializable {
             this.fertigungsverwaltungKostenField.setText(String.valueOf(auftrag.getKosten()));
             this.fertigungsverwaltungTimestampLabel.setText(auftrag.getZeitstempelString());
             this.fertigungsverwaltungAuftraggeberField.setText(auftrag.getAuftraggeber().getName());
-            this.fertigungsverwaltungAuftragbearbeiterArea.setText(auftrag.getAuftragbearbeiterString());
+            StringBuilder auftragbearbeiterNamen = new StringBuilder();
+            for (Person auftragbearbeiter : auftrag.getAuftragbearbeiter()) {
+                auftragbearbeiterNamen.append(auftragbearbeiter.getName()).append(";");
+            }
+            this.fertigungsverwaltungAuftragbearbeiterLabel.setText(auftragbearbeiterNamen.toString());
 
             this.fertigungsverwaltungAngenommenSpinnerValueFactory.setValue(this.boolToJaNein(auftrag.isAngenommen()));
             this.fertigungsverwaltungGefertigtSpinnerValueFactory.setValue(this.boolToJaNein(auftrag.isGefertigt()));
@@ -674,6 +679,15 @@ public class Controller implements Initializable {
             this.fertigungsverwaltungTimestampMaterialLabel.setText(auftrag.getStatusZeitstempel_wartenAufMaterialString());
             this.fertigungsverwaltungTimestampUnterbrochenLabel.setText(auftrag.getStatusZeitstempel_fertigungFehlgeschlagenString());
         }
+    }
+
+    public void editAuftragbearbeiterAction() {
+        this.fertigungsverwaltungAuftragbearbeiterIDs = PopupFertigungsverwaltungSetAuftraggeber.display("Auftraggeber wählen", this.fertigungsverwaltungAuftragbearbeiterIDs, this.personenverwaltung.getPersonen());
+        StringBuilder auftragbearbeiterNamen = new StringBuilder();
+        for (Integer id : fertigungsverwaltungAuftragbearbeiterIDs) {
+            auftragbearbeiterNamen.append(personenverwaltung.getPersonByID(id).getName()).append(";");
+        }
+        this.fertigungsverwaltungAuftragbearbeiterLabel.setText(auftragbearbeiterNamen.toString());
     }
 
     /**
