@@ -125,7 +125,7 @@ public class Fertigungsverwaltung {
 //        
 //    }	
 
-    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId,ArrayList<Integer> auftragbearbeiter) throws ElabException, SQLException
+    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId,ArrayList<Integer> auftragbearbeiter) throws ElabException
     {
     	Db db = new Db();
     	Personenverwaltung pw = new Personenverwaltung();
@@ -151,9 +151,20 @@ public class Fertigungsverwaltung {
               + auftraggeberId + "')";
     	
     	PreparedStatement stmt = null;
+    	try {
     	stmt = db.dataSource().prepareStatement(sql, stmt.RETURN_GENERATED_KEYS);
-    	
     	stmt.executeUpdate();
+    	stmt.close();
+    	}
+    	catch(SQLException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	finally {
+    	
+    	db.close();
+    	}
+    	
     	
     	try(ResultSet generatedKeys = stmt.getGeneratedKeys())
     	{
@@ -161,6 +172,10 @@ public class Fertigungsverwaltung {
     		{
     			key = generatedKeys.getInt(1);
     		}
+    	}
+    	catch(SQLException x)
+    	{
+    		x.printStackTrace();
     	}
     	
     	for(Integer i : auftragbearbeiter)
