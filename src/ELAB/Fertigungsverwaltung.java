@@ -35,7 +35,7 @@ public class Fertigungsverwaltung {
         return personen;
     }
 
-        
+
     private void reloadAuftraege() {
         Db db = new Db();
         Personenverwaltung pw = new Personenverwaltung();
@@ -54,9 +54,9 @@ public class Fertigungsverwaltung {
                         rs.getBoolean("fertigungFehlgeschlagen"),
                         rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"), pw.getPersonByID(rs.getInt("AuftraggeberID")), fillList(rs.getInt("ID")));
                 a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
-               
+
 //                System.out.println("Auftrag in Aufruf: "+a);
-                
+
                 this.auftraege.add(a);
             }
             rs.close();
@@ -125,68 +125,59 @@ public class Fertigungsverwaltung {
 //        
 //    }	
 
-    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId,ArrayList<Integer> auftragbearbeiter) throws ElabException
-    {
-    	Db db = new Db();
-    	Personenverwaltung pw = new Personenverwaltung();
-    	ArrayList<Person> bearbeiter = new ArrayList<Person>();
-    	
-    	int key = 0;
-    	
-    	 float kostenFloat;
-       try {
-           kostenFloat = Float.parseFloat(kosten);
-       } catch (NumberFormatException e) {
-           throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
-       }
-    	
-    	String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , AuftragbearbeiterIds) "
-              + "VALUES ('" + titel + "','"
-              + fertigungsArt + "','"
-              + dateiName + "','"
-              + dateiOrt + "',"
-              + kostenFloat + ",'"
-              + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
-              + timestamp + "','"
-              + auftraggeberId + "')";
-    	
-    	PreparedStatement stmt = null;
-    	try {
-    	stmt = db.dataSource().prepareStatement(sql, stmt.RETURN_GENERATED_KEYS);
-    	stmt.executeUpdate();
-    	stmt.close();
-    	}
-    	catch(SQLException e)
-    	{
-    		e.printStackTrace();
-    	}
-    	finally {
-    	
-    	db.close();
-    	}
-    	
-    	
-    	try(ResultSet generatedKeys = stmt.getGeneratedKeys())
-    	{
-    		if (generatedKeys.next())
-    		{
-    			key = generatedKeys.getInt(1);
-    		}
-    	}
-    	catch(SQLException x)
-    	{
-    		x.printStackTrace();
-    	}
-    	
-    	for(Integer i : auftragbearbeiter)
-    	{
-    		String sql2 = "INSERT INTO AuftragPerson (AuftragID,PersonID) VALUES (" + key + "," + i + ")";
-    		try {
-				db.updateQuery(sql);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-    	}
+    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId, ArrayList<Integer> auftragbearbeiter) throws ElabException {
+        Db db = new Db();
+        Personenverwaltung pw = new Personenverwaltung();
+        ArrayList<Person> bearbeiter = new ArrayList<Person>();
+
+        int key = 0;
+
+        float kostenFloat;
+        try {
+            kostenFloat = Float.parseFloat(kosten);
+        } catch (NumberFormatException e) {
+            throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+        }
+
+        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , AuftragbearbeiterIds) "
+                + "VALUES ('" + titel + "','"
+                + fertigungsArt + "','"
+                + dateiName + "','"
+                + dateiOrt + "',"
+                + kostenFloat + ",'"
+                + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
+                + timestamp + "','"
+                + auftraggeberId + "')";
+
+        PreparedStatement stmt = null;
+        try {
+            stmt = db.dataSource().prepareStatement(sql, stmt.RETURN_GENERATED_KEYS);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+            db.close();
+        }
+
+
+        try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                key = generatedKeys.getInt(1);
+            }
+        } catch (SQLException x) {
+            x.printStackTrace();
+        }
+
+        for (Integer i : auftragbearbeiter) {
+            String sql2 = "INSERT INTO AuftragPerson (AuftragID,PersonID) VALUES (" + key + "," + i + ")";
+            try {
+                db.updateQuery(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void removeAuftrag(int id) {
@@ -201,56 +192,50 @@ public class Fertigungsverwaltung {
 
 
     public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt,
-                              float kosten,String auftraggeber, ArrayList<Integer> bearbeiter) throws ElabException {
+                              float kosten, String auftraggeber, ArrayList<Integer> bearbeiter) throws ElabException {
 
         //todo ("Auftraggeber existiert nicht!");
 
         Db db = new Db();
         Personenverwaltung pw = new Personenverwaltung();
         String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
-                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten + ",'" + pw.getPersonIdByName(auftraggeber) 
+                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten + ",'" + pw.getPersonIdByName(auftraggeber)
                 + "' WHERE ID = " + id + "";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
+
+
         String sql2 = "DELETE FROM AuftragPerson WHERE AuftragID = " + id + "";
         try {
-			db.updateQuery(sql2);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-        
-        if(bearbeiter.size() > 0)
-        {
-	        for(Integer i : bearbeiter)
-	    	{
-	    		String sql3 = "INSERT INTO AuftragPerson (AuftragID,PersonID) VALUES (" + id + "," + i + ")";
-	    		try {
-					db.updateQuery(sql3);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-	    	}
+            db.updateQuery(sql2);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        else
-        {
-        	throw new ElabException("Es muss mindestens ein Bearbeiter an einem Auftrag arbeiten");
+
+        if (bearbeiter.size() > 0) {
+            for (Integer i : bearbeiter) {
+                String sql3 = "INSERT INTO AuftragPerson (AuftragID,PersonID) VALUES (" + id + "," + i + ")";
+                try {
+                    db.updateQuery(sql3);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            throw new ElabException("Es muss mindestens ein Bearbeiter an einem Auftrag arbeiten");
         }
-    }
-    
-    public void deleteAuftragbearbeiter(int auftragID, int personID)
-    {
-    	Db db = new Db();
-    	
-    	String sql = "DELETE FROM AuftragPerson WHERE PersonID = " + personID + "";
-    	
     }
 
-    
+    public void deleteAuftragbearbeiter(int auftragID, int personID) {
+        Db db = new Db();
+
+        String sql = "DELETE FROM AuftragPerson WHERE PersonID = " + personID + "";
+
+    }
+
 
     public void updateStatus(int id, boolean angenommen, boolean gefertigt, boolean kosten_kalkuliert, boolean abgeholt,
                              boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {

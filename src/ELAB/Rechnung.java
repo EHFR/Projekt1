@@ -28,8 +28,6 @@ public class Rechnung {
     private Timestamp statusZeitstempel;
 
 
-
-
     public Rechnung(int id, String name, float betrag, String bezahlart, boolean inBearbeitung, Timestamp statusZeitstempel_inBearbeitung,
                     boolean eingereicht, Timestamp statusZeitstempel_eingereicht, boolean abgewickelt,
                     Timestamp statusZeitstempel_abgewickelt, boolean ausstehend, Timestamp statusZeitstempel_ausstehend) {
@@ -212,7 +210,6 @@ public class Rechnung {
     }
 
 
-    
     //todo export muss implementiert werden (Nachfolgend der dazugehörige Satz in der Anforderung)
     /*
      F ¨ ur das Ab- ¨
@@ -225,8 +222,8 @@ exportierbar sein.
 
     // todo Muss noch implementiert werden! (Sollte Analog zu Auftragsstatus machbar sein)
     public void updateStatus(boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
-    	
-    	Db db = new Db();
+
+        Db db = new Db();
         String sql = "";
         Timestamp timestampNew = new Timestamp(System.currentTimeMillis());
 
@@ -235,16 +232,16 @@ exportierbar sein.
             this.setInBearbeitung(inBearbeitung);
             this.setStatusZeitstempel_inBearbeitung(timestampNew);
 
-            sql = " UPDATE Rechnung SET inBearbeitung = '" + inBearbeitung + "', statusZeitstempel_inBearbeitung = '" + timestampNew.toString()                
-            	+ "' WHERE ID = " + this.id + "";
-            
+            sql = " UPDATE Rechnung SET inBearbeitung = '" + inBearbeitung + "', statusZeitstempel_inBearbeitung = '" + timestampNew.toString()
+                    + "' WHERE ID = " + this.id + "";
+
             try {
                 db.updateQuery(sql);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        
+
 //        if (r.isEingereicht() != eingereicht) {
 //
 //            r.setEingereicht(eingereicht);
@@ -289,10 +286,10 @@ exportierbar sein.
     }
 
     public void setNewTopfID(int id) {
-    	
-    	Db db = new Db();
-        String sql = "UPDATE Rechnung SET TopfID = " + id 
-        		+ " WHERE ID = " + this.id + "";
+
+        Db db = new Db();
+        String sql = "UPDATE Rechnung SET TopfID = " + id
+                + " WHERE ID = " + this.id + "";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {

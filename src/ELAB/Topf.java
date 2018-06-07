@@ -13,8 +13,8 @@ public class Topf {
     private ArrayList<Rechnung> rechnungen;
     private String kasse;
     private Timestamp zeitstempel;
-    
-    
+
+
     public Timestamp getZeitstempel() {
         return zeitstempel;
     }
@@ -62,7 +62,7 @@ public class Topf {
     }
 
     public ArrayList<Rechnung> getRechnungen() {
-    	this.reloadRechnung(this.getId());
+        this.reloadRechnung(this.getId());
         return rechnungen;
     }
 
@@ -81,34 +81,34 @@ public class Topf {
 
     // Methoden Für Rechnungen in dem Topf
     private Personenverwaltung personenVerwaltung = new Personenverwaltung();
-    
+
     private void reloadRechnung(int topfID) {
         Db db = new Db();
         this.rechnungen.clear();
         try {
-            ResultSet rs = db.exequteQuery("SELECT * FROM Rechnung WHERE TopfID="+topfID);
+            ResultSet rs = db.exequteQuery("SELECT * FROM Rechnung WHERE TopfID=" + topfID);
             while (rs.next()) {
-                Rechnung r = new Rechnung(rs.getInt("ID"), rs.getString("Name"), rs.getFloat("Betrag"), rs.getString("Bezahlart"), 
-                		rs.getBoolean("inBearbeitung"), rs.getTimestamp("statusZeitstempel_inBearbeitung"),
-                		rs.getBoolean("eingereicht"), rs.getTimestamp("statusZeitstempel_eingereicht"),
-                		rs.getBoolean("abgewickelt"), rs.getTimestamp("statusZeitstempel_abgewickelt"),
-                		rs.getBoolean("ausstehend"), rs.getTimestamp("statusZeitstempel_ausstehend"));
+                Rechnung r = new Rechnung(rs.getInt("ID"), rs.getString("Name"), rs.getFloat("Betrag"), rs.getString("Bezahlart"),
+                        rs.getBoolean("inBearbeitung"), rs.getTimestamp("statusZeitstempel_inBearbeitung"),
+                        rs.getBoolean("eingereicht"), rs.getTimestamp("statusZeitstempel_eingereicht"),
+                        rs.getBoolean("abgewickelt"), rs.getTimestamp("statusZeitstempel_abgewickelt"),
+                        rs.getBoolean("ausstehend"), rs.getTimestamp("statusZeitstempel_ausstehend"));
                 r.setZeitstempel(rs.getTimestamp("Zeitstempel"));
 
                 System.out.println(rs.getBoolean("inBearbeitung")); // Fukan, hier ist der Status schon false
 
-				try {
-					Person geber = personenVerwaltung.getPersonByName(rs.getString("AuftragGeber"));
-					  r.setAuftraggeber(geber);
-					  
-					Person ansprechPartner = personenVerwaltung.getPersonByName(rs.getString("AnsprechPartner"));
-					  r.setAnsprechpartner(ansprechPartner);
-					  
-				} catch (ElabException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-              
+                try {
+                    Person geber = personenVerwaltung.getPersonByName(rs.getString("AuftragGeber"));
+                    r.setAuftraggeber(geber);
+
+                    Person ansprechPartner = personenVerwaltung.getPersonByName(rs.getString("AnsprechPartner"));
+                    r.setAnsprechpartner(ansprechPartner);
+
+                } catch (ElabException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
                 this.rechnungen.add(r);
             }
             rs.close();
@@ -121,38 +121,38 @@ public class Topf {
     }
 
     public void addRechnung(String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException {
-    	
-    	float BetragFloat;
+
+        float BetragFloat;
         try {
             BetragFloat = Float.parseFloat(betrag);
         } catch (NumberFormatException e) {
             throw new ElabException("Betrag wurde nicht als korrekte Kommazahl angegeben! (float)");
         }
-    	
-    	Personenverwaltung person = new Personenverwaltung();
-    	
-    	for (String namen : auftraggeber.split("\n")) {
+
+        Personenverwaltung person = new Personenverwaltung();
+
+        for (String namen : auftraggeber.split("\n")) {
             if (!person.personAlreadyExists(namen)) {
                 throw new ElabException("Auftraggeber " + namen + " existiert nicht!");
             }
         }
-    	
-    	for (String namen : ansprechpartner.split("\n")) {
+
+        for (String namen : ansprechpartner.split("\n")) {
             if (!person.personAlreadyExists(namen)) {
                 throw new ElabException("Ansprechpartner " + namen + " existiert nicht!");
             }
         }
-    	
-    	ArrayList<String> personen = new ArrayList<>();
-    	personen.add(auftraggeber);
-    	personen.add(ansprechpartner);
-    	
-    	Db db = new Db();
+
+        ArrayList<String> personen = new ArrayList<>();
+        personen.add(auftraggeber);
+        personen.add(ansprechpartner);
+
+        Db db = new Db();
         zeitstempel = new Timestamp(System.currentTimeMillis());
-        
+
         String sql = "INSERT INTO Rechnung (Datum, Name, AuftragGeber, AnsprechPartner, TopfID, Betrag, Bezahlart, Zeitstempel) "
-                + "VALUES ('" 
-        		+ zeitstempel + "','"
+                + "VALUES ('"
+                + zeitstempel + "','"
                 + name + "','"
                 + auftraggeber + "','"
                 + ansprechpartner + "',"
@@ -169,18 +169,18 @@ public class Topf {
     }
 
     public void removeRechnung(int id) throws ElabException {
-    	Db db = new Db();
-        String sql = "DELETE FROM Rechnung WHERE ID = " +id + " ";
+        Db db = new Db();
+        String sql = "DELETE FROM Rechnung WHERE ID = " + id + " ";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-  
+
     public void updateRechnung(int id, String name, String auftraggeber, String ansprechpartner, String betrag, String bezahlart) throws ElabException {
-    	
-    	Db db = new Db();
+
+        Db db = new Db();
         String sql = "UPDATE Rechnung SET Name = '" + name + "', AuftragGeber = '" + auftraggeber
                 + "', AnsprechPartner = '" + ansprechpartner + "', Betrag = '" + betrag + "', Bezahlart = '" + bezahlart
                 + "' WHERE ID = " + id + "";
@@ -190,6 +190,6 @@ public class Topf {
             e.printStackTrace();
         }
     }
-   
-    
+
+
 }
