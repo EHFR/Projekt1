@@ -221,6 +221,7 @@ public class Controller implements Initializable {
     /**
      * Bauteileverwaltung Bestellungen
      */
+    public Tab tabBauteileverwaltungBestellungen;
     public TableView<Bestellung> bestellungenTable;
     public TableColumn<Bestellung, String> bestellungenNameCol;
     public TableColumn<Bestellung, String> bestellungenProduktCol;
@@ -345,6 +346,7 @@ public class Controller implements Initializable {
             this.tabFinanzverwaltung.setDisable(true);
             this.tabBauteileverwaltung.setDisable(true);
             this.tabBauteileverwaltungVerwaltung.setDisable(true);
+            this.tabBauteileverwaltungBestellungen.setDisable(true);
             this.anmeldungAngemeldetLabel.setText("Abgemeldet");
 
         } else if (this.angemeldetePerson.getType().equals("Mitglied")) {
@@ -356,6 +358,7 @@ public class Controller implements Initializable {
             this.tabFinanzverwaltung.setDisable(false);
             this.tabBauteileverwaltung.setDisable(false);
             this.tabBauteileverwaltungVerwaltung.setDisable(false);
+            this.tabBauteileverwaltungBestellungen.setDisable(false);
             this.anmeldungAngemeldetLabel.setText("Mitglied: " + this.angemeldetePerson.getName());
 
         } else if (this.angemeldetePerson.getType().equals("Kunde") || this.angemeldetePerson.getType().equals("Lehrstuhl bezogene Person")) {
@@ -367,6 +370,7 @@ public class Controller implements Initializable {
             this.tabFinanzverwaltung.setDisable(true);
             this.tabBauteileverwaltung.setDisable(false);
             this.tabBauteileverwaltungVerwaltung.setDisable(true);
+            this.tabBauteileverwaltungBestellungen.setDisable(true);
             this.contentTabPane.getSelectionModel().select(this.tabBauteileverwaltung);
             this.bauteileverwaltungTabPane.getSelectionModel().select(this.tabBauteileverwaltungBauteile);
             this.anmeldungAngemeldetLabel.setText(this.angemeldetePerson.getType() + ": " + this.angemeldetePerson.getName());
@@ -1430,6 +1434,7 @@ public class Controller implements Initializable {
         Bestellung bestellungToRemove = this.bauteileverwaltung.getBestellungen().get(listId);
         try {
             this.bauteileverwaltung.removeBestellung(bestellungToRemove.getId());
+            showOk();
         } catch (ElabException e) {
             showError(e);
             return;

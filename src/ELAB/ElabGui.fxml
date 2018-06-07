@@ -749,7 +749,7 @@
                                  </children>
                               </VBox>
                            </content></Tab>
-                        <Tab text="Bestellungen">
+                        <Tab fx:id="tabBauteileverwaltungBestellungen" text="Bestellungen">
                            <content>
                               <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
                                  <children>
