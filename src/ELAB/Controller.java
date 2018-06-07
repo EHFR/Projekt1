@@ -370,7 +370,7 @@ public class Controller implements Initializable {
      * Personenverwaltung
      */
 
-    private void initPersonenverwaltung() {
+    public void initPersonenverwaltung() {
         this.populatePersonenverwaltungList();
         ObservableList<String> types = FXCollections.observableArrayList("Mitglied", "Kunde", "Lehrstuhl bezogene Person");
         this.personenverwaltungTypeValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(types);
@@ -426,7 +426,7 @@ public class Controller implements Initializable {
             }
             Person personToRemove = personenverwaltung.getPersonen().get(listId);
             try {
-                this.personenverwaltung.removePerson(personToRemove.getId());
+                this.personenverwaltung.removePerson(personToRemove.getId(), this.angemeldetePerson.getId());
             } catch (ElabException e) {
                 showError(e);
                 return;
@@ -501,7 +501,7 @@ public class Controller implements Initializable {
     /**
      * Fertigungsverwaltung
      */
-    private void initFertigungsverwaltung() {
+    public void initFertigungsverwaltung() {
         ObservableList<String> stadien = FXCollections.observableArrayList("Ja", "Nein");
         this.fertigungsverwaltungAngenommenSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
         this.fertigungsverwaltungAngenommenSpinner.setValueFactory(fertigungsverwaltungAngenommenSpinnerValueFactory);
@@ -679,7 +679,7 @@ public class Controller implements Initializable {
     /**
      * Finanzverwaltung Konten und Töpfe
      */
-    private void initFinanzverwaltungKontenUndToepfe() {
+    public void initFinanzverwaltungKontenUndToepfe() {
         this.updateKontostaende();
         ObservableList<String> topfKasse = FXCollections.observableArrayList("Barkasse", "Konto", "Kostenstelle");
         this.topfKasseSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(topfKasse);
@@ -802,11 +802,15 @@ public class Controller implements Initializable {
         }
     }
 
+    public void exitFinanzverwaltungKontenUndToepfe() {
+        this.initFinanzverwaltungRechnungen();
+    }
+
     /**
      * Finanzverwaltung Rechnungen
      */
 
-    private void initFinanzverwaltungRechnungen() {
+    public void initFinanzverwaltungRechnungen() {
         ObservableList<String> bezahlarten = FXCollections.observableArrayList("Bar", "Überweisung", "Kostenstelle");
         this.rechnungBezahlartSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(bezahlarten);
         this.rechnungBezahlartSpinner.setValueFactory(rechnungBezahlartSpinnerValueFactory);
@@ -1048,6 +1052,10 @@ public class Controller implements Initializable {
         showOk();
     }
 
+    public void exitFinanzverwaltungRechnungen() {
+        this.initFinanzverwaltungKontenUndToepfe();
+    }
+
     /**
      * Bauteileverwaltung Bauteile
      */
@@ -1133,6 +1141,10 @@ public class Controller implements Initializable {
             showError(new ElabException("Probleme beim Öffnen des Links"));
             e.printStackTrace();
         }
+    }
+
+    public void exitBauteileverwaltungBauteile() {
+        this.initBauteileverwaltungVerwaltung();
     }
 
     /**
@@ -1333,5 +1345,9 @@ public class Controller implements Initializable {
         }
         showOk();
         populateKategorieverwaltungList();
+    }
+
+    public void exitBauteileverwaltungVerwaltung() {
+        this.initBauteileverwaltungBauteile();
     }
 }
