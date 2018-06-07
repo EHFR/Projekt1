@@ -278,7 +278,7 @@
                <content>
                   <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                      <tabs>
-                        <Tab text="Konten und Töpfe">
+                        <Tab onClosed="#exitFinanzverwaltungKontenUndToepfe" text="Konten und Töpfe">
                            <content>
                               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
@@ -417,7 +417,7 @@
                               </VBox>
                            </content>
                         </Tab>
-                        <Tab text="Rechnungen">
+                        <Tab onClosed="#exitFinanzverwaltungRechnungen" text="Rechnungen">
                            <content>
                               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
@@ -549,7 +549,7 @@
                <content>
                   <TabPane fx:id="bauteileverwaltungTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                      <tabs>
-                        <Tab fx:id="tabBauteileverwaltungBauteile" text="Bauteile">
+                        <Tab fx:id="tabBauteileverwaltungBauteile" onClosed="#exitBauteileverwaltungBauteile" text="Bauteile">
                            <content>
                               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
@@ -620,7 +620,7 @@
                               </VBox>
                            </content>
                         </Tab>
-                        <Tab fx:id="tabBauteileverwaltungVerwaltung" text="Verwaltung">
+                        <Tab fx:id="tabBauteileverwaltungVerwaltung" onClosed="#exitBauteileverwaltungVerwaltung" text="Verwaltung">
                            <content>
                               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>

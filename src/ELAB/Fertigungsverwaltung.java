@@ -1,5 +1,6 @@
 package ELAB;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -51,7 +52,7 @@ public class Fertigungsverwaltung {
                         rs.getBoolean("abgerechnet"), rs.getTimestamp("statusZeitstempel_abgerechnet"),
                         rs.getBoolean("wartenAufMaterial"), rs.getTimestamp("statusZeitstempel_wartenAufMaterial"),
                         rs.getBoolean("fertigungFehlgeschlagen"),
-                        rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"), pw.getPersonByID(rs.getInt("AuftraggeberID")), rs.getString("Auftragbearbearbeiter"));
+                        rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"), pw.getPersonByID(rs.getInt("AuftraggeberID")), fillList(rs.getInt("ID")));
                 a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
                
 //                System.out.println("Auftrag in Aufruf: "+a);
@@ -72,62 +73,110 @@ public class Fertigungsverwaltung {
         return auftraege;
     }
 
-    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId, String auftragbearbeiter) throws ElabException {
+//    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId, String auftragbearbeiter) throws ElabException {
+//
+//        //todo ("Auftraggeber existiert nicht!");
+//
+//        Personenverwaltung personenverwaltung = new Personenverwaltung();
+//        ArrayList<Person> auftragbearbeiterListe = new ArrayList<Person>();
+//        for (String name : auftragbearbeiter.split("\n")) {
+//            auftragbearbeiterListe.add(personenverwaltung.getPersonByName(auftragbearbeiter));
+//        }
+//
+//
+//        //todo Idee zum testen, ob alle Auftraggeber auch existieren   man müsste hier dann ein objekt von der personenverwaltung erstellen
+//        for (String name : auftragbearbeiter.split("\n")) {
+//            if (!personenverwaltung.personAlreadyExists(name)) {
+//                throw new ElabException("Auftragbearbeiter " + name + " existiert nicht!");
+//            }
+//        }
+//
+//        // hier schonmal der Test auf korrekte eingabe der Kosten
+//        float kostenFloat;
+//        try {
+//            kostenFloat = Float.parseFloat(kosten);
+//        } catch (NumberFormatException e) {
+//            throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+//        }
+//
+//        ArrayList<String> auftragbearbeiterIds = new ArrayList<>();
+//        // hier müssen die Personen korrekt aus dem String eingefügt werden
+//        auftragbearbeiterIds.add("8"); //beispielhaft
+//
+//        Db db = new Db();
+//        timestamp = new Timestamp(System.currentTimeMillis());
+//
+//        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , AuftragbearbeiterIds) "
+//                + "VALUES ('" + titel + "','"
+//                + fertigungsArt + "','"
+//                + dateiName + "','"
+//                + dateiOrt + "',"
+//                + kostenFloat + ",'"
+//                + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
+//                + timestamp + "','"
+//                + auftraggeberId + "')";
+//        
+//        System.out.println(sql);
+//        try {
+//           db.updateQuery(sql);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        
+//    }	
 
-        //todo ("Auftraggeber existiert nicht!");
-
-        Personenverwaltung personenverwaltung = new Personenverwaltung();
-        ArrayList<Person> auftragbearbeiterListe = new ArrayList<Person>();
-        for (String name : auftragbearbeiter.split("\n")) {
-            auftragbearbeiterListe.add(personenverwaltung.getPersonByName(auftragbearbeiter));
-        }
-
-
-        //todo Idee zum testen, ob alle Auftraggeber auch existieren   man müsste hier dann ein objekt von der personenverwaltung erstellen
-        for (String name : auftragbearbeiter.split("\n")) {
-            if (!personenverwaltung.personAlreadyExists(name)) {
-                throw new ElabException("Auftragbearbeiter " + name + " existiert nicht!");
-            }
-        }
-
-        // hier schonmal der Test auf korrekte eingabe der Kosten
-        float kostenFloat;
-        try {
-            kostenFloat = Float.parseFloat(kosten);
-        } catch (NumberFormatException e) {
-            throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
-        }
-
-        ArrayList<String> auftragbearbeiterIds = new ArrayList<>();
-        // hier müssen die Personen korrekt aus dem String eingefügt werden
-        auftragbearbeiterIds.add("8"); //beispielhaft
-
-        Db db = new Db();
-        timestamp = new Timestamp(System.currentTimeMillis());
-
-        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , AuftragbearbeiterIds) "
-                + "VALUES ('" + titel + "','"
-                + fertigungsArt + "','"
-                + dateiName + "','"
-                + dateiOrt + "',"
-                + kostenFloat + ",'"
-                + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
-                + timestamp + "','"
-                + auftraggeberId + "','"
-                + auftragbearbeiter + "')";
-        System.out.println(sql);
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId,ArrayList<Integer> auftragbearbeiter) throws ElabException, SQLException
+    {
+    	Db db = new Db();
+    	Personenverwaltung pw = new Personenverwaltung();
+    	ArrayList<Person> bearbeiter = new ArrayList<Person>();
+    	
+    	int key = 0;
+    	
+    	 float kostenFloat;
+       try {
+           kostenFloat = Float.parseFloat(kosten);
+       } catch (NumberFormatException e) {
+           throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+       }
+    	
+    	String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , AuftragbearbeiterIds) "
+              + "VALUES ('" + titel + "','"
+              + fertigungsArt + "','"
+              + dateiName + "','"
+              + dateiOrt + "',"
+              + kostenFloat + ",'"
+              + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
+              + timestamp + "','"
+              + auftraggeberId + "')";
+    	
+    	PreparedStatement stmt = null;
+    	stmt = db.dataSource().prepareStatement(sql, stmt.RETURN_GENERATED_KEYS);
+    	
+    	stmt.executeUpdate();
+    	
+    	try(ResultSet generatedKeys = stmt.getGeneratedKeys())
+    	{
+    		if (generatedKeys.next())
+    		{
+    			key = generatedKeys.getInt(1);
+    		}
+    	}
+    	
+    	for(Integer i : auftragbearbeiter)
+    	{
+    		String sql2 = "INSERT INTO AuftragPerson (AuftragID,PersonID) VALUES (" + key + "," + i + ")";
+    		try {
+				db.updateQuery(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+    	}
     }
-
 
     public void removeAuftrag(int id) {
         Db db = new Db();
-        Auftrag a = this.getAuftragByID(id);
-        String sql = "DELETE FROM Auftrag WHERE ID = " + a.getId() + " ";
+        String sql = "DELETE FROM Auftrag WHERE ID = " + id + " ";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -137,21 +186,56 @@ public class Fertigungsverwaltung {
 
 
     public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt,
-                              float kosten) throws ElabException {
+                              float kosten,String auftraggeber, ArrayList<Integer> bearbeiter) throws ElabException {
 
         //todo ("Auftraggeber existiert nicht!");
 
         Db db = new Db();
+        Personenverwaltung pw = new Personenverwaltung();
         String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
-                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten
-                + "WHERE ID = " + id + "";
+                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten + ",'" + pw.getPersonIdByName(auftraggeber) 
+                + "' WHERE ID = " + id + "";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        
+        String sql2 = "DELETE FROM AuftragPerson WHERE AuftragID = " + id + "";
+        try {
+			db.updateQuery(sql2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
+        if(bearbeiter.size() > 0)
+        {
+	        for(Integer i : bearbeiter)
+	    	{
+	    		String sql3 = "INSERT INTO AuftragPerson (AuftragID,PersonID) VALUES (" + id + "," + i + ")";
+	    		try {
+					db.updateQuery(sql3);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+	    	}
+        }
+        else
+        {
+        	throw new ElabException("Es muss mindestens ein Bearbeiter an einem Auftrag arbeiten");
+        }
+    }
+    
+    public void deleteAuftragbearbeiter(int auftragID, int personID)
+    {
+    	Db db = new Db();
+    	
+    	String sql = "DELETE FROM AuftragPerson WHERE PersonID = " + personID + "";
+    	
     }
 
+    
 
     public void updateStatus(int id, boolean angenommen, boolean gefertigt, boolean kosten_kalkuliert, boolean abgeholt,
                              boolean abgerechnet, boolean wartenAufMaterial, boolean fertigungFehlgeschlagen) {

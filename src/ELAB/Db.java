@@ -27,6 +27,13 @@ public class Db {
         stmt.close();
         close();
     }
+    
+    Connection dataSource() throws SQLException
+    {
+    	DriverManager.registerDriver(new org.sqlite.JDBC());
+    	this.conn = DriverManager.getConnection(this.db_url);
+    	return conn;
+    }
 
 
     void close() {
