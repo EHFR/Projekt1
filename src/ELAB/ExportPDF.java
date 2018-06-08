@@ -62,28 +62,28 @@ public class ExportPDF {
         						  + System.getProperty("user.name") + ", " + new Date(), smallBold));
         
         addEmptyLine(preface, 4);
-        preface.add(new Paragraph("ID: " , smallBold));
+        preface.add(new Paragraph("ID: " + rechnung.getId() , smallBold));
         
         addEmptyLine(preface, 1);
         preface.add(new Paragraph("Rechnungsdatum: " + rechnung.getZeitstempelString() , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Rechnungsname: " , smallBold));
+        preface.add(new Paragraph("Rechnungsname: " + rechnung.getName() , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Auftraggeber: " , smallBold));
+        preface.add(new Paragraph("Auftraggeber: " + rechnung.getAuftraggeber(), smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Ansprechpartner: " , smallBold));
+        preface.add(new Paragraph("Ansprechpartner: " + rechnung.getAnsprechpartner(), smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Topf-ID: " , smallBold));
+        preface.add(new Paragraph("Topf-ID: " + rechnung.getTopf(), smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Rechnungsbetrag: " , smallBold));
+        preface.add(new Paragraph("Rechnungsbetrag: " + rechnung.getBetrag(), smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Bezahlart: " , smallBold));
+        preface.add(new Paragraph("Bezahlart: " + rechnung.getBezahlart(), smallBold));
         
         document.add(preface);
     }
