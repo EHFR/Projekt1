@@ -6,40 +6,22 @@ import java.util.ArrayList;
 
 public class Bauteileverwaltung {
 
-    private ArrayList<Kategorie> kategorie;
-    private ArrayList<Produkt> produkt;
+    private ArrayList<Kategorie> kategorien;
+    private ArrayList<Bestellung> bestellungen;
 
     public Bauteileverwaltung() {
-        kategorie = new ArrayList<>();
-        produkt = new ArrayList<>();
-    }
-
-    private void reloadProdukt() {
-        Db db = new Db();
-        this.kategorie.clear();
-        try {
-            ResultSet rs = db.exequteQuery("SELECT * FROM Produkt");
-            while (rs.next()) {
-                Produkt p = new Produkt(rs.getInt("ID"), rs.getString("Name"), rs.getString("Link"),
-                        rs.getDouble("Einzelpreis"), rs.getInt("MengeLagernd"),
-                        rs.getInt("MengeGeplant"), rs.getInt("MengeBestellt"), rs.getString("LagerOrt"));
-                this.produkt.add(p);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            db.close();
-        }
-
+        kategorien = new ArrayList<>();
+        bestellungen = new ArrayList<>();
     }
 
     private void reloadKategorie() {
         Db db = new Db();
-        this.kategorie.clear();
+        this.kategorien.clear();
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Kategorie");
             while (rs.next()) {
-                Kategorie p = new Kategorie(rs.getInt("ID"), rs.getString("Name"));
+                Kategorie k = new Kategorie(rs.getInt("ID"), rs.getString("Name"));
+                this.kategorien.add(k);
             }
             rs.close();
         } catch (SQLException e) {
@@ -49,23 +31,10 @@ public class Bauteileverwaltung {
         }
     }
 
-    public void addProdukt(String name, String link, float einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) {
+    public void addKategorie(String name) throws ElabException {
         Db db = new Db();
-        String sql = "INSERT INTO Produkt (Name,Link,Einzelpreis,MengeLagernd,MengeGeplant,MengeBestellt,LagerOrt"
-                + "VALUES ('" + name + "','" + link + "'," + einzelpreis + "," + menge_lagernd + "," + menge_geplant + ","
-                + menge_bestellt + ",'" + lagerort + "')";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // todo Kategorie ID wird doch automatisch von der Datenbank erstellt, PARAMETER LÖSCHEN!
-    public void addKategorie(int kategorieID, String name) {
-        Db db = new Db();
-        String sql = "INSERT INTO Kategorie (ID, Name, Produkte)"
-                + "VALUES (" + kategorieID + ",'" + name + "')";
+        String sql = "INSERT INTO Kategorie (Name)"
+                + "VALUES ('" + name + "')";
         try {
             db.updateQuery(sql);
         } catch (Exception e) {
@@ -73,42 +42,16 @@ public class Bauteileverwaltung {
         }
     }
 
-    public void updateProdukt(int id, String name, String link, float einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) {
-        Db db = new Db();
-        String sql = "UPDATE Produkt SET Name = '" + name + "', Link = '" + link
-                + "', Einzelpreis = '" + einzelpreis + "', MengeLagernd = '" + mengeLagernd + "', MengeGeplant = '"
-                + mengeGeplant + "', MengeBestellt = '" + mengeBestellt + "', LagerOrt =  '" + lagerOrt + " "
-                + "WHERE PersonID = " + id + "";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void updateKategorie(ArrayList<String> produktID) {
-        Db db = new Db();
-        String sql = "UPDATE Kategorie SET produktID = '" + String.join("','", produktID) + "')";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void removeKategorie(int id) throws ElabException {
+        for (Kategorie kategorie : this.kategorien) {
+            if (kategorie.getId() == id) {
+                if (kategorie.getProdukte().size() > 0) {
+                    throw new ElabException("Es gibt noch Produkte in dieser Kategorie");
+                }
+            }
         }
 
-    }
-
-
-    public void removeProdukt(int id) {
-        Db db = new Db();
-        String sql = "DELETE FROM Produkt WHERE ID = " + id + "";
-        try {
-            db.updateQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void removeKategorie(int id) {
         Db db = new Db();
         String sql = "DELETE FROM Kategorie WHERE ID = " + id + "";
         try {
@@ -119,8 +62,60 @@ public class Bauteileverwaltung {
     }
 
 
-    public ArrayList<Kategorie> getKategorien(){
+    public ArrayList<Kategorie> getKategorien() {
         this.reloadKategorie();
-        return this.kategorie;
+        return this.kategorien;
+    }
+
+    /**
+     * Bestellungen
+     */
+
+    private void reloadBestellungen() {
+        Db db = new Db();
+        this.bestellungen.clear();
+        try {
+            ResultSet rs = db.exequteQuery("SELECT * FROM Bestellung");
+            while (rs.next()) {
+                Bestellung bestellung = new Bestellung(rs.getInt("ID"), rs.getString("Name"), rs.getString("Produkt"),
+                        rs.getString("Kategorie"), rs.getString("Einzelpreis"), rs.getString("Menge"));
+                this.bestellungen.add(bestellung);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+    }
+
+    public void addBestellung(String name, String produkt, String kategorie, String einzelpreis, String menge) {
+        Db db = new Db();
+        String sql = "INSERT INTO Bestellung (Name, Produkt, Kategorie, Einzelpreis, Menge)"
+                + "VALUES ('" + name + "','"
+                + produkt + "','"
+                + kategorie + "','"
+                + einzelpreis + "','"
+                + menge + "')";
+        try {
+            db.updateQuery(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Bestellung> getBestellungen() {
+        this.reloadBestellungen();
+        return this.bestellungen;
+    }
+
+    public void removeBestellung(int id) throws ElabException {
+        Db db = new Db();
+        String sql = "DELETE FROM Bestellung WHERE ID = " + id + "";
+        try {
+            db.updateQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -36,7 +36,7 @@ public class Auftrag {
                    float kosten, boolean angenommen, Timestamp statusZeitstempel_angenommen, boolean gefertigt, Timestamp statusZeitstempel_gefertigt,
                    boolean kosten_kalkuliert, Timestamp statusZeitstempel_kosten_kalkuliert, boolean abgeholt, Timestamp statusZeitstempel_abgeholt,
                    boolean abgerechnet, Timestamp statusZeitstempel_abgerechnet, boolean wartenAufMaterial, Timestamp statusZeitstempel_wartenAufMaterial,
-                   boolean fertigungFehlgeschlagen, Timestamp statusZeitstempel_fertigungFehlgeschlagen) {
+                   boolean fertigungFehlgeschlagen, Timestamp statusZeitstempel_fertigungFehlgeschlagen, Person auftaggeber, ArrayList<Person> auftragbearbeiter) {
 
         this.id = id;
         this.titel = titel;
@@ -59,6 +59,8 @@ public class Auftrag {
         this.statusZeitstempel_wartenAufMaterial = statusZeitstempel_wartenAufMaterial;
         this.statusZeitstempel_fertigungFehlgeschlagen = statusZeitstempel_fertigungFehlgeschlagen;
         this.zeitstempel = new Timestamp(System.currentTimeMillis());
+        this.auftraggeber = auftraggeber;
+        this.auftragbearbeiter = auftragbearbeiter;
     }
 
 
@@ -281,6 +283,7 @@ public class Auftrag {
     }
 
     public void setAuftraggeber(Person auftraggeber) {
+        System.out.println("Setze Auftraggeber auf: " + auftraggeber);
         this.auftraggeber = auftraggeber;
     }
 
@@ -293,10 +296,7 @@ public class Auftrag {
     }
 
     public String getAuftragbearbeiterString() {
-        StringBuilder output = new StringBuilder();
-        for (Person person : this.auftragbearbeiter) {
-            output.append(person.getName()).append("\r");
-        }
-        return output.toString();
+        return auftragbearbeiter.toString();
     }
+
 }

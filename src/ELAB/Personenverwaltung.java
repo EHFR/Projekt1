@@ -94,7 +94,12 @@ public class Personenverwaltung {
         }
     }
 
-    public void removePerson(int id) throws ElabException {
+    public void removePerson(int id, int angemeldetePersonID) throws ElabException {
+        //Angemeldetes Mitglied darf nicht gelöscht werden
+        if (id == angemeldetePersonID) {
+            throw new ElabException("Angemeldete Personen können sich nicht selbst löschen");
+        }
+
         // Testen, ob das letzte Mitglied gelöscht wird.
         boolean letztesMitglied = true;
         for (Person person : personen) {
