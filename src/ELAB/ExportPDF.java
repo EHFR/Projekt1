@@ -19,7 +19,7 @@ public class ExportPDF {
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
             Font.BOLD);
     
-    public void start() {
+    public void start(Rechnung rechnung) {
     	Document document = new Document();
         try {
 			PdfWriter.getInstance(document, new FileOutputStream(FILE));
@@ -33,7 +33,7 @@ public class ExportPDF {
         document.open();
         addMetaData(document);
         try {
-			addTitlePage(document);
+			addTitlePage(document, rechnung);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class ExportPDF {
         document.addCreator("Max Mustermann");
     }
     
-    public void addTitlePage(Document document)
+    public void addTitlePage(Document document, Rechnung rechnung)
             throws DocumentException {
         Paragraph preface = new Paragraph();
 
@@ -65,7 +65,7 @@ public class ExportPDF {
         preface.add(new Paragraph("ID: " , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Rechnungsdatum: " , smallBold));
+        preface.add(new Paragraph("Rechnungsdatum: " + rechnung.getZeitstempelString() , smallBold));
         
         addEmptyLine(preface, 1);
         preface.add(new Paragraph("Rechnungsname: " , smallBold));

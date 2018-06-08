@@ -216,7 +216,7 @@ public class Rechnung {
     
     public void exportToPDF() {
     	
-    	export.start();
+    	export.start(this);
 
     }
 
