@@ -1164,8 +1164,6 @@ public class Controller implements Initializable {
         }
     }
 
-    // todo jar to exe https://www.youtube.com/watch?v=7LoigYW1VPY
-
     private void produkteDisableInputs(boolean disabled) {
         this.produktGrid.setDisable(disabled);
     }
