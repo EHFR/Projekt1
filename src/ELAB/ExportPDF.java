@@ -10,6 +10,7 @@ import com.itextpdf.text.Font;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ExportPDF {
@@ -18,7 +19,7 @@ public class ExportPDF {
             Font.BOLD);
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
             Font.BOLD);
-
+    
     public static void main(String[] args) {
         try {
             Document document = new Document();
@@ -52,28 +53,28 @@ public class ExportPDF {
         						  + System.getProperty("user.name") + ", " + new Date(), smallBold));
         
         addEmptyLine(preface, 4);
-        preface.add(new Paragraph("ID: "  , smallBold));
+        preface.add(new Paragraph("ID: " , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Datum: ", smallBold));
+        preface.add(new Paragraph("Rechnungsdatum: " , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Rechnungsname: ", smallBold));
+        preface.add(new Paragraph("Rechnungsname: " , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Auftraggeber: ", smallBold));
+        preface.add(new Paragraph("Auftraggeber: " , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Ansprechpartner: ", smallBold));
+        preface.add(new Paragraph("Ansprechpartner: " , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Topf-ID: ", smallBold));
+        preface.add(new Paragraph("Topf-ID: " , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Rechnungsbetrag: ", smallBold));
+        preface.add(new Paragraph("Rechnungsbetrag: " , smallBold));
         
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Bezahlart: ", smallBold));
+        preface.add(new Paragraph("Bezahlart: " , smallBold));
         
         document.add(preface);
     }
