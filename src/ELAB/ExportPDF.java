@@ -20,20 +20,30 @@ public class ExportPDF {
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
             Font.BOLD);
     
-    public static void main(String[] args) {
+    public void start() {
+    	Document document = new Document();
         try {
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(FILE));
-            document.open();
-            addMetaData(document);
-            addTitlePage(document);
-            document.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+			PdfWriter.getInstance(document, new FileOutputStream(FILE));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        document.open();
+        addMetaData(document);
+        try {
+			addTitlePage(document);
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        document.close();
+    	
     }
     
-    private static void addMetaData(Document document) {
+    public void addMetaData(Document document) {
         document.addTitle("Rechnungen");
         document.addSubject("ELAB");
         document.addKeywords("");
@@ -41,7 +51,7 @@ public class ExportPDF {
         document.addCreator("Max Mustermann");
     }
     
-    private static void addTitlePage(Document document)
+    public void addTitlePage(Document document)
             throws DocumentException {
         Paragraph preface = new Paragraph();
 
@@ -85,5 +95,17 @@ public class ExportPDF {
         }        
     }
     
-
 }
+
+//public static void main(String[] args) {
+//try {
+//  Document document = new Document();
+//  PdfWriter.getInstance(document, new FileOutputStream(FILE));
+//  document.open();
+//  addMetaData(document);
+//  addTitlePage(document);
+//  document.close();
+//} catch (Exception e) {
+//  e.printStackTrace();
+//}
+//}
