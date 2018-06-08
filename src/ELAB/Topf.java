@@ -95,8 +95,9 @@ public class Topf {
                         rs.getBoolean("ausstehend"), rs.getTimestamp("statusZeitstempel_ausstehend"));
                 r.setZeitstempel(rs.getTimestamp("Zeitstempel"));
 
-                System.out.println(rs.getBoolean("inBearbeitung")); // Fukan, hier ist der Status schon false
-
+                System.out.println(rs.getBoolean("inBearbeitung"));// Fukan, hier ist der Status schon false
+                System.out.println(rs.getTimestamp("statusZeitstempel_inBearbeitung"));
+                
                 try {
                     Person geber = personenVerwaltung.getPersonByName(rs.getString("AuftragGeber"));
                     r.setAuftraggeber(geber);
