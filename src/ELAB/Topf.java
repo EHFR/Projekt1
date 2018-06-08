@@ -84,6 +84,7 @@ public class Topf {
 
     private void reloadRechnung(int topfID) {
         Db db = new Db();
+        Personenverwaltung pw = new Personenverwaltung();
         this.rechnungen.clear();
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Rechnung WHERE TopfID=" + topfID);
