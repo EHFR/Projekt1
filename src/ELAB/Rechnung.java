@@ -3,7 +3,6 @@ package ELAB;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Rechnung {
@@ -210,17 +209,13 @@ public class Rechnung {
     }
 
 
-    //todo export muss implementiert werden (Nachfolgend der dazugehörige Satz in der Anforderung)
-    /*
-     F ¨ ur das Ab- ¨
-heften einer Rechnung in Papierform, mussen diese in ein leserliches Format wie einer PDF-Datei ¨
-exportierbar sein.
-     */
+    //Methoden für Rechnung
+    
     public void exportToPDF() {
 
     }
 
-    // todo Muss noch implementiert werden! (Sollte Analog zu Auftragsstatus machbar sein)
+
     public void updateStatus(boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
 
         Db db = new Db();
@@ -241,48 +236,54 @@ exportierbar sein.
                 e.printStackTrace();
             }
         }
+        
+        if (this.isEingereicht() != eingereicht) {
 
-//        if (r.isEingereicht() != eingereicht) {
-//
-//            r.setEingereicht(eingereicht);
-//            r.setStatusZeitstempel_eingereicht(timestampNew);
-//
-//            sql = "UPDATE Rechnung SET eingereicht = " + eingereicht + ", statusZeitstempel_eingereicht = " + timestampNew
-//                    + " WHERE ID = " + r.getId() + "";
-//            try {
-//                db.updateQuery(sql);
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        
-//        if (r.isAbgewickelt() != abgewickelt) {
-//
-//            r.setAbgewickelt(abgewickelt);
-//            r.setStatusZeitstempel_abgewickelt(timestampNew);
-//
-//            sql = "UPDATE Rechnung SET abgewickelt = " + abgewickelt + ", statusZeitstempel_abgewickelt = " + timestampNew
-//                    + " WHERE ID = " + r.getId() + "";
-//            try {
-//                db.updateQuery(sql);
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        
-//        if (r.isAusstehend() != ausstehend) {
-//
-//            r.setAusstehend(ausstehend);
-//            r.setStatusZeitstempel_ausstehend(timestampNew);
-//
-//            sql = "UPDATE Rechnung SET ausstehend = " + ausstehend + ", statusZeitstempel_ausstehend = " + timestampNew
-//                    + " WHERE ID = " + r.getId() + "";
-//            try {
-//                db.updateQuery(sql);
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
+            this.setEingereicht(eingereicht);
+            this.setStatusZeitstempel_eingereicht(timestampNew);
+
+            sql = " UPDATE Rechnung SET eingereicht = '" + eingereicht + "', statusZeitstempel_eingereicht = '" + timestampNew.toString()
+                    + "' WHERE ID = " + this.id + "";
+
+            try {
+                db.updateQuery(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        if (this.isAbgewickelt() != abgewickelt) {
+
+            this.setAbgewickelt(abgewickelt);
+            this.setStatusZeitstempel_abgewickelt(timestampNew);
+
+            sql = " UPDATE Rechnung SET abgewickelt = '" + abgewickelt + "', statusZeitstempel_abgewickelt = '" + timestampNew.toString()
+                    + "' WHERE ID = " + this.id + "";
+
+            try {
+                db.updateQuery(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        if (this.isAusstehend()!= ausstehend) {
+
+            this.setAusstehend(ausstehend);
+            this.setStatusZeitstempel_ausstehend(timestampNew);
+
+            sql = " UPDATE Rechnung SET ausstehend = '" + ausstehend + "', statusZeitstempel_ausstehend = '" + timestampNew.toString()
+                    + "' WHERE ID = " + this.id + "";
+
+            try {
+                db.updateQuery(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
     }
 
     public void setNewTopfID(int id) {
