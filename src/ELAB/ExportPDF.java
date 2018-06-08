@@ -52,7 +52,7 @@ public class ExportPDF {
         						  + System.getProperty("user.name") + ", " + new Date(), smallBold));
         
         addEmptyLine(preface, 4);
-        preface.add(new Paragraph("ID: ", smallBold));
+        preface.add(new Paragraph("ID: "  , smallBold));
         
         addEmptyLine(preface, 1);
         preface.add(new Paragraph("Datum: ", smallBold));
