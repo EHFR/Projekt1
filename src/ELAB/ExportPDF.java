@@ -10,7 +10,6 @@ import com.itextpdf.text.Font;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class ExportPDF {

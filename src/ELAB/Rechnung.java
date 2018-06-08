@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class Rechnung {
     private int id;
     private Date datum;
@@ -25,8 +26,6 @@ public class Rechnung {
     private boolean ausstehend;
     private Timestamp zeitstempel;
     private Timestamp statusZeitstempel;
-    
-    ExportPDF export = new ExportPDF();
 
 
     public Rechnung(int id, String name, float betrag, String bezahlart, boolean inBearbeitung, Timestamp statusZeitstempel_inBearbeitung,
@@ -212,6 +211,8 @@ public class Rechnung {
 
 
     //Methoden für Rechnung
+    
+    ExportPDF export = new ExportPDF();
     
     public void exportToPDF() {
     	
