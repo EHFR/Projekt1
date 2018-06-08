@@ -7,6 +7,7 @@
     <file url="file://$PROJECT_DIR$/src/ELAB/ConfirmBox.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Controller.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Db.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/ELAB/ExportPDF.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Fertigungsverwaltung.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Finanzverwaltung.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/ELAB/Kategorie.java" charset="ISO-8859-1" />

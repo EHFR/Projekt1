@@ -22,7 +22,7 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ELAB.Controller">
    <children>
-      <HBox prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: #bbb;">
+      <HBox prefHeight="64.0" prefWidth="600.0" style="-fx-background-color: #bbb;">
          <children>
             <HBox fx:id="anmeldenBox" prefHeight="42.0" prefWidth="373.0">
                <children>
@@ -38,11 +38,11 @@
                         <PasswordField fx:id="anmeldungPasswortField" />
                      </children>
                   </VBox>
-                  <VBox alignment="BOTTOM_LEFT" prefHeight="42.0" prefWidth="164.0">
+                  <VBox alignment="BOTTOM_LEFT" prefHeight="25.0" prefWidth="164.0">
                      <children>
                         <Button fx:id="anmeldungAnmeldenBtn" mnemonicParsing="false" onAction="#anmeldenAction" text="Anmelden">
                            <VBox.margin>
-                              <Insets left="1.0" />
+                              <Insets bottom="3.0" left="1.0" />
                            </VBox.margin>
                         </Button>
                      </children>
