@@ -860,6 +860,11 @@ public class Controller implements Initializable {
         this.rechnungStatusAusstehendSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(stadien);
         this.rechnungStatusAusstehendSpinner.setValueFactory(rechnungStatusAusstehendSpinnerValueFactory);
 
+        this.rechnungStatusInBearbeitungSpinnerValueFactory.setValue("Nein");
+        this.rechnungStatusEingereichtSpinnerValueFactory.setValue("Nein");
+        this.rechnungStatusAbgewickeltSpinnerValueFactory.setValue("Nein");
+        this.rechnungStatusAusstehendSpinnerValueFactory.setValue("Nein");
+
         this.populateTopfList();
     }
 
