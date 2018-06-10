@@ -140,7 +140,7 @@ public class Fertigungsverwaltung {
         }
         
         int key = 0;
-
+        int row = 0;
         float kostenFloat;
         try {
             kostenFloat = Float.parseFloat(kosten);
@@ -161,11 +161,11 @@ public class Fertigungsverwaltung {
         PreparedStatement stmt = null;
         try {
             stmt = db.dataSource().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.executeUpdate();
+            row = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        
         try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 key = generatedKeys.getInt(1);
@@ -180,7 +180,7 @@ public class Fertigungsverwaltung {
         for (Integer i : auftragbearbeiter) {
             String sql2 = "INSERT INTO AuftragPerson (AuftragID,PersonID) VALUES (" + key + "," + i + ")";
             try {
-                db.updateQuery(sql);
+                db.updateQuery(sql2);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
