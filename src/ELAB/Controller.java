@@ -676,7 +676,7 @@ public class Controller implements Initializable {
             this.fertigungsverwaltungAuftraggeberField.setText(auftrag.getAuftraggeber().getName());
             StringBuilder auftragbearbeiterNamen = new StringBuilder();
             for (Person auftragbearbeiter : auftrag.getAuftragbearbeiter()) {
-                auftragbearbeiterNamen.append(auftragbearbeiter.getName()).append(";");
+                auftragbearbeiterNamen.append(auftragbearbeiter.getName()).append("; ");
             }
             this.fertigungsverwaltungAuftragbearbeiterLabel.setText(auftragbearbeiterNamen.toString());
 
@@ -698,11 +698,13 @@ public class Controller implements Initializable {
         }
     }
 
+    //todo millisekunden bei timestamps entfernen
+
     public void editAuftragbearbeiterAction() {
         this.fertigungsverwaltungAuftragbearbeiterIDs = PopupFertigungsverwaltungSetAuftraggeber.display("Auftraggeber wählen", this.fertigungsverwaltungAuftragbearbeiterIDs, this.personenverwaltung.getPersonen());
         StringBuilder auftragbearbeiterNamen = new StringBuilder();
         for (Integer id : fertigungsverwaltungAuftragbearbeiterIDs) {
-            auftragbearbeiterNamen.append(personenverwaltung.getPersonByID(id).getName()).append(";");
+            auftragbearbeiterNamen.append(personenverwaltung.getPersonByID(id).getName()).append("; ");
         }
         this.fertigungsverwaltungAuftragbearbeiterLabel.setText(auftragbearbeiterNamen.toString());
     }
