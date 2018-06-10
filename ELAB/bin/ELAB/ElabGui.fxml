@@ -191,7 +191,7 @@
                                           <Button fx:id="fertigungsverwaltungSaveBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveAuftragAction" prefHeight="25.0" prefWidth="116.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                           <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                              <children>
-                                                <Label fx:id="fertigungsverwaltungAuftragbearbeiterLabel" prefHeight="64.0" prefWidth="111.0" text="Label" />
+                                                <Label fx:id="fertigungsverwaltungAuftragbearbeiterLabel" prefHeight="64.0" prefWidth="111.0" text="Label" wrapText="true" />
                                                 <Button mnemonicParsing="false" onAction="#editAuftragbearbeiterAction" prefHeight="25.0" prefWidth="114.0" text="Bearbeiten" />
                                              </children>
                                           </VBox>
