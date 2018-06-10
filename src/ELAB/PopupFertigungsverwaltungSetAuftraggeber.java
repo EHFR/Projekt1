@@ -51,6 +51,7 @@ public class PopupFertigungsverwaltungSetAuftraggeber {
         //Clicking will set answer and close window
         yesButton.setOnAction(e -> {
             ObservableList<Integer> listIDs = list.getSelectionModel().getSelectedIndices();
+            selected = new ArrayList<>();
             for (Integer listID : listIDs) {
                 selected.add(mitglieder.get(listID).getId());
             }
