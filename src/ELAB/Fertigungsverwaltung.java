@@ -3,6 +3,7 @@ package ELAB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -125,11 +126,19 @@ public class Fertigungsverwaltung {
 //        
 //    }	
 
-    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeberId, ArrayList<Integer> auftragbearbeiter) throws ElabException {
+    public void addAuftrag(String titel, String fertigungsArt, String dateiName, String dateiOrt, String kosten, String auftraggeber, ArrayList<Integer> auftragbearbeiter) throws ElabException {
         Db db = new Db();
         Personenverwaltung pw = new Personenverwaltung();
         ArrayList<Person> bearbeiter = new ArrayList<Person>();
-
+        
+        for(Person p : pw.getPersonen())
+        {
+ 	       if(!pw.personAlreadyExists(auftraggeber))
+ 	       {
+ 	    	   throw new ElabException("Auftraggeber " + auftraggeber + " existiert nicht");
+ 	       }
+        }
+        
         int key = 0;
 
         float kostenFloat;
@@ -147,20 +156,15 @@ public class Fertigungsverwaltung {
                 + kostenFloat + ",'"
                 + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
                 + timestamp + "','"
-                + auftraggeberId + "')";
+                + auftraggeber + "')";
 
         PreparedStatement stmt = null;
         try {
-            stmt = db.dataSource().prepareStatement(sql, stmt.RETURN_GENERATED_KEYS);
+            stmt = db.dataSource().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.executeUpdate();
-            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-
-            db.close();
         }
-
 
         try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
             if (generatedKeys.next()) {
@@ -168,6 +172,9 @@ public class Fertigungsverwaltung {
             }
         } catch (SQLException x) {
             x.printStackTrace();
+        } finally 
+        {
+        	db.close();
         }
 
         for (Integer i : auftragbearbeiter) {
@@ -192,14 +199,32 @@ public class Fertigungsverwaltung {
 
 
     public void updateAuftrag(int id, String titel, String fertigungsArt, String dateiName, String dateiOrt,
-                              float kosten, String auftraggeber, ArrayList<Integer> bearbeiter) throws ElabException {
+                              String kosten, String auftraggeber, ArrayList<Integer> bearbeiter) throws ElabException {
 
         //todo ("Auftraggeber existiert nicht!");
 
         Db db = new Db();
         Personenverwaltung pw = new Personenverwaltung();
+        
+       for(Person p : pw.getPersonen())
+       {
+	       if(!pw.personAlreadyExists(auftraggeber))
+	       {
+	    	   throw new ElabException("Auftraggeber " + auftraggeber + " existiert nicht");
+	       }
+       }
+        
+       float kostenFloat;
+       try {
+           kostenFloat = Float.parseFloat(kosten);
+       } catch (NumberFormatException e) {
+           throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
+       }
+    
+        
+        
         String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
-                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kosten + ",'" + pw.getPersonIdByName(auftraggeber)
+                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kostenFloat + ",'" + pw.getPersonIdByName(auftraggeber)
                 + "' WHERE ID = " + id + "";
         try {
             db.updateQuery(sql);
