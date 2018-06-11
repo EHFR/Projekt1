@@ -36,7 +36,7 @@ public class Auftrag {
                    float kosten, boolean angenommen, Timestamp statusZeitstempel_angenommen, boolean gefertigt, Timestamp statusZeitstempel_gefertigt,
                    boolean kosten_kalkuliert, Timestamp statusZeitstempel_kosten_kalkuliert, boolean abgeholt, Timestamp statusZeitstempel_abgeholt,
                    boolean abgerechnet, Timestamp statusZeitstempel_abgerechnet, boolean wartenAufMaterial, Timestamp statusZeitstempel_wartenAufMaterial,
-                   boolean fertigungFehlgeschlagen, Timestamp statusZeitstempel_fertigungFehlgeschlagen, Person auftaggeber, ArrayList<Person> auftragbearbeiter) {
+                   boolean fertigungFehlgeschlagen, Timestamp statusZeitstempel_fertigungFehlgeschlagen, Person auftraggeber, ArrayList<Person> auftragbearbeiter) {
 
         this.id = id;
         this.titel = titel;
