@@ -116,12 +116,7 @@ public class Rechnung {
     }
 
     public String getZeitstempelString() {
-        if (zeitstempel != null) {
-            Date date = new Date();
-            date.setTime(zeitstempel.getTime());
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
-        }
-        return "Null"; // für den Fall, dass der Zeitstempel null ist
+        return this.zeitstempelToString(zeitstempel);
     }
 
     public String getBezahlart() {
@@ -132,7 +127,7 @@ public class Rechnung {
         if (t != null) {
             Date date = new Date();
             date.setTime(t.getTime());
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
+            return new SimpleDateFormat("dd.MM.yyyy_HH.mm.ss").format(date);
         }
         return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
@@ -211,13 +206,8 @@ public class Rechnung {
 
 
     //Methoden für Rechnung
-    
-    ExportPDF export = new ExportPDF();
-    
     public void exportToPDF() {
-    	
-    	export.start(this);
-
+        ExportPDF export = new ExportPDF(this);
     }
 
 
@@ -241,7 +231,7 @@ public class Rechnung {
                 e.printStackTrace();
             }
         }
-        
+
         if (this.isEingereicht() != eingereicht) {
 
             this.setEingereicht(eingereicht);
@@ -256,7 +246,7 @@ public class Rechnung {
                 e.printStackTrace();
             }
         }
-        
+
         if (this.isAbgewickelt() != abgewickelt) {
 
             this.setAbgewickelt(abgewickelt);
@@ -271,8 +261,8 @@ public class Rechnung {
                 e.printStackTrace();
             }
         }
-        
-        if (this.isAusstehend()!= ausstehend) {
+
+        if (this.isAusstehend() != ausstehend) {
 
             this.setAusstehend(ausstehend);
             this.setStatusZeitstempel_ausstehend(timestampNew);
@@ -286,7 +276,6 @@ public class Rechnung {
                 e.printStackTrace();
             }
         }
-
 
 
     }
