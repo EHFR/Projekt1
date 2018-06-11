@@ -62,7 +62,7 @@ public class Topf {
     }
 
     public ArrayList<Rechnung> getRechnungen() {
-        this.reloadRechnung(this.getId());
+        this.reloadRechnung();
         return rechnungen;
     }
 
@@ -82,12 +82,12 @@ public class Topf {
     // Methoden Für Rechnungen in dem Topf
     private Personenverwaltung personenVerwaltung = new Personenverwaltung();
 
-    private void reloadRechnung(int topfID) {
+    private void reloadRechnung() {
         Db db = new Db();
         Personenverwaltung pw = new Personenverwaltung();
         this.rechnungen.clear();
         try {
-            ResultSet rs = db.exequteQuery("SELECT * FROM Rechnung WHERE TopfID=" + topfID);
+            ResultSet rs = db.exequteQuery("SELECT * FROM Rechnung WHERE TopfID=" + this.getId());
             while (rs.next()) {
                 Rechnung r = new Rechnung(rs.getInt("ID"), rs.getString("Name"), rs.getFloat("Betrag"), rs.getString("Bezahlart"),
                         rs.getBoolean("inBearbeitung"), rs.getTimestamp("statusZeitstempel_inBearbeitung"),
@@ -110,6 +110,8 @@ public class Topf {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+                
+                r.setTopf(this);
 
                 this.rechnungen.add(r);
             }
