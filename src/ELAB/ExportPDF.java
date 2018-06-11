@@ -88,7 +88,7 @@ public class ExportPDF {
         preface.add(new Paragraph("Topf-ID: " + rechnung.getTopf().getId(), smallBold));
 
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Rechnungsbetrag: " + rechnung.getBetrag() + " ?", smallBold));
+        preface.add(new Paragraph("Rechnungsbetrag: " + rechnung.getBetrag() + " €", smallBold));
 
         addEmptyLine(preface, 1);
         preface.add(new Paragraph("Bezahlart: " + rechnung.getBezahlart(), smallBold));
