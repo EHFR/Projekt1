@@ -70,7 +70,7 @@ public class Person {
         if (zeitstempel != null) {
             Date date = new Date();
             date.setTime(zeitstempel.getTime());
-            return new SimpleDateFormat("dd.MM.yyyy_HH.mm.ss").format(date);
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(date);
         }
         return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
