@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import com.itextpdf.text.log.SysoLogger;
+
 public class Fertigungsverwaltung {
     private ArrayList<Auftrag> auftraege;
     private Timestamp timestamp;
@@ -140,7 +142,7 @@ public class Fertigungsverwaltung {
         }
         
         int key = 0;
-        int row = 0;
+        int auftraggeberid = pw.getPersonIdByName(auftraggeber);
         float kostenFloat;
         try {
             kostenFloat = Float.parseFloat(kosten);
@@ -148,20 +150,22 @@ public class Fertigungsverwaltung {
             throw new ElabException("Kosten wurden nicht als korrekte Kommazahl angegeben! (float)");
         }
 
-        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID , AuftragbearbeiterIds) "
-                + "VALUES ('" + titel + "','"
+        timestamp = new Timestamp(System.currentTimeMillis()); 
+        String sql = "INSERT INTO Auftrag (Titel, FertigungsArt, DateiName, DateiOrt, Kosten, angenommen, gefertigt, kosten_kalkuliert, abgeholt, abgerechnet, wartenAufMaterial, fertigungFehlgeschlagen, ZeitStempel ,AuftraggeberID) "
+                + "VALUES ('" 
+        		+ titel + "','"
                 + fertigungsArt + "','"
                 + dateiName + "','"
                 + dateiOrt + "',"
                 + kostenFloat + ",'"
-                + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE',"
-                + timestamp + "','"
-                + auftraggeber + "')";
-
+                + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','"
+                + timestamp.toString() + "','"
+                + auftraggeberid + "')";
+        System.out.println(sql);
         PreparedStatement stmt = null;
         try {
             stmt = db.dataSource().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            row = stmt.executeUpdate();
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
