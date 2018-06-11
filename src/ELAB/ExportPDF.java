@@ -10,15 +10,10 @@ import com.itextpdf.text.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ExportPDF {
-    private static Date date = new Date();
-    private static String FILE = System.getProperty("user.home") + "/Desktop/ElabRechnungen/Rechnung__" + date.toString().replaceAll(" ", "_").replaceAll(":", "-") + ".pdf";
-    boolean bool = new File(System.getProperty("user.home") + "/Desktop/ElabRechnungen").mkdirs();
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
