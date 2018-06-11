@@ -228,8 +228,9 @@ public class Fertigungsverwaltung {
         
         
         String sql = "UPDATE Auftrag SET Titel = '" + titel + "', FertigungsArt = '" + fertigungsArt
-                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = '" + kostenFloat + ",'" + pw.getPersonIdByName(auftraggeber)
-                + "' WHERE ID = " + id + "";
+                + "', DateiName = '" + dateiName + "', DateiOrt = '" + dateiOrt + "', Kosten = " + kostenFloat + ", AuftraggeberID = " + pw.getPersonIdByName(auftraggeber)
+                + " WHERE ID = " + id + "";
+        System.out.println(sql);
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
