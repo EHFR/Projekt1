@@ -116,12 +116,7 @@ public class Rechnung {
     }
 
     public String getZeitstempelString() {
-        if (zeitstempel != null) {
-            Date date = new Date();
-            date.setTime(zeitstempel.getTime());
-            return new SimpleDateFormat("dd.MM.yyyy_HH.mm.ss").format(date);
-        }
-        return "Null"; // f?r den Fall, dass der Zeitstempel null ist
+        return this.zeitstempelToString(zeitstempel);
     }
 
     public String getBezahlart() {
@@ -134,7 +129,7 @@ public class Rechnung {
             date.setTime(t.getTime());
             return new SimpleDateFormat("dd.MM.yyyy_HH.mm.ss").format(date);
         }
-        return "Null"; // f?r den Fall, dass der Zeitstempel null ist
+        return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
 
     public String getStatusZeitstempel_inBearbeitungString() {
@@ -210,7 +205,7 @@ public class Rechnung {
     }
 
 
-    //Methoden f?r Rechnung
+    //Methoden für Rechnung
     public void exportToPDF() {
         ExportPDF export = new ExportPDF(this);
     }

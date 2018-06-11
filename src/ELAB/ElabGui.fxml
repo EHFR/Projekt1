@@ -525,7 +525,7 @@
                                                       <TextField fx:id="rechnungAuftraggeberField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <TextField fx:id="rechnungAnsprechpartnerField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                       <TextField fx:id="rechnungBetragField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                      <Label fx:id="rechnungTimestampLabel" text="Time" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <Label fx:id="rechnungTimestampLabel" text="Time" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                       <Button fx:id="rechnungRemoveBtn" mnemonicParsing="false" onAction="#removeRechnungAction" prefHeight="25.0" prefWidth="92.0" text="Löschen" GridPane.rowIndex="6" />
                                                       <Button fx:id="rechnungSaveBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveRechnungAction" prefHeight="25.0" prefWidth="116.0" text="Speichern" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                       <Spinner fx:id="rechnungBezahlartSpinner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
