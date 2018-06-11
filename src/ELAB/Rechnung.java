@@ -216,12 +216,12 @@ public class Rechnung {
         Db db = new Db();
         String sql = "";
         Timestamp timestampNew = new Timestamp(System.currentTimeMillis());
-
+        
         if (this.isInBearbeitung() != inBearbeitung) {
 
             this.setInBearbeitung(inBearbeitung);
             this.setStatusZeitstempel_inBearbeitung(timestampNew);
-
+            
             sql = " UPDATE Rechnung SET inBearbeitung = '" + inBearbeitung + "', statusZeitstempel_inBearbeitung = '" + timestampNew.toString()
                     + "' WHERE ID = " + this.id + "";
 
