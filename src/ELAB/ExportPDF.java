@@ -103,16 +103,3 @@ public class ExportPDF {
     }
 
 }
-
-//public static void main(String[] args) {
-//try {
-//  Document document = new Document();
-//  PdfWriter.getInstance(document, new FileOutputStream(FILE));
-//  document.open();
-//  addMetaData(document);
-//  addTitlePage(document);
-//  document.close();
-//} catch (Exception e) {
-//  e.printStackTrace();
-//}
-//}
