@@ -16,9 +16,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ExportPDF {
-    //private static Date date = new Date();
-    //private static String FILE = System.getProperty("user.home") + "/Desktop/ElabRechnungen/Rechnung__" + date.toString().replaceAll(" ", "_").replaceAll(":", "-") + ".pdf";
-    //boolean bool = new File(System.getProperty("user.home") + "/Desktop/ElabRechnungen").mkdirs();
+    private static Date date = new Date();
+    private static String FILE = System.getProperty("user.home") + "/Desktop/ElabRechnungen/Rechnung__" + date.toString().replaceAll(" ", "_").replaceAll(":", "-") + ".pdf";
+    boolean bool = new File(System.getProperty("user.home") + "/Desktop/ElabRechnungen").mkdirs();
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
@@ -84,16 +84,16 @@ public class ExportPDF {
         preface.add(new Paragraph("Rechnungsname: " + rechnung.getName(), smallBold));
 
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Auftraggeber: " + rechnung.getAuftraggeber(), smallBold));
+        preface.add(new Paragraph("Auftraggeber: " + rechnung.getAuftraggeber().getName(), smallBold));
 
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Ansprechpartner: " + rechnung.getAnsprechpartner(), smallBold));
+        preface.add(new Paragraph("Ansprechpartner: " + rechnung.getAnsprechpartner().getName(), smallBold));
 
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Topf-ID: " + rechnung.getTopf(), smallBold));
+        preface.add(new Paragraph("Topf-ID: " + rechnung.getTopf().getId(), smallBold));
 
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Rechnungsbetrag: " + rechnung.getBetrag() + " ?", smallBold));
+        preface.add(new Paragraph("Rechnungsbetrag: " + rechnung.getBetrag() + " €", smallBold));
 
         addEmptyLine(preface, 1);
         preface.add(new Paragraph("Bezahlart: " + rechnung.getBezahlart(), smallBold));
