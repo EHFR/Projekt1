@@ -700,8 +700,6 @@ public class Controller implements Initializable {
         }
     }
 
-    //todo millisekunden bei timestamps entfernen
-
     public void editAuftragbearbeiterAction() {
         this.fertigungsverwaltungAuftragbearbeiterIDs = PopupFertigungsverwaltungSetAuftraggeber.display("Auftraggeber wählen", this.fertigungsverwaltungAuftragbearbeiterIDs, this.personenverwaltung.getPersonen());
         StringBuilder auftragbearbeiterNamen = new StringBuilder();
@@ -1049,8 +1047,8 @@ public class Controller implements Initializable {
         if (listId != -1) {
             Auftrag auftrag = this.fertigungsverwaltung.getAuftraege().get(listId);
 
-            //this.rechnungAuftraggeberField.setText(auftrag.getAuftraggeber().getName()); // todo wieder einbinden!
-            //this.rechnungAnsprechpartnerField.setText(auftrag.getAuftragbearbeiter().get(0).getName());
+            this.rechnungAuftraggeberField.setText(auftrag.getAuftraggeber().getName());
+            this.rechnungAnsprechpartnerField.setText(auftrag.getAuftragbearbeiter().get(0).getName());
             this.rechnungBetragField.setText(String.valueOf(auftrag.getKosten()));
         } else {
             showError(new ElabException("Laden des Auftrages fehlgeschlagen..."));

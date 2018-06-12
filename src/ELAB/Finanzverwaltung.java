@@ -88,6 +88,9 @@ public class Finanzverwaltung {
 
 
     public void removeTopf(int id) throws ElabException {
+        if (getTopfByID(id).getRechnungen().size() > 0) {
+            throw new ElabException("Topf hat noch Rechnungen. Diese im vorhinein löschen.");
+        }
         Db db = new Db();
         Topf t = this.getTopfByID(id);
         String sql = "DELETE FROM Topf WHERE ID = " + t.getId() + " ";
