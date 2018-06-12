@@ -122,6 +122,10 @@ public class Personenverwaltung {
     }
 
     public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) throws ElabException {
+        if (this.personAlreadyExists(personName)) {
+            throw new ElabException("Name existiert schon, bitte einen anderen wählen!");
+        }
+
         Db db = new Db();
         String sql = "UPDATE Personen SET PersonName = '" + personName + "', PersonAdresse = '" + personAdresse
                 + "', PersonTel = '" + personTel + "', PersonEmail = '" + personEmail + "', Type = '" + type + "', Password = '" + passwort + "' "

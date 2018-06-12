@@ -22,30 +22,22 @@ public class Finanzverwaltung {
     public void setToepfe(ArrayList<Topf> toepfe) {
         this.toepfe = toepfe;
     }
-    
-    public boolean booleanReturn(int b)
-    {
-    	
-    	if(b == 1)
-    	{
-    		return true;
-    	}
-    	else 
-    	{ 
-    		return false;
+
+    public boolean booleanReturn(int b) {
+
+        if (b == 1) {
+            return true;
+        } else {
+            return false;
         }
     }
-    
-    public int intReturn(boolean b)
-    {
-    	if(b == true)
-    	{
-    		return 1;
-    	}
-    	else
-    	{
-    		return 0;
-    	}
+
+    public int intReturn(boolean b) {
+        if (b == true) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     //Methoden für Töpfe
@@ -139,36 +131,25 @@ public class Finanzverwaltung {
 
     }
 
-   
-    public String getIstBestandToepfe(int idTopf) {
-    	this.reloadTopf();
-    	float ergebnis = 0;
-    	for(Topf topf : this.toepfe)
-    	{
-    		ergebnis+=topf.getIstbestand();
-    	}
-    	return String.valueOf(ergebnis);
-    }
-    
-    
-    public String getIstbestandBarkasse() {
 
-        String sql = "SELECT * FROM Topf";
-        Db db = new Db();
-        float betrag = 0;
-        try {
-            ResultSet rs = db.exequteQuery(sql);
-            while (rs.next()) {
-                if (rs.getString("Kasse").equals("Barkasse")) {
-                    betrag += rs.getFloat("IstBestand");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public String getIstBestandToepfe() {
+        this.reloadTopf();
+        float ergebnis = 0;
+        for (Topf topf : this.toepfe) {
+            ergebnis += topf.getIstbestand();
         }
+        return String.valueOf(ergebnis);
+    }
 
-        String result = String.valueOf(betrag);
-        return result;
+
+    public String getIstbestandBarkasse() {
+        this.reloadTopf();
+        float ergebnis = 0;
+        for (Topf topf : this.toepfe) {
+            if (topf.getKasse().equals("Barkasse"))
+                ergebnis += topf.getIstbestand();
+        }
+        return String.valueOf(ergebnis);
     }
 
 
@@ -193,21 +174,13 @@ public class Finanzverwaltung {
 
 
     public String getIstbestandKonto() {
-        String sql = "SELECT * FROM Topf";
-        Db db = new Db();
-        float betrag = 0;
-        try {
-            ResultSet rs = db.exequteQuery(sql);
-            while (rs.next()) {
-                if (rs.getString("Kasse").equals("Konto")) {
-                    betrag += rs.getFloat("IstBestand");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        this.reloadTopf();
+        float ergebnis = 0;
+        for (Topf topf : this.toepfe) {
+            if (topf.getKasse().equals("Konto"))
+                ergebnis += topf.getIstbestand();
         }
-        String result = String.valueOf(betrag);
-        return result;
+        return String.valueOf(ergebnis);
     }
 
 
@@ -231,21 +204,13 @@ public class Finanzverwaltung {
 
 
     public String getIstbestandKostenstelle() {
-        String sql = "SELECT * FROM Topf";
-        Db db = new Db();
-        float betrag = 0;
-        try {
-            ResultSet rs = db.exequteQuery(sql);
-            while (rs.next()) {
-                if (rs.getString("Kasse").equals("Kostenstelle")) {
-                    betrag += rs.getFloat("IstBestand");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        this.reloadTopf();
+        float ergebnis = 0;
+        for (Topf topf : this.toepfe) {
+            if (topf.getKasse().equals("Kostenstelle"))
+                ergebnis += topf.getIstbestand();
         }
-        String result = String.valueOf(betrag);
-        return result;
+        return String.valueOf(ergebnis);
     }
 
 
