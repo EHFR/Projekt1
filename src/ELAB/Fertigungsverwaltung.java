@@ -38,6 +38,30 @@ public class Fertigungsverwaltung {
         return personen;
     }
 
+    public boolean booleanReturn(int b)
+    {
+    	
+    	if(b == 1)
+    	{
+    		return true;
+    	}
+    	else 
+    	{ 
+    		return false;
+        }
+    }
+    
+    public int intReturn(boolean b)
+    {
+    	if(b == true)
+    	{
+    		return 1;
+    	}
+    	else
+    	{
+    		return 0;
+    	}
+    }
 
     private void reloadAuftraege() {
         Db db = new Db();
@@ -48,13 +72,13 @@ public class Fertigungsverwaltung {
             while (rs.next()) {
                 Auftrag a = new Auftrag(rs.getInt("ID"), rs.getString("Titel"), rs.getString("FertigungsArt"),
                         rs.getString("DateiName"), rs.getString("DateiOrt"), rs.getFloat("Kosten"),
-                        rs.getBoolean("angenommen"), rs.getTimestamp("statusZeitstempel_angenommen"),
-                        rs.getBoolean("gefertigt"), rs.getTimestamp("statusZeitstempel_gefertigt"),
-                        rs.getBoolean("kosten_kalkuliert"), rs.getTimestamp("statusZeitstempel_kosten_kalkuliert"),
-                        rs.getBoolean("abgeholt"), rs.getTimestamp("statusZeitstempel_abgeholt"),
-                        rs.getBoolean("abgerechnet"), rs.getTimestamp("statusZeitstempel_abgerechnet"),
-                        rs.getBoolean("wartenAufMaterial"), rs.getTimestamp("statusZeitstempel_wartenAufMaterial"),
-                        rs.getBoolean("fertigungFehlgeschlagen"),
+                        booleanReturn(rs.getInt("angenommen")), rs.getTimestamp("statusZeitstempel_angenommen"),
+                        booleanReturn(rs.getInt("gefertigt")), rs.getTimestamp("statusZeitstempel_gefertigt"),
+                        booleanReturn(rs.getInt("kosten_kalkuliert")), rs.getTimestamp("statusZeitstempel_kosten_kalkuliert"),
+                        booleanReturn(rs.getInt("abgeholt")), rs.getTimestamp("statusZeitstempel_abgeholt"),
+                        booleanReturn(rs.getInt("abgerechnet")), rs.getTimestamp("statusZeitstempel_abgerechnet"),
+                        booleanReturn(rs.getInt("wartenAufMaterial")), rs.getTimestamp("statusZeitstempel_wartenAufMaterial"),
+                        booleanReturn(rs.getInt("fertigungFehlgeschlagen")),
                         rs.getTimestamp("statusZeitstempel_fertigungFehlgeschlagen"), pw.getPersonByID(rs.getInt("AuftraggeberID")), fillList(rs.getInt("ID")));
                 a.setZeitstempel(rs.getTimestamp("ZeitStempel"));
 
@@ -157,8 +181,8 @@ public class Fertigungsverwaltung {
                 + fertigungsArt + "','"
                 + dateiName + "','"
                 + dateiOrt + "',"
-                + kostenFloat + ",'"
-                + "FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','"
+                + kostenFloat + ","
+                + "0,0,0,0,0,0,0,'"
                 + timestamp.toString() + "','"
                 + auftraggeberid + "')";
         System.out.println(sql);
@@ -284,7 +308,7 @@ public class Fertigungsverwaltung {
             a.setAngenommen(angenommen);
             a.setStatusZeitstempel_angenommen(timestampNew);
 
-            String sql = "UPDATE Auftrag SET angenommen = '" + angenommen + "', statusZeitstempel_angenommen = '" + timestampNew.toString()
+            String sql = "UPDATE Auftrag SET angenommen = '" + intReturn(angenommen) + "', statusZeitstempel_angenommen = '" + timestampNew.toString()
                     + "' WHERE ID = " + a.getId() + "";
             System.out.println(sql);
             try {
@@ -298,7 +322,7 @@ public class Fertigungsverwaltung {
 
             a.setGefertigt(gefertigt);
             a.setStatusZeitstempel_gefertigt(timestampNew);
-            String sql = "UPDATE Auftrag SET gefertigt = '" + gefertigt + "', statusZeitstempel_gefertigt = '" + timestampNew.toString()
+            String sql = "UPDATE Auftrag SET gefertigt = '" + intReturn(gefertigt) + "', statusZeitstempel_gefertigt = '" + timestampNew.toString()
                     + "' WHERE ID = " + a.getId() + "";
             System.out.println(sql);
             try {
@@ -312,7 +336,7 @@ public class Fertigungsverwaltung {
 
             a.setKosten_kalkuliert(kosten_kalkuliert);
             a.setStatusZeitstempel_kosten_kalkuliert(timestampNew);
-            String sql = "UPDATE Auftrag SET kosten_kalkuliert = '" + kosten_kalkuliert + "', statusZeitstempel_kosten_kalkuliert = '"
+            String sql = "UPDATE Auftrag SET kosten_kalkuliert = '" + intReturn(kosten_kalkuliert) + "', statusZeitstempel_kosten_kalkuliert = '"
                     + timestampNew.toString() + "' WHERE ID = " + a.getId() + "";
             System.out.println(sql);
             try {
@@ -326,7 +350,7 @@ public class Fertigungsverwaltung {
 
             a.setAbgeholt(abgeholt);
             a.setStatusZeitstempel_abgeholt(timestampNew);
-            String sql = "UPDATE Auftrag SET abgeholt = '" + abgeholt + "', statusZeitstempel_abgeholt = '" + timestampNew.toString()
+            String sql = "UPDATE Auftrag SET abgeholt = '" + intReturn(abgeholt) + "', statusZeitstempel_abgeholt = '" + timestampNew.toString()
                     + "' WHERE ID = " + a.getId() + "";
             System.out.println(sql);
             try {
@@ -340,7 +364,7 @@ public class Fertigungsverwaltung {
 
             a.setAbgerechnet(abgerechnet);
             a.setStatusZeitstempel_abgerechnet(timestampNew);
-            String sql = "UPDATE Auftrag SET abgerechnet = '" + abgerechnet + "', statusZeitstempel_abgerechnet = '" + timestampNew.toString()
+            String sql = "UPDATE Auftrag SET abgerechnet = '" + intReturn(abgerechnet) + "', statusZeitstempel_abgerechnet = '" + timestampNew.toString()
                     + "' WHERE ID = " + a.getId() + "";
             System.out.println(sql);
             try {
@@ -354,7 +378,7 @@ public class Fertigungsverwaltung {
 
             a.setWartenAufMaterial(wartenAufMaterial);
             a.setStatusZeitstempel_wartenAufMaterial(timestampNew);
-            String sql = "UPDATE Auftrag SET wartenAufMaterial = '" + wartenAufMaterial + "', statusZeitstempel_wartenAufMaterial = '"
+            String sql = "UPDATE Auftrag SET wartenAufMaterial = '" + intReturn(wartenAufMaterial) + "', statusZeitstempel_wartenAufMaterial = '"
                     + timestampNew.toString() + "' WHERE ID = " + a.getId() + "";
             System.out.println(sql);
             try {
@@ -368,7 +392,7 @@ public class Fertigungsverwaltung {
 
             a.setFertigungFehlgeschlagen(fertigungFehlgeschlagen);
             a.setStatusZeitstempel_fertigungFehlgeschlagen(timestampNew);
-            String sql = "UPDATE Auftrag SET fertigungFehlgeschlagen = '" + fertigungFehlgeschlagen + "', statusZeitstempel_fertigungFehlgeschlagen = '"
+            String sql = "UPDATE Auftrag SET fertigungFehlgeschlagen = '" + intReturn(fertigungFehlgeschlagen) + "', statusZeitstempel_fertigungFehlgeschlagen = '"
                     + timestampNew.toString() + "' WHERE ID = " + a.getId() + "";
             System.out.println(sql);
             try {
