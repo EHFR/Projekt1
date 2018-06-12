@@ -210,6 +210,30 @@ public class Rechnung {
         ExportPDF export = new ExportPDF(this);
     }
 
+    public boolean booleanReturn(int b)
+    {
+    	
+    	if(b == 1)
+    	{
+    		return true;
+    	}
+    	else 
+    	{ 
+    		return false;
+        }
+    }
+    
+    public int intReturn(boolean b)
+    {
+    	if(b == true)
+    	{
+    		return 1;
+    	}
+    	else
+    	{
+    		return 0;
+    	}
+    }
 
     public void updateStatus(boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
 
@@ -222,7 +246,7 @@ public class Rechnung {
             this.setInBearbeitung(inBearbeitung);
             this.setStatusZeitstempel_inBearbeitung(timestampNew);
             
-            sql = " UPDATE Rechnung SET inBearbeitung = '" + inBearbeitung + "', statusZeitstempel_inBearbeitung = '" + timestampNew.toString()
+            sql = " UPDATE Rechnung SET inBearbeitung = '" + intReturn(inBearbeitung) + "', statusZeitstempel_inBearbeitung = '" + timestampNew.toString()
                     + "' WHERE ID = " + this.id + "";
 
             try {
@@ -237,7 +261,7 @@ public class Rechnung {
             this.setEingereicht(eingereicht);
             this.setStatusZeitstempel_eingereicht(timestampNew);
 
-            sql = " UPDATE Rechnung SET eingereicht = '" + eingereicht + "', statusZeitstempel_eingereicht = '" + timestampNew.toString()
+            sql = " UPDATE Rechnung SET eingereicht = '" + intReturn(eingereicht) + "', statusZeitstempel_eingereicht = '" + timestampNew.toString()
                     + "' WHERE ID = " + this.id + "";
 
             try {
@@ -252,7 +276,7 @@ public class Rechnung {
             this.setAbgewickelt(abgewickelt);
             this.setStatusZeitstempel_abgewickelt(timestampNew);
 
-            sql = " UPDATE Rechnung SET abgewickelt = '" + abgewickelt + "', statusZeitstempel_abgewickelt = '" + timestampNew.toString()
+            sql = " UPDATE Rechnung SET abgewickelt = '" + intReturn(abgewickelt) + "', statusZeitstempel_abgewickelt = '" + timestampNew.toString()
                     + "' WHERE ID = " + this.id + "";
 
             try {
@@ -267,7 +291,7 @@ public class Rechnung {
             this.setAusstehend(ausstehend);
             this.setStatusZeitstempel_ausstehend(timestampNew);
 
-            sql = " UPDATE Rechnung SET ausstehend = '" + ausstehend + "', statusZeitstempel_ausstehend = '" + timestampNew.toString()
+            sql = " UPDATE Rechnung SET ausstehend = '" + intReturn(ausstehend) + "', statusZeitstempel_ausstehend = '" + timestampNew.toString()
                     + "' WHERE ID = " + this.id + "";
 
             try {

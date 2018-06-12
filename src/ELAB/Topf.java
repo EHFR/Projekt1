@@ -80,6 +80,33 @@ public class Topf {
 
 
     // Methoden Für Rechnungen in dem Topf
+    
+    
+    public boolean booleanReturn(int b)
+    {
+    	
+    	if(b == 1)
+    	{
+    		return true;
+    	}
+    	else 
+    	{ 
+    		return false;
+        }
+    }
+    
+    public int intReturn(boolean b)
+    {
+    	if(b == true)
+    	{
+    		return 1;
+    	}
+    	else
+    	{
+    		return 0;
+    	}
+    }
+    
     private Personenverwaltung personenVerwaltung = new Personenverwaltung();
 
     private void reloadRechnung() {
@@ -90,13 +117,13 @@ public class Topf {
             ResultSet rs = db.exequteQuery("SELECT * FROM Rechnung WHERE TopfID=" + this.getId());
             while (rs.next()) {
                 Rechnung r = new Rechnung(rs.getInt("ID"), rs.getString("Name"), rs.getFloat("Betrag"), rs.getString("Bezahlart"),
-                        rs.getBoolean("inBearbeitung"), rs.getTimestamp("statusZeitstempel_inBearbeitung"),
-                        rs.getBoolean("eingereicht"), rs.getTimestamp("statusZeitstempel_eingereicht"),
-                        rs.getBoolean("abgewickelt"), rs.getTimestamp("statusZeitstempel_abgewickelt"),
-                        rs.getBoolean("ausstehend"), rs.getTimestamp("statusZeitstempel_ausstehend"));
+                        booleanReturn(rs.getInt("inBearbeitung")), rs.getTimestamp("statusZeitstempel_inBearbeitung"),
+                        booleanReturn(rs.getInt("eingereicht")), rs.getTimestamp("statusZeitstempel_eingereicht"),
+                        booleanReturn(rs.getInt("abgewickelt")), rs.getTimestamp("statusZeitstempel_abgewickelt"),
+                        booleanReturn(rs.getInt("ausstehend")), rs.getTimestamp("statusZeitstempel_ausstehend"));
                 r.setZeitstempel(rs.getTimestamp("Zeitstempel"));
 
-                System.out.println(rs.getBoolean("inBearbeitung"));
+                System.out.println(booleanReturn(rs.getInt("inBearbeitung")));
                 System.out.println(rs.getTimestamp("statusZeitstempel_inBearbeitung"));
                 
                 try {

@@ -22,6 +22,31 @@ public class Finanzverwaltung {
     public void setToepfe(ArrayList<Topf> toepfe) {
         this.toepfe = toepfe;
     }
+    
+    public boolean booleanReturn(int b)
+    {
+    	
+    	if(b == 1)
+    	{
+    		return true;
+    	}
+    	else 
+    	{ 
+    		return false;
+        }
+    }
+    
+    public int intReturn(boolean b)
+    {
+    	if(b == true)
+    	{
+    		return 1;
+    	}
+    	else
+    	{
+    		return 0;
+    	}
+    }
 
     //Methoden für Töpfe
     private void reloadTopf() {
