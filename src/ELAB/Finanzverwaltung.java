@@ -139,7 +139,18 @@ public class Finanzverwaltung {
 
     }
 
-    //Kassenbestände
+   
+    public String getIstBestandToepfe(int idTopf) {
+    	this.reloadTopf();
+    	float ergebnis = 0;
+    	for(Topf topf : this.toepfe)
+    	{
+    		ergebnis+=topf.getIstbestand();
+    	}
+    	return String.valueOf(ergebnis);
+    }
+    
+    
     public String getIstbestandBarkasse() {
 
         String sql = "SELECT * FROM Topf";

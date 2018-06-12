@@ -12,7 +12,8 @@ public class Rechnung {
     private String name;
     private Person auftraggeber;
     private Person ansprechpartner;
-    private Topf topf;
+    private float istBestand;
+	private Topf topf;
     private float betrag;
     private String bezahlart;
     private String status;
@@ -30,7 +31,8 @@ public class Rechnung {
 
     public Rechnung(int id, String name, float betrag, String bezahlart, boolean inBearbeitung, Timestamp statusZeitstempel_inBearbeitung,
                     boolean eingereicht, Timestamp statusZeitstempel_eingereicht, boolean abgewickelt,
-                    Timestamp statusZeitstempel_abgewickelt, boolean ausstehend, Timestamp statusZeitstempel_ausstehend) {
+                    Timestamp statusZeitstempel_abgewickelt, boolean ausstehend, Timestamp statusZeitstempel_ausstehend,
+                    float istBestand) {
 
         this.id = id;
         this.name = name;
@@ -45,6 +47,7 @@ public class Rechnung {
         this.statusZeitstempel_abgewickelt = statusZeitstempel_abgewickelt;
         this.statusZeitstempel_ausstehend = statusZeitstempel_ausstehend;
         this.datum = new Timestamp(System.currentTimeMillis());
+        this.istBestand = istBestand;
     }
 
     public int getId() {
@@ -203,6 +206,14 @@ public class Rechnung {
     public void setStatusZeitstempel(Timestamp statusZeitstempel) {
         this.statusZeitstempel = statusZeitstempel;
     }
+    
+    public float getIstBestand() {
+		return istBestand;
+	}
+
+	public void setIstBestand(float istBestand) {
+		this.istBestand = istBestand;
+	}
 
 
     //Methoden für Rechnung

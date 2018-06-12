@@ -54,7 +54,13 @@ public class Topf {
     }
 
     public float getIstbestand() {
-        return istbestand;
+    	this.reloadRechnung();
+    	float ergebnis = 0;
+    	for(Rechnung rechnung : this.rechnungen)
+    	{
+    		ergebnis+=rechnung.getBetrag();
+    	}
+    	return ergebnis;
     }
 
     public void setIstbestand(float istbestand) {
@@ -120,7 +126,8 @@ public class Topf {
                         booleanReturn(rs.getInt("inBearbeitung")), rs.getTimestamp("statusZeitstempel_inBearbeitung"),
                         booleanReturn(rs.getInt("eingereicht")), rs.getTimestamp("statusZeitstempel_eingereicht"),
                         booleanReturn(rs.getInt("abgewickelt")), rs.getTimestamp("statusZeitstempel_abgewickelt"),
-                        booleanReturn(rs.getInt("ausstehend")), rs.getTimestamp("statusZeitstempel_ausstehend"));
+                        booleanReturn(rs.getInt("ausstehend")), rs.getTimestamp("statusZeitstempel_ausstehend"),
+                		rs.getFloat("IstBestand"));
                 r.setZeitstempel(rs.getTimestamp("Zeitstempel"));
 
                 System.out.println(booleanReturn(rs.getInt("inBearbeitung")));
