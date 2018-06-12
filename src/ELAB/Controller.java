@@ -675,8 +675,10 @@ public class Controller implements Initializable {
             this.fertigungsverwaltungTimestampLabel.setText(auftrag.getZeitstempelString());
             this.fertigungsverwaltungAuftraggeberField.setText(auftrag.getAuftraggeber().getName());
             StringBuilder auftragbearbeiterNamen = new StringBuilder();
+            this.fertigungsverwaltungAuftragbearbeiterIDs.clear();
             for (Person auftragbearbeiter : auftrag.getAuftragbearbeiter()) {
                 auftragbearbeiterNamen.append(auftragbearbeiter.getName()).append("; ");
+                this.fertigungsverwaltungAuftragbearbeiterIDs.add(auftragbearbeiter.getId());
             }
             this.fertigungsverwaltungAuftragbearbeiterLabel.setText(auftragbearbeiterNamen.toString());
 
