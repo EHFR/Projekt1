@@ -8,15 +8,12 @@ import java.util.Date;
 
 public class Rechnung {
     private int id;
-    private Date datum;
     private String name;
     private Person auftraggeber;
     private Person ansprechpartner;
-    private float istBestand;
-	private Topf topf;
+    private Topf topf;
     private float betrag;
     private String bezahlart;
-    private String status;
     private Timestamp statusZeitstempel_inBearbeitung;
     private Timestamp statusZeitstempel_eingereicht;
     private Timestamp statusZeitstempel_abgewickelt;
@@ -26,14 +23,10 @@ public class Rechnung {
     private boolean abgewickelt;
     private boolean ausstehend;
     private Timestamp zeitstempel;
-    private Timestamp statusZeitstempel;
-
 
     public Rechnung(int id, String name, float betrag, String bezahlart, boolean inBearbeitung, Timestamp statusZeitstempel_inBearbeitung,
                     boolean eingereicht, Timestamp statusZeitstempel_eingereicht, boolean abgewickelt,
-                    Timestamp statusZeitstempel_abgewickelt, boolean ausstehend, Timestamp statusZeitstempel_ausstehend,
-                    float istBestand) {
-
+                    Timestamp statusZeitstempel_abgewickelt, boolean ausstehend, Timestamp statusZeitstempel_ausstehend) {
         this.id = id;
         this.name = name;
         this.betrag = betrag;
@@ -46,20 +39,10 @@ public class Rechnung {
         this.statusZeitstempel_eingereicht = statusZeitstempel_eingereicht;
         this.statusZeitstempel_abgewickelt = statusZeitstempel_abgewickelt;
         this.statusZeitstempel_ausstehend = statusZeitstempel_ausstehend;
-        this.datum = new Timestamp(System.currentTimeMillis());
-        this.istBestand = istBestand;
     }
 
     public int getId() {
         return id;
-    }
-
-    public Date getDatum() {
-        return datum;
-    }
-
-    public void setDatum(Date datum) {
-        this.datum = datum;
     }
 
     public String getName() {
@@ -70,59 +53,43 @@ public class Rechnung {
         this.name = name;
     }
 
-    public Person getAuftraggeber() {
+    Person getAuftraggeber() {
         return auftraggeber;
     }
 
-    public void setAuftraggeber(Person auftraggeber) {
+    void setAuftraggeber(Person auftraggeber) {
         this.auftraggeber = auftraggeber;
     }
 
-    public Person getAnsprechpartner() {
+    Person getAnsprechpartner() {
         return ansprechpartner;
     }
 
-    public void setAnsprechpartner(Person ansprechpartner) {
+    void setAnsprechpartner(Person ansprechpartner) {
         this.ansprechpartner = ansprechpartner;
     }
 
-    public Topf getTopf() {
+    Topf getTopf() {
         return topf;
     }
 
-    public void setTopf(Topf topf) {
+    void setTopf(Topf topf) {
         this.topf = topf;
     }
 
-    public float getBetrag() {
+    float getBetrag() {
         return betrag;
     }
 
-    public void setBetrag(float betrag) {
-        this.betrag = betrag;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Timestamp getZeitstempel() {
-        return zeitstempel;
-    }
-
-    public void setZeitstempel(Timestamp zeitstempel) {
+    void setZeitstempel(Timestamp zeitstempel) {
         this.zeitstempel = zeitstempel;
     }
 
-    public String getZeitstempelString() {
+    String getZeitstempelString() {
         return this.zeitstempelToString(zeitstempel);
     }
 
-    public String getBezahlart() {
+    String getBezahlart() {
         return bezahlart;
     }
 
@@ -135,131 +102,92 @@ public class Rechnung {
         return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
 
-    public String getStatusZeitstempel_inBearbeitungString() {
+    String getStatusZeitstempel_inBearbeitungString() {
         return this.zeitstempelToString(statusZeitstempel_inBearbeitung);
     }
 
-    public void setStatusZeitstempel_inBearbeitung(Timestamp statusZeitstempel_inBearbeitung) {
+    private void setStatusZeitstempel_inBearbeitung(Timestamp statusZeitstempel_inBearbeitung) {
         this.statusZeitstempel_inBearbeitung = statusZeitstempel_inBearbeitung;
     }
 
-    public String getStatusZeitstempel_eingereichtString() {
+    String getStatusZeitstempel_eingereichtString() {
         return this.zeitstempelToString(statusZeitstempel_eingereicht);
     }
 
-    public void setStatusZeitstempel_eingereicht(Timestamp statusZeitstempel_eingereicht) {
+    private void setStatusZeitstempel_eingereicht(Timestamp statusZeitstempel_eingereicht) {
         this.statusZeitstempel_eingereicht = statusZeitstempel_eingereicht;
     }
 
-    public String getStatusZeitstempel_abgewickeltString() {
+    String getStatusZeitstempel_abgewickeltString() {
         return this.zeitstempelToString(statusZeitstempel_abgewickelt);
     }
 
-    public void setStatusZeitstempel_abgewickelt(Timestamp statusZeitstempel_abgewickelt) {
+    private void setStatusZeitstempel_abgewickelt(Timestamp statusZeitstempel_abgewickelt) {
         this.statusZeitstempel_abgewickelt = statusZeitstempel_abgewickelt;
     }
 
-    public String getStatusZeitstempel_ausstehendString() {
+    String getStatusZeitstempel_ausstehendString() {
         return this.zeitstempelToString(statusZeitstempel_ausstehend);
     }
 
-    public void setStatusZeitstempel_ausstehend(Timestamp statusZeitstempel_ausstehend) {
+    private void setStatusZeitstempel_ausstehend(Timestamp statusZeitstempel_ausstehend) {
         this.statusZeitstempel_ausstehend = statusZeitstempel_ausstehend;
     }
 
-    public boolean isInBearbeitung() {
+    boolean isInBearbeitung() {
         return inBearbeitung;
     }
 
-    public void setInBearbeitung(boolean inBearbeitung) {
+    private void setInBearbeitung(boolean inBearbeitung) {
         this.inBearbeitung = inBearbeitung;
     }
 
-    public boolean isEingereicht() {
+    boolean isEingereicht() {
         return eingereicht;
     }
 
-    public void setEingereicht(boolean eingereicht) {
+    private void setEingereicht(boolean eingereicht) {
         this.eingereicht = eingereicht;
     }
 
-    public boolean isAbgewickelt() {
+    boolean isAbgewickelt() {
         return abgewickelt;
     }
 
-    public void setAbgewickelt(boolean abgewickelt) {
+    private void setAbgewickelt(boolean abgewickelt) {
         this.abgewickelt = abgewickelt;
     }
 
-    public boolean isAusstehend() {
+    boolean isAusstehend() {
         return ausstehend;
     }
 
-    public void setAusstehend(boolean ausstehend) {
+    private void setAusstehend(boolean ausstehend) {
         this.ausstehend = ausstehend;
     }
 
-    public Timestamp getStatusZeitstempel() {
-        return statusZeitstempel;
-    }
-
-    public void setStatusZeitstempel(Timestamp statusZeitstempel) {
-        this.statusZeitstempel = statusZeitstempel;
-    }
-    
-    public float getIstBestand() {
-		return istBestand;
-	}
-
-	public void setIstBestand(float istBestand) {
-		this.istBestand = istBestand;
-	}
-
-
     //Methoden für Rechnung
-    public void exportToPDF() {
-        ExportPDF export = new ExportPDF(this);
+    void exportToPDF() {
+        new ExportPDF(this);
     }
 
-    public boolean booleanReturn(int b)
-    {
-    	
-    	if(b == 1)
-    	{
-    		return true;
-    	}
-    	else 
-    	{ 
-    		return false;
-        }
-    }
-    
-    public int intReturn(boolean b)
-    {
-    	if(b == true)
-    	{
-    		return 1;
-    	}
-    	else
-    	{
-    		return 0;
-    	}
+    private int intReturn(boolean b) {
+        if (b)
+            return 1;
+        else
+            return 0;
     }
 
-    public void updateStatus(boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
-
+    void updateStatus(boolean inBearbeitung, boolean eingereicht, boolean abgewickelt, boolean ausstehend) {
         Db db = new Db();
-        String sql = "";
+        String sql;
         Timestamp timestampNew = new Timestamp(System.currentTimeMillis());
-        
-        if (this.isInBearbeitung() != inBearbeitung) {
 
+        if (this.isInBearbeitung() != inBearbeitung) {
             this.setInBearbeitung(inBearbeitung);
             this.setStatusZeitstempel_inBearbeitung(timestampNew);
-            
             sql = " UPDATE Rechnung SET inBearbeitung = '" + intReturn(inBearbeitung) + "', statusZeitstempel_inBearbeitung = '" + timestampNew.toString()
                     + "' WHERE ID = " + this.id + "";
-
             try {
                 db.updateQuery(sql);
             } catch (SQLException e) {
@@ -268,13 +196,10 @@ public class Rechnung {
         }
 
         if (this.isEingereicht() != eingereicht) {
-
             this.setEingereicht(eingereicht);
             this.setStatusZeitstempel_eingereicht(timestampNew);
-
             sql = " UPDATE Rechnung SET eingereicht = '" + intReturn(eingereicht) + "', statusZeitstempel_eingereicht = '" + timestampNew.toString()
                     + "' WHERE ID = " + this.id + "";
-
             try {
                 db.updateQuery(sql);
             } catch (SQLException e) {
@@ -283,13 +208,10 @@ public class Rechnung {
         }
 
         if (this.isAbgewickelt() != abgewickelt) {
-
             this.setAbgewickelt(abgewickelt);
             this.setStatusZeitstempel_abgewickelt(timestampNew);
-
             sql = " UPDATE Rechnung SET abgewickelt = '" + intReturn(abgewickelt) + "', statusZeitstempel_abgewickelt = '" + timestampNew.toString()
                     + "' WHERE ID = " + this.id + "";
-
             try {
                 db.updateQuery(sql);
             } catch (SQLException e) {
@@ -298,25 +220,19 @@ public class Rechnung {
         }
 
         if (this.isAusstehend() != ausstehend) {
-
             this.setAusstehend(ausstehend);
             this.setStatusZeitstempel_ausstehend(timestampNew);
-
             sql = " UPDATE Rechnung SET ausstehend = '" + intReturn(ausstehend) + "', statusZeitstempel_ausstehend = '" + timestampNew.toString()
                     + "' WHERE ID = " + this.id + "";
-
             try {
                 db.updateQuery(sql);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-
-
     }
 
-    public void setNewTopfID(int id) {
-
+    void setNewTopfID(int id) {
         Db db = new Db();
         String sql = "UPDATE Rechnung SET TopfID = " + id
                 + " WHERE ID = " + this.id + "";
@@ -325,6 +241,5 @@ public class Rechnung {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }

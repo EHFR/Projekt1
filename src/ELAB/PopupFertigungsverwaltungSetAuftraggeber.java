@@ -13,12 +13,12 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class PopupFertigungsverwaltungSetAuftraggeber {
+class PopupFertigungsverwaltungSetAuftraggeber {
 
     //Create variable
-    static ArrayList<Integer> selected;
+    private static ArrayList<Integer> selected;
 
-    public static ArrayList<Integer> display(String title, ArrayList<Integer> preselected, ArrayList<Person> personen) {
+    static ArrayList<Integer> display(String title, ArrayList<Integer> preselected, ArrayList<Person> personen) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);

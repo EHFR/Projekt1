@@ -35,27 +35,27 @@ public class Produkt {
         this.name = name;
     }
 
-    public String getLink() {
+    String getLink() {
         return link;
     }
 
-    public double getEinzelpreis() {
+    double getEinzelpreis() {
         return einzelpreis;
     }
 
-    public int getMenge_lagernd() {
+    int getMenge_lagernd() {
         return menge_lagernd;
     }
 
-    public int getMenge_geplant() {
+    int getMenge_geplant() {
         return menge_geplant;
     }
 
-    public int getMenge_bestellt() {
+    int getMenge_bestellt() {
         return menge_bestellt;
     }
 
-    public void setMenge_lagernd(int menge_lagernd) {
+    void setMenge_lagernd(int menge_lagernd) {
         Db db = new Db();
         String sql = "UPDATE Produkt SET MengeLagernd = " + menge_lagernd
                 + " WHERE ID = " + id;
@@ -63,11 +63,10 @@ public class Produkt {
             db.updateQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
     }
 
-    public String getLagerort() {
+    String getLagerort() {
         return lagerort;
     }
 

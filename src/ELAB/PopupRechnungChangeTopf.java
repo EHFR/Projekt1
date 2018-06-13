@@ -15,12 +15,12 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class PopupRechnungChangeTopf {
+class PopupRechnungChangeTopf {
 
     //Create variable
-    static int newTopfID;
+    private static int newTopfID;
 
-    public static int display(String title, ArrayList<Topf> toepfe) {
+    static int display(String title, ArrayList<Topf> toepfe) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);

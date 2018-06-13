@@ -14,7 +14,6 @@ public class Person {
     private String passwort;
     private String type;
 
-
     public Person(int id, String name, String adresse, String telefonnr, String email, String type, String passwort) {
         this.id = id;
         this.name = name;
@@ -26,10 +25,6 @@ public class Person {
         this.passwort = passwort;
     }
 
-    public Timestamp getZeitstempel() {
-        return zeitstempel;
-    }
-
     public String getName() {
         return name;
     }
@@ -38,35 +33,23 @@ public class Person {
         this.name = name;
     }
 
-    public String getAdresse() {
+    String getAdresse() {
         return adresse;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getTelefonnr() {
+    String getTelefonnr() {
         return telefonnr;
     }
 
-    public void setTelefonnr(String telefonnr) {
-        this.telefonnr = telefonnr;
-    }
-
-    public String getEmail() {
+    String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setZeitstempel(Timestamp zeitstempel) {
+    void setZeitstempel(Timestamp zeitstempel) {
         this.zeitstempel = zeitstempel;
     }
 
-    public String getZeitstempelString() {
+    String getZeitstempelString() {
         if (zeitstempel != null) {
             Date date = new Date();
             date.setTime(zeitstempel.getTime());
@@ -75,20 +58,15 @@ public class Person {
         return "Null"; // für den Fall, dass der Zeitstempel null ist
     }
 
-
     public int getId() {
         return id;
     }
 
-    public String getType() {
+    String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPasswort() {
+    String getPasswort() {
         return passwort;
     }
 

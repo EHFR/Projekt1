@@ -23,7 +23,7 @@ public class Kategorie {
         return name;
     }
 
-    public ArrayList<Produkt> getProdukte() {
+    ArrayList<Produkt> getProdukte() {
         this.reloadProdukt();
         return produkte;
     }
@@ -46,8 +46,7 @@ public class Kategorie {
         }
     }
 
-    public void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) throws ElabException {
-
+    void addProdukt(String name, String link, String einzelpreis, int menge_lagernd, int menge_geplant, int menge_bestellt, String lagerort) throws ElabException {
         float preis;
         try {
             preis = Float.parseFloat(einzelpreis);
@@ -66,7 +65,7 @@ public class Kategorie {
         }
     }
 
-    public void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) throws ElabException {
+    void updateProdukt(int id, String name, String link, String einzelpreis, int mengeLagernd, int mengeGeplant, int mengeBestellt, String lagerOrt) throws ElabException {
 
         float preis;
         try {
@@ -87,7 +86,7 @@ public class Kategorie {
         }
     }
 
-    public void removeProdukt(int id) throws ElabException {
+    void removeProdukt(int id) throws ElabException {
         reloadProdukt();
         for (Produkt produkt : this.produkte) {
             if (produkt.getId() == id) {

@@ -13,29 +13,25 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ExportPDF {
-    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
-            Font.BOLD);
-    private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
-            Font.BOLD);
+class ExportPDF {
+    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+    private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
     private String file;
 
-
-    public ExportPDF(Rechnung rechnung) {
+    ExportPDF(Rechnung rechnung) {
         Date date = new Date();
         String dateString = new SimpleDateFormat("dd.MM.yyyy_HH.mm.ss").format(date);
         file = System.getProperty("user.home") + "/Desktop/ElabRechnungen/Rechnung" + dateString + "Uhr_" + rechnung.getName() + ".pdf";
-        boolean bool = new File(System.getProperty("user.home") + "/Desktop/ElabRechnungen").mkdirs();
+        new File(System.getProperty("user.home") + "/Desktop/ElabRechnungen").mkdirs();
 
         this.start(rechnung);
     }
 
-    public void start(Rechnung rechnung) {
+    private void start(Rechnung rechnung) {
         Document document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream(file));
         } catch (FileNotFoundException | DocumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         document.open();
@@ -43,14 +39,13 @@ public class ExportPDF {
         try {
             addTitlePage(document, rechnung);
         } catch (DocumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         document.close();
 
     }
 
-    public void addMetaData(Document document, Rechnung rechnung) {
+    private void addMetaData(Document document, Rechnung rechnung) {
         document.addTitle("Rechnung");
         document.addSubject("ELAB");
         document.addKeywords("");
@@ -58,7 +53,7 @@ public class ExportPDF {
         document.addCreator("ElabVerwaltungssystem");
     }
 
-    public void addTitlePage(Document document, Rechnung rechnung)
+    private void addTitlePage(Document document, Rechnung rechnung)
             throws DocumentException {
         Paragraph preface = new Paragraph();
 
@@ -101,18 +96,4 @@ public class ExportPDF {
             paragraph.add(new Paragraph(" "));
         }
     }
-
 }
-
-//public static void main(String[] args) {
-//try {
-//  Document document = new Document();
-//  PdfWriter.getInstance(document, new FileOutputStream(FILE));
-//  document.open();
-//  addMetaData(document);
-//  addTitlePage(document);
-//  document.close();
-//} catch (Exception e) {
-//  e.printStackTrace();
-//}
-//}

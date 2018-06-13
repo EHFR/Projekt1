@@ -8,36 +8,14 @@ import java.util.ArrayList;
 public class Finanzverwaltung {
     private ArrayList<Topf> toepfe;
 
-
     public Finanzverwaltung() {
         toepfe = new ArrayList<>();
         this.reloadTopf();
     }
 
-    public ArrayList<Topf> getToepfe() {
+    ArrayList<Topf> getToepfe() {
         this.reloadTopf();
         return toepfe;
-    }
-
-    public void setToepfe(ArrayList<Topf> toepfe) {
-        this.toepfe = toepfe;
-    }
-
-    public boolean booleanReturn(int b) {
-
-        if (b == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public int intReturn(boolean b) {
-        if (b == true) {
-            return 1;
-        } else {
-            return 0;
-        }
     }
 
     //Methoden für Töpfe
@@ -47,9 +25,8 @@ public class Finanzverwaltung {
         try {
             ResultSet rs = db.exequteQuery("SELECT * FROM Topf");
             while (rs.next()) {
-                Topf t = new Topf(rs.getInt("ID"), rs.getString("Name"), rs.getFloat("SollBestand"),
-                        rs.getFloat("IstBestand"), rs.getString("Kasse"));
-                t.setZeitstempel(rs.getTimestamp("Zeitstempel"));
+                Topf t = new Topf(rs.getInt("ID"), rs.getString("Name"),
+                        rs.getFloat("SollBestand"), rs.getString("Kasse"));
                 this.toepfe.add(t);
             }
             rs.close();
@@ -61,7 +38,7 @@ public class Finanzverwaltung {
         }
     }
 
-    public void addTopf(String name, String sollBetrag, String kasse) throws ElabException {
+    void addTopf(String name, String sollBetrag, String kasse) throws ElabException {
 
         float sollBetragFloat;
         try {
@@ -71,14 +48,10 @@ public class Finanzverwaltung {
         }
 
         Db db = new Db();
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        String sql = "INSERT INTO Topf (Name, SollBestand, Kasse, Zeitstempel) "
+        String sql = "INSERT INTO Topf (Name, SollBestand, Kasse) "
                 + "VALUES ('" + name + "','"
                 + sollBetragFloat + "','"
-                + kasse + "','"
-                + timestamp + "')";
-
+                + kasse + "')";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
@@ -87,7 +60,7 @@ public class Finanzverwaltung {
     }
 
 
-    public void removeTopf(int id) throws ElabException {
+    void removeTopf(int id) throws ElabException {
         if (getTopfByID(id).getRechnungen().size() > 0) {
             throw new ElabException("Topf hat noch Rechnungen. Diese im vorhinein löschen.");
         }
@@ -112,7 +85,7 @@ public class Finanzverwaltung {
     }
 
 
-    public void updateTopf(int id, String name, String sollBetrag, String kasse) throws ElabException {
+    void updateTopf(int id, String name, String sollBetrag, String kasse) throws ElabException {
 
         float sollBetragFloat2;
         try {
@@ -134,18 +107,7 @@ public class Finanzverwaltung {
 
     }
 
-
-    public String getIstBestandToepfe() {
-        this.reloadTopf();
-        float ergebnis = 0;
-        for (Topf topf : this.toepfe) {
-            ergebnis += topf.getIstbestand();
-        }
-        return String.valueOf(ergebnis);
-    }
-
-
-    public String getIstbestandBarkasse() {
+    String getIstbestandBarkasse() {
         this.reloadTopf();
         float ergebnis = 0;
         for (Topf topf : this.toepfe) {
@@ -156,7 +118,7 @@ public class Finanzverwaltung {
     }
 
 
-    public String getSollbestandBarkasse() {
+    String getSollbestandBarkasse() {
         String sql = "SELECT * FROM Topf";
         Db db = new Db();
         float betrag = 0;
@@ -171,12 +133,11 @@ public class Finanzverwaltung {
             e.printStackTrace();
         }
 
-        String result = String.valueOf(betrag);
-        return result;
+        return String.valueOf(betrag);
     }
 
 
-    public String getIstbestandKonto() {
+    String getIstbestandKonto() {
         this.reloadTopf();
         float ergebnis = 0;
         for (Topf topf : this.toepfe) {
@@ -187,7 +148,7 @@ public class Finanzverwaltung {
     }
 
 
-    public String getSollbestandKonto() {
+    String getSollbestandKonto() {
         String sql = "SELECT * FROM Topf";
         Db db = new Db();
         float betrag = 0;
@@ -201,12 +162,11 @@ public class Finanzverwaltung {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String result = String.valueOf(betrag);
-        return result;
+        return String.valueOf(betrag);
     }
 
 
-    public String getIstbestandKostenstelle() {
+    String getIstbestandKostenstelle() {
         this.reloadTopf();
         float ergebnis = 0;
         for (Topf topf : this.toepfe) {
@@ -217,7 +177,7 @@ public class Finanzverwaltung {
     }
 
 
-    public String getSollbestandKostenstelle() {
+    String getSollbestandKostenstelle() {
         String sql = "SELECT * FROM Topf";
         Db db = new Db();
         float betrag = 0;
@@ -231,7 +191,6 @@ public class Finanzverwaltung {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String result = String.valueOf(betrag);
-        return result;
+        return String.valueOf(betrag);
     }
 }
