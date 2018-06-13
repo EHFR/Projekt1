@@ -481,7 +481,7 @@ public class Controller implements Initializable {
                 this.personenverwaltung.updatePerson(person.getId(), this.personenverwaltungNameField.getText(),
                         this.personenverwaltungAdresseField.getText(), this.personenverwaltungTelefonField.getText(),
                         this.personenverwaltungEmailField.getText(), this.personenverwaltungTypSpinner.getValue(),
-                        this.personenverwaltungPasswortField.getText());
+                        this.personenverwaltungPasswortField.getText(), this.angemeldetePerson.getId());
             } catch (ElabException e) {
                 showError(e);
                 return;
@@ -1141,7 +1141,7 @@ public class Controller implements Initializable {
         this.kategorieListID = this.kategorienListe.getFocusModel().getFocusedIndex();
         this.produkteDisableInputs(true);
         if (this.kategorieListID == -1) {
-            this.produktListe.setDisable(true);
+            this.produktGrid.setDisable(true);
         } else {
             this.populateProdukteList();
         }

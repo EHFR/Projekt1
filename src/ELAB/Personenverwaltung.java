@@ -129,7 +129,12 @@ public class Personenverwaltung {
         }
     }
 
-    void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) throws ElabException {
+    void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type, String passwort, int angemeldetePersonID) throws ElabException {
+        //Angemeldetes Mitglied darf nicht gelöscht werden
+        if (id == angemeldetePersonID && !type.equals("Mitglied")) {
+            throw new ElabException("Angemeldete Mitglieder können ihren eigenen Typ nicht ändern!");
+        }
+
         if (this.personAlreadyExists(personName)) {
             if (this.getPersonByName(personName).getId() != id) {
                 throw new ElabException("Name existiert schon, bitte einen anderen wählen!");
