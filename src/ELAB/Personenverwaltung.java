@@ -113,12 +113,23 @@ public class Personenverwaltung {
         }
 
         Db db = new Db();
+        
+        String sql2 = "DELETE FROM AuftragPerson WHERE PersonID = " + id + " ";
+        try {
+        	db.updateQuery(sql2);
+        } catch (SQLException x) {
+        	x.printStackTrace();
+        }
+        
+        
         String sql = "DELETE FROM Personen WHERE PersonID = " + id + " ";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        
     }
 
     public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) throws ElabException {
