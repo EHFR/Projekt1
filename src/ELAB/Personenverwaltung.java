@@ -113,28 +113,28 @@ public class Personenverwaltung {
         }
 
         Db db = new Db();
-        
+
         String sql2 = "DELETE FROM AuftragPerson WHERE PersonID = " + id + " ";
         try {
-        	db.updateQuery(sql2);
+            db.updateQuery(sql2);
         } catch (SQLException x) {
-        	x.printStackTrace();
+            x.printStackTrace();
         }
-        
-        
+
+
         String sql = "DELETE FROM Personen WHERE PersonID = " + id + " ";
         try {
             db.updateQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
     }
 
     public void updatePerson(int id, String personName, String personAdresse, String personTel, String personEmail, String type, String passwort) throws ElabException {
         if (this.personAlreadyExists(personName)) {
-            throw new ElabException("Name existiert schon, bitte einen anderen wählen!");
+            if (this.getPersonByName(personName).getId() != id) {
+                throw new ElabException("Name existiert schon, bitte einen anderen wählen!");
+            }
         }
 
         Db db = new Db();

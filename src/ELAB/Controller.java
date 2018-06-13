@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
@@ -78,7 +77,6 @@ public class Controller implements Initializable {
      */
     public ListView<String> fertigungsverwaltungListe;
     public Spinner<String> fertigungsverwaltungFilterSpinner;
-    private SpinnerValueFactory<String> fertigungsverwaltungFilerSpinnerValueFactory;
     public GridPane fertigungsverwaltungBearbeitungGrid;
     public TextField fertigungsverwaltungTitelField;
     public TextField fertigungsverwaltungFertigungsartField;
@@ -537,8 +535,8 @@ public class Controller implements Initializable {
         ObservableList<String> alleFilter = FXCollections.observableArrayList("Alles", "Angenommen", "Nicht Angenommen",
                 "Gefertigt", "Nicht Gefertigt", "Kosten kalkuliert", "Kosten nicht kalkuliert", "Abgeholt", "Nicht Abgeholt",
                 "Abgerechnet", "Nicht Abgerechnet", "Auf Material warten", "Material vorhanden", "Fertigung unterbrochen", "Fertigung nicht unterbrochen");
-        this.fertigungsverwaltungFilerSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(alleFilter);
-        this.fertigungsverwaltungFilterSpinner.setValueFactory(fertigungsverwaltungFilerSpinnerValueFactory);
+        SpinnerValueFactory<String> fertigungsverwaltungFilterSpinnerValueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<String>(alleFilter);
+        this.fertigungsverwaltungFilterSpinner.setValueFactory(fertigungsverwaltungFilterSpinnerValueFactory);
         this.populateFertigungsverwaltungList();
     }
 

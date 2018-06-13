@@ -25,6 +25,9 @@ public class Bestellung {
         return name;
     }
 
+    /**
+     * Getter sind Erforderlich für die JavaFx Tabelle!
+     */
     public String getProdukt() {
         return produkt;
     }
