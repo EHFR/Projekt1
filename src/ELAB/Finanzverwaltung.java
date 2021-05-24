@@ -18,7 +18,7 @@ public class Finanzverwaltung {
         return toepfe;
     }
 
-    //Methoden für Töpfe
+    //Methoden fï¿½r Tï¿½pfe
     private void reloadTopf() {
         Db db = new Db();
         this.toepfe.clear();
@@ -62,7 +62,7 @@ public class Finanzverwaltung {
 
     void removeTopf(int id) throws ElabException {
         if (getTopfByID(id).getRechnungen().size() > 0) {
-            throw new ElabException("Topf hat noch Rechnungen. Diese im vorhinein löschen.");
+            throw new ElabException("Topf hat noch Rechnungen. Diese im vorhinein lï¿½schen.");
         }
         Db db = new Db();
         Topf t = this.getTopfByID(id);
@@ -193,4 +193,5 @@ public class Finanzverwaltung {
         }
         return String.valueOf(betrag);
     }
+    print(helloworld)
 }
